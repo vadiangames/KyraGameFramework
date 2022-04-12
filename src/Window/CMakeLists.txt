@@ -1,0 +1,6 @@
+
+add_library(KyraWindow SHARED IWindow.cpp)
+target_compile_definitions(KyraWindow PRIVATE -DKYRA_WINDOW_EXPORTS)
+
+install(TARGETS KyraWindow RUNTIME DESTINATION ${PROJECT_SOURCE_DIR}/bin)
+install(TARGETS KyraWindow ARCHIVE DESTINATION ${PROJECT_SOURCE_DIR}/lib)
