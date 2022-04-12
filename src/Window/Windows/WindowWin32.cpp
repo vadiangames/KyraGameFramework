@@ -23,10 +23,22 @@ namespace kyra {
 				switch(msg) {
 					case WM_CLOSE:
 						dispatcher->sendOnCloseEvent();
-					return true;
+					return 0;
 					case WM_SIZE:
 						dispatcher->sendOnResizeEvent(LOWORD(lParam),HIWORD(lParam));
-					return true;
+					return 0;
+					case WM_KILLFOCUS:
+						dispatcher->sendOnFocusLostEvent();
+					return 0;
+					case WM_SETFOCUS:
+						dispatcher->sendOnFocusGainedEvent();
+					return 0;
+					case WM_KEYUP:
+						dispatcher->sendOnKeyReleasedEvent(wParam);
+					return 0;
+					case WM_KEYDOWN:
+						dispatcher->sendOnKeyPressedEvent(wParam);
+					return 0;
 				}
 			}
 			return DefWindowProcW(hWnd, msg, wParam, lParam);

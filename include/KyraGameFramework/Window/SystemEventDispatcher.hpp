@@ -19,7 +19,10 @@ namespace kyra {
 		
 		void sendOnCloseEvent();
 		void sendOnResizeEvent(uint32_t windowWidth, uint32_t windowHeight);
-		
+		void sendOnFocusLostEvent();
+		void sendOnFocusGainedEvent();
+		void sendOnKeyPressedEvent(size_t key);
+		void sendOnKeyReleasedEvent(size_t key);
 	};
 	
 }

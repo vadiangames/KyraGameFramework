@@ -31,4 +31,29 @@ namespace kyra {
 		}
 	}
 	
+	void KYRA_WINDOW_API SystemEventDispatcher::sendOnFocusLostEvent() {
+		for(auto& listener : m_Listeners) {
+			listener->onFocusLost();
+		}
+	}
+	
+	void KYRA_WINDOW_API SystemEventDispatcher::sendOnFocusGainedEvent() {
+		for(auto& listener : m_Listeners) {
+			listener->onFocusGained();
+		}
+	}
+	
+	void KYRA_WINDOW_API SystemEventDispatcher::sendOnKeyPressedEvent(size_t key) {
+		for(auto& listener : m_Listeners) {
+			listener->onKeyPressed(key);
+		}
+	}
+	
+	void KYRA_WINDOW_API SystemEventDispatcher::sendOnKeyReleasedEvent(size_t key) {
+		for(auto& listener : m_Listeners) {
+			listener->onKeyReleased(key);
+		}
+	}
+	
+	
 }

@@ -27,11 +27,11 @@ namespace kyra {
 	
 	}
 	
-	void KYRA_WINDOW_API SystemEventListener::onKeyPressed() {
+	void KYRA_WINDOW_API SystemEventListener::onKeyPressed(size_t key) {
 	
 	}
 	
-	void KYRA_WINDOW_API SystemEventListener::onKeyReleased() {
+	void KYRA_WINDOW_API SystemEventListener::onKeyReleased(size_t key) {
 		
 	}
 	
