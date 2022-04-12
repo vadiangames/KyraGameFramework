@@ -1,5 +1,9 @@
 
-add_library(KyraWindow SHARED IWindow.cpp)
+add_library(KyraWindow SHARED IWindow.cpp
+							  SystemEventListener.cpp
+							  SystemEventDispatcher.cpp
+							  ./Windows/WindowWin32.cpp)
+							  
 target_compile_definitions(KyraWindow PRIVATE -DKYRA_WINDOW_EXPORTS)
 
 install(TARGETS KyraWindow RUNTIME DESTINATION ${PROJECT_SOURCE_DIR}/bin)

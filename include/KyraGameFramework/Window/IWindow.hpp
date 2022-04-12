@@ -2,6 +2,7 @@
 #define KYRAGAMEFRAMEWORK_WINDOW_IWINDOW_HPP
 
 #include <KyraGameFramework/Window/DLL.hpp>
+#include <KyraGameFramework/Window/SystemEventDispatcher.hpp>
 #include <string>
 
 namespace kyra {
@@ -14,8 +15,8 @@ namespace kyra {
 	}WindowSettings;
 	
 	//! Abstract class for window implementations
-	class KYRA_WINDOW_API IWindow {
-		
+	class KYRA_WINDOW_API IWindow : public SystemEventDispatcher {
+				
 		public:
 		//! Default constructor
 		IWindow();
@@ -34,6 +35,9 @@ namespace kyra {
 		
 		/** Processes the system-events */
 		virtual void processEvents() = 0;
+		
+		/** Closes the window */
+		virtual void close() = 0;
 
 	};
 	
