@@ -75,4 +75,11 @@ namespace kyra {
 		SwapBuffers(m_DeviceContext);
 	}
 	
+	void KYRA_RENDERDEVICEGL_API RenderDeviceGL::draw(IVertexBuffer& buffer, IProgram& program, IVertexLayout& layout) {
+		buffer.bind();
+		layout.bind();
+		program.use();
+		glDrawArrays(GL_TRIANGLES,0,3);
+	}
+	
 }

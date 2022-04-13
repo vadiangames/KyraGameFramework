@@ -27,6 +27,9 @@ namespace kyra {
 		virtual bool create(IWindow& window);
 		virtual void clear();
 		virtual void display();
+		
+		void draw(IVertexBuffer& buffer, IProgram& program, IVertexLayout& layout);
+
 	};
 
 }
