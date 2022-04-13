@@ -38,6 +38,9 @@ namespace kyra {
 		
 		/** Closes the window */
 		virtual void close() final;
+		
+		/** Return the window-handle */
+		virtual void* getHandle() const final;
 
 	};
 	

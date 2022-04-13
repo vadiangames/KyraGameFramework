@@ -108,4 +108,8 @@ namespace kyra {
 		m_WindowHandle = NULL;
 	}
 	
+	void* KYRA_WINDOW_API WindowWin32::getHandle() const {
+		return reinterpret_cast<void*>(m_WindowHandle);
+	}
+	
 }

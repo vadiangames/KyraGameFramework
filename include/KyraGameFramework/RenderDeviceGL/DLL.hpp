@@ -1,0 +1,10 @@
+#ifndef KYRAGAMEFRAMEWORK_RENDERDEVICEGL_DLL_HPP
+#define KYRAGAMEFRAMEWORK_RENDERDEVICEGL_DLL_HPP
+
+#ifdef KYRA_RENDERDEVICEGL_EXPORTS
+  #define KYRA_RENDERDEVICEGL_API __declspec(dllexport)
+#else
+  #define KYRA_RENDERDEVICEGL_API __declspec(dllimport)
+#endif
+
+#endif

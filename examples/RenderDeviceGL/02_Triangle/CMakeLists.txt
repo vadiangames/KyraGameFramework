@@ -1,0 +1,5 @@
+
+add_executable(RendererGL_Example_Triangle main.cpp)
+target_link_libraries(RendererGL_Example_Triangle PRIVATE KyraWindow KyraGLExtensionLoader KyraRenderDeviceGL opengl32)
+
+install(TARGETS RendererGL_Example_Triangle RUNTIME DESTINATION ${PROJECT_SOURCE_DIR}/bin)

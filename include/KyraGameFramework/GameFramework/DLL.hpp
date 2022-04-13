@@ -1,0 +1,10 @@
+#ifndef KYRAGAMEFRAMEWORK_GAMEFRAMEWORK_DLL_HPP
+#define KYRAGAMEFRAMEWORK_GAMEFRAMEWORK_DLL_HPP
+
+#ifdef KYRA_GAMEFRAMEWORK_EXPORTS
+  #define KYRA_GAMEFRAMEWORK_API __declspec(dllexport)
+#else
+  #define KYRA_GAMEFRAMEWORK_API __declspec(dllimport)
+#endif
+
+#endif

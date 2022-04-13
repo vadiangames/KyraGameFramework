@@ -1,1 +1,4 @@
 add_subdirectory(Window)
+add_subdirectory(AbstractRenderDevice)
+add_subdirectory(GLExtensionLoader)
+add_subdirectory(RenderDeviceGL)

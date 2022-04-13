@@ -1,0 +1,5 @@
+
+add_executable(RendererGL_Example_HelloWorld main.cpp)
+target_link_libraries(RendererGL_Example_HelloWorld PRIVATE KyraWindow KyraRenderDeviceGL opengl32)
+
+install(TARGETS RendererGL_Example_HelloWorld RUNTIME DESTINATION ${PROJECT_SOURCE_DIR}/bin)
