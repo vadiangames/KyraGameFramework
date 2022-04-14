@@ -1,5 +1,6 @@
 
 #include <KyraGameFramework/Window/SystemEventDispatcher.hpp>
+#include <algorithm>
 
 namespace kyra {
 	
@@ -20,39 +21,39 @@ namespace kyra {
 	}
 	
 	void KYRA_WINDOW_API SystemEventDispatcher::sendOnCloseEvent() {
-		for(auto& listener : m_Listeners) {
+		std::for_each(m_Listeners.begin(),m_Listeners.end(), [](SystemEventListener* listener) {
 			listener->onClose();
-		}
+		});
 	}
 	
 	void KYRA_WINDOW_API SystemEventDispatcher::sendOnResizeEvent(uint32_t windowWidth, uint32_t windowHeight) {
-		for(auto& listener : m_Listeners) {
+		std::for_each(m_Listeners.begin(),m_Listeners.end(), [&](SystemEventListener* listener) {
 			listener->onResize(windowWidth, windowHeight);
-		}
+		});
 	}
 	
 	void KYRA_WINDOW_API SystemEventDispatcher::sendOnFocusLostEvent() {
-		for(auto& listener : m_Listeners) {
+		std::for_each(m_Listeners.begin(),m_Listeners.end(), [](SystemEventListener* listener) {
 			listener->onFocusLost();
-		}
+		});
 	}
 	
 	void KYRA_WINDOW_API SystemEventDispatcher::sendOnFocusGainedEvent() {
-		for(auto& listener : m_Listeners) {
+		std::for_each(m_Listeners.begin(),m_Listeners.end(), [](SystemEventListener* listener) {
 			listener->onFocusGained();
-		}
+		});
 	}
 	
 	void KYRA_WINDOW_API SystemEventDispatcher::sendOnKeyPressedEvent(size_t key) {
-		for(auto& listener : m_Listeners) {
+		std::for_each(m_Listeners.begin(),m_Listeners.end(), [&](SystemEventListener* listener) {
 			listener->onKeyPressed(key);
-		}
+		});
 	}
 	
 	void KYRA_WINDOW_API SystemEventDispatcher::sendOnKeyReleasedEvent(size_t key) {
-		for(auto& listener : m_Listeners) {
+		std::for_each(m_Listeners.begin(),m_Listeners.end(), [&](SystemEventListener* listener) {
 			listener->onKeyReleased(key);
-		}
+		});
 	}
 	
 	

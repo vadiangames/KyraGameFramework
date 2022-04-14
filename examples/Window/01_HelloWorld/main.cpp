@@ -14,12 +14,12 @@ class MyApplication : public kyra::SystemEventListener {
 	
 	
 	//! Implementation of kyra::SystemEventListener::onClose()
-	virtual void onClose() {
+	virtual void onClose() final {
 		window.close();
 	}
 	
 	//! Implementation of kyra::SystemEventListener::onResize()
-	virtual void onResize(uint32_t windowWidth, uint32_t windowHeight) {
+	virtual void onResize(uint32_t windowWidth, uint32_t windowHeight) final {
 		std::cout << "New window size: " << windowWidth << " " << windowHeight << std::endl;
 	}
 

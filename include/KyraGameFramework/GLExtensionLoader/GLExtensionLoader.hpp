@@ -34,7 +34,10 @@ KYRA_GLEXTENSIONLOADER_API extern PFNGLDELETEPROGRAMPROC glDeleteProgram;
 //VERTEXLAYOUT FUNCTIONS
 KYRA_GLEXTENSIONLOADER_API extern PFNGLVERTEXATTRIBPOINTERPROC glVertexAttribPointer;
 KYRA_GLEXTENSIONLOADER_API extern PFNGLENABLEVERTEXATTRIBARRAYPROC glEnableVertexAttribArray;
-				
+
+
+#include <iostream>
+#define GL_CHECK(x) x; if(glGetError() != GL_NO_ERROR) {std::cout <<"[ERROR] Error in OpenGL-Function: " << #x << std::endl;}
 
 namespace kyra {
 		

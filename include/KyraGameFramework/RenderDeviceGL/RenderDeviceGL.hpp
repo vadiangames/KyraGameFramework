@@ -1,14 +1,12 @@
 #ifndef KYRAGAMEFRAMEWORK_RENDERDEVICEGL_RENDERDEVICEGL_HPP
 #define KYRAGAMEFRAMEWORK_RENDERDEVICEGL_RENDERDEVICEGL_HPP
 
+
+#include <KyraGameFramework/GLExtensionLoader/GLExtensionLoader.hpp>
 #include <KyraGameFramework/RenderDeviceGL/DLL.hpp>
 #include <KyraGameFramework/AbstractRenderDevice/IRenderDevice.hpp>
 
 #include <windows.h>
-#include <GL/gl.h>
-#include <GL/glext.h>
-#include <GL/wgl.h>
-#include <GL/wglext.h>
 
 namespace kyra {
 
@@ -24,12 +22,12 @@ namespace kyra {
 		RenderDeviceGL();
 		virtual ~RenderDeviceGL();
 		
-		virtual bool create(IWindow& window);
-		virtual void clear();
-		virtual void display();
+		virtual bool create(IWindow& window) final;
+		virtual void clear() final;
+		virtual void display() final;
 		
-		void draw(IVertexBuffer& buffer, IProgram& program, IVertexLayout& layout);
-		void draw(IDrawable& drawable);
+		void draw(IVertexBuffer& buffer, IProgram& program, IVertexLayout& layout) final;
+		void draw(IDrawable& drawable) final;
 	};
 
 }

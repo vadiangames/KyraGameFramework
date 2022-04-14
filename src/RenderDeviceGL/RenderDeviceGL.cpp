@@ -3,7 +3,7 @@
 
 namespace kyra {
 	
-	KYRA_RENDERDEVICEGL_API RenderDeviceGL::RenderDeviceGL() {
+	KYRA_RENDERDEVICEGL_API RenderDeviceGL::RenderDeviceGL() : m_WindowHandle(NULL), m_DeviceContext(NULL) {
 		
 	}
 		
