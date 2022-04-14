@@ -2,6 +2,9 @@
 #include <KyraGameFramework/Window/Windows/WindowWin32.hpp>
 #include <KyraGameFramework/Window/SystemEventListener.hpp>
 #include <KyraGameFramework/RenderDeviceGL/RenderDeviceGl.hpp>
+#include <KyraGameFramework/AbstractRenderDevice/IVertexArray.hpp>
+#include <KyraGameFramework/Math/Vector3.hpp>
+
 
 #include <iostream>
 #include <vector>
@@ -9,24 +12,10 @@
 #define GL_CHECK(x) x; if(glGetError() != GL_NO_ERROR) {std::cout <<"[ERROR] Error in OpenGL-Function: " << #x << std::endl;}
 
 namespace kyra {
-	
-	template<class T>
-	class Vector3 {
-	
-		T m_Data[3];
-		
-		public:
-		Vector3() : m_Data{0,0,0} {}
-		Vector3(T x, T y, T z) : m_Data{x,y,z} {}
-		
-		void* getData() {
-			return (void*)(&m_Data[0]);
-		}
-		
-	};
+
 	
 	template<class VertexType>
-	class VertexArray {
+	class VertexArray : public IVertexArray {
 		
 		std::vector<VertexType> m_Data;
 		int m_Type;
@@ -67,6 +56,10 @@ namespace kyra {
 		
 		void resize(size_t size) {
 			m_Data.resize(size);
+		}
+		
+		void* getData() {
+			return &m_Data[0];
 		}
 		
 		VertexType& operator[](size_t index) {
@@ -175,6 +168,7 @@ namespace kyra {
 	class VertexBuffer : public IVertexBuffer {
 		
 		GLuint m_Id;
+		size_t m_ElementCount;
 		
 		public:
 		VertexBuffer() : m_Id(0){
@@ -187,7 +181,11 @@ namespace kyra {
 			}
 		}
 		
-		void create(size_t size, void* data) {
+		virtual size_t getElementCount() const {
+			return m_ElementCount;
+		}
+		
+		void create(size_t elementCount, size_t size, void* data) {
 			if(m_Id) {
 				GL_CHECK(glDeleteBuffers(1,&m_Id));
 				m_Id = 0;
@@ -195,6 +193,17 @@ namespace kyra {
 			GL_CHECK(glGenBuffers(1,&m_Id));
 			GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, m_Id));
 			GL_CHECK(glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW));
+		}
+		
+		virtual void create(IVertexArray& vertexArray) {
+			if(m_Id) {
+				GL_CHECK(glDeleteBuffers(1,&m_Id));
+				m_Id = 0;
+			}
+			m_ElementCount = vertexArray.count();
+			GL_CHECK(glGenBuffers(1,&m_Id));
+			GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, m_Id));
+			GL_CHECK(glBufferData(GL_ARRAY_BUFFER, vertexArray.getSize(), vertexArray.getData(), GL_STATIC_DRAW));
 		}
 		
 		void bind() {
@@ -276,6 +285,38 @@ std::string fragmentShaderSrc = "#version 330 core\n"
 typedef struct {
 	kyra::Vector3<float> position;
 }Vertex;
+
+class TriangleShape : public kyra::IDrawable {
+	
+	kyra::VertexArray<Vertex> m_VertexArray;
+	kyra::VertexBuffer m_VertexBuffer;
+	kyra::Program m_Program;
+	kyra::VertexLayout m_VertexLayout;
+	
+	public:
+	TriangleShape() {
+	
+		m_VertexArray = kyra::VertexArray<Vertex>(GL_TRIANGLES, 3);
+		m_VertexArray[0].position = kyra::Vector3<float>(-0.5f,-0.5f,0.0f);
+		m_VertexArray[1].position = kyra::Vector3<float>(0.5f,-0.5f,0.0f);
+		m_VertexArray[2].position = kyra::Vector3<float>(0.0f,0.5f,0.0f);
+	
+		m_Program.linkFromMemory(vertexShaderSrc, fragmentShaderSrc);
+		m_VertexBuffer.create(m_VertexArray.count(),m_VertexArray.getSize(), &m_VertexArray[0]);
+					
+		m_VertexLayout.add(3, 3*sizeof(float), GL_FLOAT);
+	
+	}
+	
+	~TriangleShape() {
+		
+	}
+	
+	virtual void draw(kyra::IRenderDevice& renderer) {
+		renderer.draw(m_VertexBuffer, m_Program, m_VertexLayout);
+	}
+		
+};
 								
 class MyApplication : public kyra::SystemEventListener {
 
@@ -310,28 +351,12 @@ class MyApplication : public kyra::SystemEventListener {
 					return;
 				}
 				
-				kyra::VertexArray<Vertex> vertexArray(GL_TRIANGLES, 3);
-				vertexArray[0].position = kyra::Vector3<float>(-0.5f,-0.5f,0.0f);
-				vertexArray[1].position = kyra::Vector3<float>(0.5f,-0.5f,0.0f);
-				vertexArray[2].position = kyra::Vector3<float>(0.0f,0.5f,0.0f);
-				
-				kyra::Program program;
-					program.linkFromMemory(vertexShaderSrc, fragmentShaderSrc);
-								
-				kyra::VertexBuffer vertexBuffer;
-					vertexBuffer.create( vertexArray.getSize(), &vertexArray[0]);
-					
-				kyra::VertexLayout vertexLayout;
-					vertexLayout.add(3, 3*sizeof(float), GL_FLOAT);
-				
+				TriangleShape shape;
+	
 				while(m_Window.isOpen()) {
 					m_Window.processEvents();
 					m_Renderer.clear();
-						vertexBuffer.bind();
-						vertexLayout.bind();
-						program.use();
-						glDrawArrays(GL_TRIANGLES,0,vertexArray.count());
-						vertexBuffer.unbind();
+						m_Renderer.draw(shape);
 					m_Renderer.display();
 				}
 				

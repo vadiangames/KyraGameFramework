@@ -82,4 +82,8 @@ namespace kyra {
 		glDrawArrays(GL_TRIANGLES,0,3);
 	}
 	
+	void  KYRA_RENDERDEVICEGL_API RenderDeviceGL::draw(IDrawable& drawable) {
+		drawable.draw(*this);
+	}
+	
 }

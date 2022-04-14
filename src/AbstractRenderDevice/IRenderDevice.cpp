@@ -11,8 +11,4 @@ namespace kyra {
 		
 	}
 	
-	void KYRA_ARD_API IRenderDevice::draw(IDrawable& drawable) {
-		drawable.draw(*this);
-	}
-	
 }

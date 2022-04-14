@@ -29,7 +29,7 @@ namespace kyra {
 		virtual void display();
 		
 		void draw(IVertexBuffer& buffer, IProgram& program, IVertexLayout& layout);
-
+		void draw(IDrawable& drawable);
 	};
 
 }
