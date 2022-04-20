@@ -41,6 +41,10 @@ namespace kyra {
 		
 		/** Return the window-handle */
 		virtual void* getHandle() const = 0;
+		
+		virtual int getWidth() const = 0;
+		
+		virtual int getHeight() const = 0;
 
 	};
 	

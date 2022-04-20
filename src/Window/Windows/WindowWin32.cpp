@@ -112,4 +112,16 @@ namespace kyra {
 		return reinterpret_cast<void*>(m_WindowHandle);
 	}
 	
+	int KYRA_WINDOW_API WindowWin32::getWidth() const {
+		RECT rect;
+		GetWindowRect(m_WindowHandle,&rect);
+		return rect.right - rect.left;
+	};
+	
+	int KYRA_WINDOW_API WindowWin32::getHeight() const {
+		RECT rect;
+		GetWindowRect(m_WindowHandle,&rect);
+		return rect.bottom - rect.top;
+	};
+	
 }

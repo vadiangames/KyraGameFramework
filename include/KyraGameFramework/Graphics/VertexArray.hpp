@@ -8,14 +8,14 @@ namespace kyra {
 	class VertexArray : public IVertexArray {
 		
 		std::vector<VertexType> m_Data;
-		int m_Type;
+		PrimitiveType m_PrimitiveType;
 		
 		public:
-		VertexArray() : m_Type(0) {
+		VertexArray() : m_PrimitiveType(PrimitiveType::UNKNOWN) {
 			
 		}
 		
-		VertexArray(int type, size_t size) : m_Type(type) {
+		VertexArray(PrimitiveType type, size_t size) : m_PrimitiveType(type) {
 			resize(size);
 		}
 			
@@ -23,18 +23,11 @@ namespace kyra {
 			
 		}
 
-		void create(int type, size_t size) {
-			m_Type = type;
+		void create(PrimitiveType type, size_t size) {
+			m_PrimitiveType = type;
 		    resize(size);
 		}	
-		
-		void setType(int type) {
-			m_Type = type;
-		}
-		
-		int getType() const {
-			return m_Type;
-		}
+				
 		
 		size_t getSize() const {
 			return m_Data.size() * sizeof(VertexType);
@@ -54,6 +47,14 @@ namespace kyra {
 		
 		VertexType& operator[](size_t index) {
 			return m_Data[index];
+		}
+		
+		void setPrimitiveType(PrimitiveType type) {
+			m_PrimitiveType = type;
+		}
+		
+		PrimitiveType getPrimitiveType() const {
+			return m_PrimitiveType;
 		}
 		
 	};

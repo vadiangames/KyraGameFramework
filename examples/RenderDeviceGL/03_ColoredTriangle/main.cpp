@@ -60,13 +60,8 @@ class MyApplication : public kyra::SystemEventListener {
 			m_Window.addListener(this);
 			
 			if(m_Renderer.create(m_Window)) {
-				
-				if(kyra::GLExtensionLoader::init() == false) {
-					std::cout << "[ERROR] GLExtensionLoader::init() failed" << std::endl;
-					return;
-				}
-				
-				kyra::VertexArray<ColorVertex> vertexArray(3,GL_TRIANGLES);
+							
+				kyra::VertexArray<ColorVertex> vertexArray(kyra::PrimitiveType::TRIANGLES, 3);
 					vertexArray[0].position = kyra::Vector3<float>(-0.5f,-0.5f,0.0f);
 					vertexArray[0].color    = kyra::Vector3<float>(1.0f,0.0f,0.0f);
 					vertexArray[1].position = kyra::Vector3<float>(0.5f,-0.5f,0.0f);
@@ -75,7 +70,7 @@ class MyApplication : public kyra::SystemEventListener {
 					vertexArray[2].color    = kyra::Vector3<float>(0.0f,0.0f,1.0f);
 				
 				kyra::VertexBuffer vertexBuffer;
-					vertexBuffer.create(vertexArray.count(),vertexArray.getSize(), &vertexArray[0]);
+					vertexBuffer.create(vertexArray);
 				
 				kyra::Program program;
 					program.linkFromMemory(vertexShaderSrc, fragmentShaderSrc);

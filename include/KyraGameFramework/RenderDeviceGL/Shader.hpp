@@ -1,7 +1,6 @@
 #ifndef KYRAGAMEFRAMEWORK_RENDERDEVICEGL_SHADER_HPP
 #define KYRAGAMEFRAMEWORK_RENDERDEVICEGL_SHADER_HPP
 
-
 #include <KyraGameFramework/GLExtensionLoader/GLExtensionLoader.hpp>
 #include <KyraGameFramework/RenderDeviceGL/DLL.hpp>
 

@@ -1,5 +1,6 @@
 
 #include <KyraGameFramework/RenderDeviceGL/RenderDeviceGL.hpp>
+#include <KyraGameFramework/GLExtensionLoader/GLExtensionLoader.hpp>
 
 namespace kyra {
 	
@@ -64,6 +65,10 @@ namespace kyra {
 		
 		wglMakeCurrent(m_DeviceContext, m_RenderContext);
 	
+		glViewport(0, 0, window.getWidth(), window.getHeight());
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	
 		return true;
 	}
 
@@ -79,7 +84,11 @@ namespace kyra {
 		buffer.bind();
 		layout.bind();
 		program.use();
-		glDrawArrays(GL_TRIANGLES,0,3);
+		if(buffer.getPrimitiveType() == PrimitiveType::TRIANGLES) {
+			glDrawArrays(GL_TRIANGLES,0,buffer.getElementCount());
+		} else {
+			std::cout << "[ERROR] Unsupported primitive type" << std::endl;
+		}
 	}
 	
 	void  KYRA_RENDERDEVICEGL_API RenderDeviceGL::draw(IDrawable& drawable) {

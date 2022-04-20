@@ -11,6 +11,7 @@ namespace kyra {
 		
 		GLuint m_Id;
 		size_t m_ElementCount;
+		PrimitiveType m_PrimitiveType;
 		
 		public:
 		VertexBuffer();
@@ -18,7 +19,7 @@ namespace kyra {
 		
 		virtual size_t getElementCount() const final;
 		
-		void create(size_t elementCount, size_t size, void* data) final;
+		void create(PrimitiveType type, size_t elementCount, size_t size, void* data) final;
 		
 		virtual void create(IVertexArray& vertexArray) final;
 		
@@ -27,6 +28,8 @@ namespace kyra {
 		void update(size_t size, void* data) final;
 		
 		void unbind() final;
+		
+		PrimitiveType getPrimitiveType() const;
 		
 	};
 }
