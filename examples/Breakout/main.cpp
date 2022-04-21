@@ -5,6 +5,8 @@
 #include <KyraGameFramework/RenderDeviceGL/Program.hpp>
 #include <KyraGameFramework/RenderDeviceGL/Texture.hpp>
 
+#include <KyraGameFramework/Graphics/Sprite.hpp>
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -32,6 +34,8 @@ class BreakoutGame : public kyra::SystemEventListener {
 	kyra::Texture   m_PowerUp_Chaos;
 	kyra::Texture   m_PowerUp_PassThrough;
 	
+	kyra::Sprite::Ptr	m_BackgroundSprite;
+	
 	public:
 	BreakoutGame() {
 		
@@ -42,26 +46,25 @@ class BreakoutGame : public kyra::SystemEventListener {
 	}
 	
 	void init(kyra::RenderDeviceGL& renderDevice) {
+		
 		//Load Shaders
-		m_SpriteShader.linkFromFile("./Shaders/Sprite.vs", "./Shaders/Sprite.fs");
+		//m_SpriteShader.linkFromFile("./Shaders/Sprite.vs", "./Shaders/Sprite.fs");
 		m_ParticleShader.linkFromFile("./Shaders/Particle.vs", "./Shaders/Particle.fs");
 		m_PostProcessingShader.linkFromFile("./Shaders/PostProcessing.vs","./Shaders/PostProcessing.fs");
 	
 		//ConfigureShaders
 		glm::mat4 projection = glm::ortho(0.0f, 800.0f, 600.f, 0.0f);
-		m_SpriteShader.setInteger("sprite",0);
-		m_SpriteShader.setMatrix4("projection", projection);
+		//glm::mat4 projection = glm::mat4(1.0f);
+		//m_SpriteShader.setInteger("sprite",0);
+		//m_SpriteShader.setMatrix4("projection", projection);
 		m_ParticleShader.setInteger("sprite",0);
 		m_ParticleShader.setMatrix4("projection", projection);
 				
 		//Load Textures
-		//TODO: This file fails to load with an error
-		m_Background.loadFromFile("./Textures/background.jpg");
+		m_Background.loadFromFile("./Textures/background.png");
 		m_AwesomeFace.loadFromFile("./Textures/awesomeface.png");
-		//TODO: This file fails to load with an error
-		//m_Block.loadFromFile("./Textures/block.png");
-		//TODO: This file fails to load with an error
-		//m_Block_Solid.loadFromFile("./Textures/block_solid.png");
+		m_Block.loadFromFile("./Textures/block.png");
+		m_Block_Solid.loadFromFile("./Textures/block_solid.png");
 		m_Paddle.loadFromFile("./Textures/paddle.png");
 		m_Particle.loadFromFile("./Textures/particle.png");
 		m_PowerUp_Speed.loadFromFile("./Textures/powerup_speed.png");
@@ -70,10 +73,22 @@ class BreakoutGame : public kyra::SystemEventListener {
 		m_PowerUp_Confuse.loadFromFile("./Textures/powerup_confuse.png");
 		m_PowerUp_Chaos.loadFromFile("./Textures/powerup_chaos.png");
 		m_PowerUp_PassThrough.loadFromFile("./Textures/powerup_passthrough.png");
+		
+		//Should be m_BackgroundSprite = kyra::Sprite::create();
+		m_BackgroundSprite = kyra::Sprite::Ptr(new kyra::Sprite());
+		m_BackgroundSprite->create(renderDevice);
+		m_BackgroundSprite->setTexture(m_Background);
+		m_BackgroundSprite->setSize( glm::vec2(500,500) );
+		m_BackgroundSprite->setPosition( glm::vec3(100,100,0) );
+		
 	}
 	
 	virtual void onClose() {
 		m_Window.close();
+	}
+	
+	void draw(kyra::RenderDeviceGL& renderDevice) {
+		renderDevice.draw(m_BackgroundSprite);
 	}
 	
 	void run() {
@@ -92,6 +107,7 @@ class BreakoutGame : public kyra::SystemEventListener {
 				while(m_Window.isOpen()) {
 					m_Window.processEvents();
 					m_Renderer.clear();
+						draw(m_Renderer);
 					m_Renderer.display();
 				}
 			} else {

@@ -16,6 +16,10 @@ namespace kyra {
 			return &m_Data[0];
 		}
 		
+		T& operator[](size_t index) {
+			return m_Data[index];
+		}
+		
 	};
 }
 

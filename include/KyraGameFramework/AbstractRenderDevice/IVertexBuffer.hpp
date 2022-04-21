@@ -3,12 +3,15 @@
 
 
 #include <KyraGameFramework/AbstractRenderDevice/IVertexArray.hpp>
+#include <memory>
 
 namespace kyra {
 	
 	class IVertexBuffer {
 		
 		public:
+		
+		typedef std::shared_ptr<IVertexBuffer> Ptr;
 		
 		virtual size_t getElementCount() const = 0;
 		

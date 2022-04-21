@@ -1,6 +1,9 @@
 
-#include <KyraGameFramework/RenderDeviceGL/RenderDeviceGL.hpp>
 #include <KyraGameFramework/GLExtensionLoader/GLExtensionLoader.hpp>
+#include <KyraGameFramework/RenderDeviceGL/RenderDeviceGL.hpp>
+#include <KyraGameFramework/RenderDeviceGL/VertexBuffer.hpp>
+#include <KyraGameFramework/RenderDeviceGL/Program.hpp>
+#include <KyraGameFramework/RenderDeviceGL/VertexLayout.hpp>
 
 namespace kyra {
 	
@@ -71,6 +74,19 @@ namespace kyra {
 	
 		return true;
 	}
+	
+	
+	IVertexBuffer::Ptr KYRA_RENDERDEVICEGL_API RenderDeviceGL::createVertexBuffer() {
+		return IVertexBuffer::Ptr(new VertexBuffer());
+	}
+	
+	IProgram::Ptr KYRA_RENDERDEVICEGL_API RenderDeviceGL::createProgram() {
+		return IProgram::Ptr(new Program());
+	}
+	
+	IVertexLayout::Ptr KYRA_RENDERDEVICEGL_API RenderDeviceGL::createVertexLayout() {
+		return IVertexLayout::Ptr(new VertexLayout());
+	}
 
 	void KYRA_RENDERDEVICEGL_API RenderDeviceGL::clear() {
 		glClear(GL_COLOR_BUFFER_BIT);
@@ -91,8 +107,26 @@ namespace kyra {
 		}
 	}
 	
+	
+	void KYRA_RENDERDEVICEGL_API RenderDeviceGL::draw(IVertexBuffer::Ptr buffer, IProgram::Ptr program, IVertexLayout::Ptr layout) {
+		if(!buffer) {
+			std::cout << "[WARN] VertexBuffer is not initialized!" << std::endl;
+		}
+		if(!program) {
+			std::cout << "[WARN] Program is not initialized!" << std::endl;
+		}
+		if(!layout) {
+			std::cout << "[WARN] VertexLayout is not initialized!" << std::endl;
+		}
+		draw(*buffer,*program,*layout);
+	}
+	
 	void  KYRA_RENDERDEVICEGL_API RenderDeviceGL::draw(IDrawable& drawable) {
 		drawable.draw(*this);
+	}
+	
+	void  KYRA_RENDERDEVICEGL_API RenderDeviceGL::draw(IDrawable::Ptr drawable) {
+		drawable->draw(*this);
 	}
 	
 }

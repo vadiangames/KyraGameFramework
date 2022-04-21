@@ -27,10 +27,9 @@ namespace kyra {
 	}
 		
 	void KYRA_RENDERDEVICEGL_API VertexLayout::bind() {
-			
 		std::for_each(m_Entries.begin(), m_Entries.end(), [&](const VertexLayoutEntry& entry) {
-			glVertexAttribPointer(entry.id,entry.size,entry.type,GL_FALSE, m_TotalSize, (void*)entry.stride);
-			glEnableVertexAttribArray(entry.id);
+			GL_CHECK(glVertexAttribPointer(entry.id,entry.size,entry.type,GL_FALSE, m_TotalSize, (void*)entry.stride));
+			GL_CHECK(glEnableVertexAttribArray(entry.id));
 		});
 			
 	}

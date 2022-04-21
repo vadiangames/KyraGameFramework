@@ -22,14 +22,14 @@ namespace kyra {
 		Shader fragmentShader;
 			fragmentShader.create(ShaderType::FRAGMENT, fragmentShaderSrc);
 				
-		m_Id = glCreateProgram();
-			glAttachShader(m_Id, vertexShader.getId());
-			glAttachShader(m_Id, fragmentShader.getId());
-			glLinkProgram(m_Id);			
+		m_Id = GL_CHECK(glCreateProgram());
+			GL_CHECK(glAttachShader(m_Id, vertexShader.getId()));
+			GL_CHECK(glAttachShader(m_Id, fragmentShader.getId()));
+			GL_CHECK(glLinkProgram(m_Id));			
 			
 		int success = 0;
 		char infoLog[512];
-		glGetProgramiv(m_Id, GL_LINK_STATUS,&success);
+		GL_CHECK(glGetProgramiv(m_Id, GL_LINK_STATUS,&success));
 		if(!success) {
 			glGetProgramInfoLog(m_Id,512, NULL,infoLog);
 			std::cout << "ERROR::PROGRAM::LINK_FAILED: " << infoLog << std::endl;
@@ -73,7 +73,17 @@ namespace kyra {
 		}
 		GL_CHECK(glUniformMatrix4fv(location,1,GL_FALSE,glm::value_ptr(matrix)));
 	}
-		
+	
+	void KYRA_RENDERDEVICEGL_API Program::setVector3(const std::string& id, const glm::vec3& vec) {
+		//TODO: Duplicated Code
+		use();
+		GLint location = GL_CHECK(glGetUniformLocation(m_Id,id.c_str()));
+		if(location == -1) {
+			std::cout << "[ERROR] Can not find uniform location " << id << std::endl;
+		}
+		GL_CHECK(glUniform3fv(location,1,glm::value_ptr(vec)));
+	}
+	
 	void KYRA_RENDERDEVICEGL_API Program::use()  {
 		GL_CHECK(glUseProgram(m_Id));
 	}

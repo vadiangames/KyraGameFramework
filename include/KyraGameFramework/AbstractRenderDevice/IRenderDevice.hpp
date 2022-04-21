@@ -16,12 +16,19 @@ namespace kyra {
 		IRenderDevice();
 		virtual ~IRenderDevice();
 		
+		
+		virtual IVertexBuffer::Ptr createVertexBuffer() = 0;
+		virtual IProgram::Ptr createProgram() = 0;
+		virtual IVertexLayout::Ptr createVertexLayout() = 0;
+		
 		virtual bool create(IWindow& window) = 0;
 		virtual void clear() = 0;
 		virtual void display() = 0;
 		
 		virtual void draw(IVertexBuffer& buffer, IProgram& program, IVertexLayout& layout) = 0;
+		virtual void draw(IVertexBuffer::Ptr buffer, IProgram::Ptr program, IVertexLayout::Ptr layout) = 0;
 		virtual void draw(IDrawable& drawable) = 0;
+		virtual void draw(IDrawable::Ptr drawable) = 0;
 	};
 
 }
