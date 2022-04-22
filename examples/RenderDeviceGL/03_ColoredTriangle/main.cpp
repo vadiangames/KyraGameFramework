@@ -60,6 +60,11 @@ class MyApplication : public kyra::SystemEventListener {
 			m_Window.addListener(this);
 			
 			if(m_Renderer.create(m_Window)) {
+				
+				if(kyra::GLExtensionLoader::init() == false) {
+					std::cout << "[ERROR] GLExtensionLoader::init() failed" << std::endl;
+					return;
+				}
 							
 				kyra::VertexArray<ColorVertex> vertexArray(kyra::PrimitiveType::TRIANGLES, 3);
 					vertexArray[0].position = kyra::Vector3<float>(-0.5f,-0.5f,0.0f);
