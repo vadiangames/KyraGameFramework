@@ -2,6 +2,9 @@
 #include <stb_image.h>
 
 #define STB_IMAGE_WRITE_IMPLEMENTATION
+#define STBI_FAILURE_USERMSG
+#define STBI_NO_FAILURE_STRINGS
+
 #include <stb_image_write.h>
 
 #include <iostream>
@@ -39,7 +42,7 @@ namespace kyra {
 		}
 		stbi_set_flip_vertically_on_load(true); 
 		m_Data = stbi_load(path.string().c_str(), &m_Width, &m_Height, &m_Channels, 0);
-		if (stbi_failure_reason()) {
+		if (!m_Data) {
 			std::cout << "[ERROR] " << stbi_failure_reason() << std::endl;
 			return false;
 		}

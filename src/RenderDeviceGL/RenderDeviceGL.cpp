@@ -96,6 +96,64 @@ namespace kyra {
 		SwapBuffers(m_DeviceContext);
 	}
 	
+	IProgram::Ptr KYRA_RENDERDEVICEGL_API RenderDeviceGL::createProgramFromFile( const std::string& id, const std::filesystem::path& vertexShader, const std::filesystem::path& fragmentShader ) {
+		if(m_ProgramMap.find(id) == m_ProgramMap.end()) {
+			IProgram::Ptr program = IProgram::Ptr(new Program());
+			program->linkFromFile(vertexShader,fragmentShader);
+			m_ProgramMap[id] = program;
+		}
+		return m_ProgramMap[id];
+	}
+	
+	IProgram::Ptr KYRA_RENDERDEVICEGL_API RenderDeviceGL::createProgramFromMemory(const std::string& id, const std::string& vertexShader, const std::string& fragmentShader ) {
+		if(m_ProgramMap.find(id) == m_ProgramMap.end()) {
+			IProgram::Ptr program = IProgram::Ptr(new Program());
+			program->linkFromMemory(vertexShader,fragmentShader);
+			m_ProgramMap[id] = program;
+		}
+		return m_ProgramMap[id];		
+	}
+		
+	IProgram::Ptr KYRA_RENDERDEVICEGL_API RenderDeviceGL::createInternalProgramFromFile(InternalProgramType type, const std::filesystem::path& vertexShader, const std::filesystem::path& fragmentShader ) {
+		if(m_InternalProgramMap.find(type) == m_InternalProgramMap.end()) {
+			IProgram::Ptr program = IProgram::Ptr(new Program());
+			program->linkFromFile(vertexShader,fragmentShader);
+			m_InternalProgramMap[type] = program;
+		}
+		return m_InternalProgramMap[type];
+
+	}
+	
+	IProgram::Ptr KYRA_RENDERDEVICEGL_API RenderDeviceGL::createInternalProgramFromMemory(InternalProgramType type, const std::string& vertexShader, const std::string& fragmentShader ) {
+		if(m_InternalProgramMap.find(type) == m_InternalProgramMap.end()) {
+			IProgram::Ptr program = IProgram::Ptr(new Program());
+			program->linkFromMemory(vertexShader,fragmentShader);
+			m_InternalProgramMap[type] = program;
+		}
+		return m_InternalProgramMap[type];
+	}
+	
+	IProgram::Ptr KYRA_RENDERDEVICEGL_API RenderDeviceGL::getProgram(const std::string& id) {
+		if(m_ProgramMap.find(id) == m_ProgramMap.end()) {
+			std::cout << "[WARN] Can not find program " << id << std::endl;
+			return IProgram::Ptr(nullptr);
+		}
+		return m_ProgramMap[id];
+	}
+	
+	IProgram::Ptr KYRA_RENDERDEVICEGL_API RenderDeviceGL::getInternalProgram(InternalProgramType type) {
+		if(m_InternalProgramMap.find(type) == m_InternalProgramMap.end()) {
+			if(type == InternalProgramType::SPRITE) {
+				std::cout << "[WARN] Can not find internal program SPRITE" << std::endl;
+			} else if(type == InternalProgramType::TEXT) {
+				std::cout << "[WARN] Can not find internal program TEXT" << std::endl;
+			}
+			return IProgram::Ptr(nullptr);
+		}
+		return m_InternalProgramMap[type];
+	}
+		
+	
 	void KYRA_RENDERDEVICEGL_API RenderDeviceGL::draw(IVertexBuffer& buffer, IProgram& program, IVertexLayout& layout) {
 		buffer.bind();
 		layout.bind();

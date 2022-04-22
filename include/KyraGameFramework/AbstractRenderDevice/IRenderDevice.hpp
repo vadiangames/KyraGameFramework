@@ -8,6 +8,8 @@
 #include <KyraGameFramework/AbstractRenderDevice/IVertexLayout.hpp>
 #include <KyraGameFramework/Window/IWindow.hpp>
 
+#include <filesystem>
+ 
 namespace kyra {
 
 	//! Abstract class for all RenderDevice-Classes
@@ -22,6 +24,22 @@ namespace kyra {
 		
 		//! Abstract class to create a program
 		virtual IProgram::Ptr createProgram() = 0;
+		
+		//! Abstract class for creating managed program from file
+		virtual IProgram::Ptr createProgramFromFile( const std::string& id, const std::filesystem::path& vertexShader, const std::filesystem::path& fragmentShader ) = 0;
+		
+		//! Abstract class for creating managed program from memory
+		virtual IProgram::Ptr createProgramFromMemory(const std::string& id, const std::string& vertexShader, const std::string& fragmentShader ) = 0;
+		
+		//! Abstract class for creating managed program from file
+		virtual IProgram::Ptr createInternalProgramFromFile(InternalProgramType type, const std::filesystem::path& vertexShader, const std::filesystem::path& fragmentShader ) = 0;
+		
+		//! Abstract class for creating managed program from memory
+		virtual IProgram::Ptr createInternalProgramFromMemory(InternalProgramType type, const std::string& vertexShader, const std::string& fragmentShader ) = 0;
+		
+		virtual IProgram::Ptr getProgram(const std::string& id) = 0;
+
+		virtual IProgram::Ptr getInternalProgram(InternalProgramType type) = 0;
 		
 		//! Abstract class to create a vertex layout
 		virtual IVertexLayout::Ptr createVertexLayout() = 0;

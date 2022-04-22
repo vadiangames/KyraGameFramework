@@ -91,16 +91,15 @@ class MyApplication : public kyra::SystemEventListener {
 					vertexArray[2].color    = glm::vec3(0.0f,0.0f,1.0f);
 					vertexArray[2].uv       = glm::vec2(1,1);
 					
-				kyra::VertexBuffer vertexBuffer;
-					vertexBuffer.create(vertexArray);
+				kyra::IVertexBuffer::Ptr vertexBuffer = m_Renderer.createVertexBuffer();
+					vertexBuffer->create(vertexArray);
 				
-				kyra::Program program;
-					program.linkFromMemory(vertexShaderSrc, fragmentShaderSrc);
+				kyra::IProgram::Ptr program = m_Renderer.createProgramFromMemory("DefaultShader", vertexShaderSrc, fragmentShaderSrc);
 				
-				kyra::VertexLayout vertexLayout;
-					vertexLayout.add(3, 3*sizeof(float), GL_FLOAT);
-					vertexLayout.add(3, 3*sizeof(float), GL_FLOAT);
-					vertexLayout.add(2, 2*sizeof(float), GL_FLOAT);
+				kyra::IVertexLayout::Ptr vertexLayout = m_Renderer.createVertexLayout();
+					vertexLayout->add(3, 3*sizeof(float), GL_FLOAT);
+					vertexLayout->add(3, 3*sizeof(float), GL_FLOAT);
+					vertexLayout->add(2, 2*sizeof(float), GL_FLOAT);
 					
 				while(m_Window.isOpen()) {
 					m_Window.processEvents();

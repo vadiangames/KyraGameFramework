@@ -8,6 +8,11 @@
 #include <glm/glm.hpp>
 
 namespace kyra {
+
+	enum class InternalProgramType{
+		TEXT,
+		SPRITE
+	};
 	
 	//! Abstract class for shader program classes
 	class IProgram {
