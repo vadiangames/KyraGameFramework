@@ -16,6 +16,7 @@ namespace kyra {
 		HWND m_WindowHandle;
 		HDC m_DeviceContext;
 		HGLRC m_RenderContext;
+		unsigned int VAO;
 		
 		bool setPixelFormat(HDC hdc);
 		

@@ -7,11 +7,15 @@
 
 namespace kyra {
 	
-	KYRA_RENDERDEVICEGL_API RenderDeviceGL::RenderDeviceGL() : m_WindowHandle(NULL), m_DeviceContext(NULL) {
+	KYRA_RENDERDEVICEGL_API RenderDeviceGL::RenderDeviceGL() : VAO(NULL), m_WindowHandle(NULL), m_DeviceContext(NULL) {
 		
 	}
 		
 	KYRA_RENDERDEVICEGL_API RenderDeviceGL::~RenderDeviceGL() {
+		if(VAO) {
+			GL_CHECK(glDeleteVertexArrays(1, &VAO));
+		}
+		
 		if(m_DeviceContext) {
 			ReleaseDC(m_WindowHandle, m_DeviceContext);
 			m_DeviceContext = NULL;
@@ -67,11 +71,54 @@ namespace kyra {
 		}
 		
 		wglMakeCurrent(m_DeviceContext, m_RenderContext);
-	
-		glViewport(0, 0, window.getWidth(), window.getHeight());
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	
+		
+		
+		if(kyra::GLExtensionLoader::init() == false) {
+			std::cout << "[ERROR] GLExtensionLoader::init() failed" << std::endl;
+		}
+		
+		std::cout << "Legacy context created" << std::endl;
+		
+		/*const int pixelFormatAttribList[] = {
+			WGL_DRAW_TO_WINDOW_ARB, GL_TRUE,
+			WGL_SUPPORT_OPENGL_ARB, GL_TRUE,
+			WGL_PIXEL_TYPE_ARB, GL_TRUE,
+			WGL_COLOR_BITS_ARB,32,
+			WGL_DEPTH_BITS_ARB,24,
+			WGL_STENCIL_BITS_ARB,8,
+			0
+		};*/
+		
+		//TODO Check OpenGL Version
+		
+		std::cout << "Create Context-attributes" << std::endl;
+		int attributes[] = {
+			WGL_CONTEXT_MAJOR_VERSION_ARB, 3,
+			WGL_CONTEXT_MINOR_VERSION_ARB, 3,
+			WGL_CONTEXT_FLAGS_ARB,WGL_CONTEXT_CORE_PROFILE_BIT_ARB,
+			0
+		};
+		
+		std::cout << "wglCreateContextAttribsARB: "  << wglCreateContextAttribsARB << std::endl;
+		
+		std::cout << "Create modern context" << std::endl;
+		HGLRC modernContext =  wglCreateContextAttribsARB( m_DeviceContext, 0, attributes);
+		std::cout << "New context " << modernContext <<  std::endl;
+		
+		if(modernContext) {
+			wglMakeCurrent(NULL,NULL);
+			wglDeleteContext(m_RenderContext);
+			m_RenderContext = modernContext;
+			wglMakeCurrent(m_DeviceContext, m_RenderContext);
+			std::cout << "Switch to modern context" << std::endl;
+		}
+			
+		GL_CHECK(glViewport(0, 0, window.getWidth(), window.getHeight()));
+		GL_CHECK(glEnable(GL_BLEND));
+		GL_CHECK(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+		GL_CHECK(glGenVertexArrays(1, &VAO));
+		GL_CHECK(glBindVertexArray(VAO));
+		
 		return true;
 	}
 	
