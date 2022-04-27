@@ -39,18 +39,11 @@ namespace kyra {
 		
 		
 		virtual IVertexBuffer::Ptr createVertexBuffer() final;
-		
-		[[deprecated]]
-		virtual IProgram::Ptr createProgram() final;
-		
 		virtual IVertexLayout::Ptr createVertexLayout() final;
 		
 		virtual bool create(IWindow& window) final;
 		virtual void clear() final;
 		virtual void display() final;
-		
-		[[deprecated]]
-		void draw(IVertexBuffer& buffer, IProgram& program, IVertexLayout& layout) final;
 		
 		void draw(IVertexBuffer::Ptr buffer, IProgram::Ptr program, IVertexLayout::Ptr layout);
 		

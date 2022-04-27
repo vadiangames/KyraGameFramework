@@ -56,5 +56,11 @@ namespace kyra {
 		});
 	}
 	
+	void KYRA_WINDOW_API SystemEventDispatcher::sendOnMouseMovedEvent(int x, int y) {
+		std::for_each(m_Listeners.begin(),m_Listeners.end(), [&](SystemEventListener* listener) {
+			listener->onMouseMoved(x,y);
+		});
+	}
+	
 	
 }

@@ -1,6 +1,7 @@
 
 #include <KyraGameFramework/Window/Windows/WindowWin32.hpp>
 #include <iostream>
+#include <windowsx.h>
 
 namespace kyra {
 	
@@ -39,6 +40,9 @@ namespace kyra {
 					return 0;
 					case WM_KEYDOWN:
 						dispatcher->sendOnKeyPressedEvent(wParam);
+					return 0;
+					case WM_MOUSEMOVE:
+						dispatcher->sendOnMouseMovedEvent(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
 					return 0;
 				}
 			}

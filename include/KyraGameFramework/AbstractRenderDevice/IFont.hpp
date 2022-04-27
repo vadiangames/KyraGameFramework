@@ -7,7 +7,7 @@ namespace kyra {
 	
 	class IRenderDevice;
 	
-	//! Abstract interface for all drawable classes
+	/// \brief Abstract interface for all font implementations
 	class IFont {
 		
 		public:

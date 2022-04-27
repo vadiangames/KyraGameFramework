@@ -7,7 +7,7 @@
 
 namespace kyra {
 	
-	KYRA_RENDERDEVICEGL_API RenderDeviceGL::RenderDeviceGL() : VAO(0), m_WindowHandle(NULL), m_DeviceContext(NULL) {
+	KYRA_RENDERDEVICEGL_API RenderDeviceGL::RenderDeviceGL() :  m_WindowHandle(NULL), m_DeviceContext(NULL), VAO(0) {
 		
 	}
 		
@@ -107,11 +107,7 @@ namespace kyra {
 	IVertexBuffer::Ptr KYRA_RENDERDEVICEGL_API RenderDeviceGL::createVertexBuffer() {
 		return IVertexBuffer::Ptr(new VertexBuffer());
 	}
-	
-	IProgram::Ptr KYRA_RENDERDEVICEGL_API RenderDeviceGL::createProgram() {
-		return IProgram::Ptr(new Program());
-	}
-	
+
 	IVertexLayout::Ptr KYRA_RENDERDEVICEGL_API RenderDeviceGL::createVertexLayout() {
 		return IVertexLayout::Ptr(new VertexLayout());
 	}
@@ -181,19 +177,6 @@ namespace kyra {
 		return m_InternalProgramMap[type];
 	}
 		
-	
-	void KYRA_RENDERDEVICEGL_API RenderDeviceGL::draw(IVertexBuffer& buffer, IProgram& program, IVertexLayout& layout) {
-		buffer.bind();
-		layout.bind();
-		program.use();
-		if(buffer.getPrimitiveType() == PrimitiveType::TRIANGLES) {
-			glDrawArrays(GL_TRIANGLES,0,buffer.getElementCount());
-		} else {
-			std::cout << "[ERROR] Unsupported primitive type" << std::endl;
-		}
-	}
-	
-	
 	void KYRA_RENDERDEVICEGL_API RenderDeviceGL::draw(IVertexBuffer::Ptr buffer, IProgram::Ptr program, IVertexLayout::Ptr layout) {
 		if(!buffer) {
 			std::cout << "[WARN] VertexBuffer is not initialized!" << std::endl;
@@ -204,7 +187,13 @@ namespace kyra {
 		if(!layout) {
 			std::cout << "[WARN] VertexLayout is not initialized!" << std::endl;
 		}
-		draw(*buffer,*program,*layout);
+		buffer->bind();
+		layout->bind();
+		program->use();
+		
+		if(buffer->getPrimitiveType() == PrimitiveType::TRIANGLES) {
+			glDrawArrays(GL_TRIANGLES,0,buffer->getElementCount());
+		}
 	}
 	
 	void  KYRA_RENDERDEVICEGL_API RenderDeviceGL::draw(IDrawable::Ptr drawable) {

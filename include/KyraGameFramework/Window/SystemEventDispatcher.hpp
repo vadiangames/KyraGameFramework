@@ -23,6 +23,7 @@ namespace kyra {
 		void sendOnFocusGainedEvent();
 		void sendOnKeyPressedEvent(size_t key);
 		void sendOnKeyReleasedEvent(size_t key);
+		void sendOnMouseMovedEvent(int x, int y);
 	};
 	
 }

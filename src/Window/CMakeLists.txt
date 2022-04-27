@@ -5,6 +5,7 @@ add_library(KyraWindow SHARED IWindow.cpp
 							  ./Windows/WindowWin32.cpp)
 							  
 target_compile_definitions(KyraWindow PRIVATE -DKYRA_WINDOW_EXPORTS)
+target_compile_options(KyraWindow PRIVATE -Wall)
 
 
 install(TARGETS KyraWindow RUNTIME DESTINATION ${PROJECT_SOURCE_DIR}/bin)
