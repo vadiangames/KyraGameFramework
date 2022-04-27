@@ -1,5 +1,6 @@
 
 #include <KyraGameFramework/Window/Windows/WindowWin32.hpp>
+#include <iostream>
 
 namespace kyra {
 	
@@ -68,13 +69,26 @@ namespace kyra {
 			return false;
 		}
 		
+		int width = windowSettings.width;
+		int height = windowSettings.height;
+		
+		//Adjust the window size ( Solves the rendering behind title-bar-problem )
+		RECT rect;
+		rect.left = 0;
+		rect.right = windowSettings.width;
+		rect.top = 0;
+		rect.bottom = windowSettings.height;
+		AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, false);
+		width = (rect.right - rect.left);
+		height = (rect.bottom - rect.top);
+			
 		m_WindowHandle = CreateWindowW( L"KYRA_WINDOW_CLASS", 
 										windowSettings.title.c_str(),
 										WS_OVERLAPPEDWINDOW,
 										CW_USEDEFAULT, 
 										CW_USEDEFAULT, 
-										windowSettings.width, 
-										windowSettings.height, 
+										width, 
+										height, 
 										NULL,
 										NULL, 
 										GetModuleHandle(NULL), 
@@ -112,16 +126,30 @@ namespace kyra {
 		return reinterpret_cast<void*>(m_WindowHandle);
 	}
 	
-	int KYRA_WINDOW_API WindowWin32::getWidth() const {
-		RECT rect;
-		GetWindowRect(m_WindowHandle,&rect);
-		return rect.right - rect.left;
-	};
-	
-	int KYRA_WINDOW_API WindowWin32::getHeight() const {
-		RECT rect;
-		GetWindowRect(m_WindowHandle,&rect);
-		return rect.bottom - rect.top;
-	};
+		
+	Rect KYRA_WINDOW_API WindowWin32::getWindowRect() const {
+		RECT window_rectangle;
+		GetWindowRect(m_WindowHandle, &window_rectangle);
+		Rect rectangle;
+		rectangle.x = window_rectangle.top;
+		rectangle.y = window_rectangle.left;
+		rectangle.width = window_rectangle.bottom - window_rectangle.top;
+		rectangle.height = window_rectangle.right - window_rectangle.left; 
+		return rectangle;
+	}
+		
+	Rect KYRA_WINDOW_API WindowWin32::getClientRect() const {
+		RECT window_rect;
+		GetWindowRect(m_WindowHandle, &window_rect);
+		RECT client_rectangle;
+		GetClientRect(m_WindowHandle, &client_rectangle);
+		
+		Rect rectangle;
+		rectangle.x = client_rectangle.left;
+		rectangle.y = (window_rect.bottom - window_rect.top) - client_rectangle.bottom;
+		rectangle.width =  client_rectangle.right - client_rectangle.left;
+		rectangle.height =client_rectangle.bottom - client_rectangle.top; 
+		return rectangle;		
+	}
 	
 }

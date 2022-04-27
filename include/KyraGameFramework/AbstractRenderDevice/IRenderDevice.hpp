@@ -58,10 +58,7 @@ namespace kyra {
 		
 		//! Draw call to draw the vertex buffer
 		virtual void draw(IVertexBuffer::Ptr buffer, IProgram::Ptr program, IVertexLayout::Ptr layout) = 0;
-		
-		[[deprecated]]
-		virtual void draw(IDrawable& drawable) = 0;
-		
+
 		//! Draws the IDrawable by calling IDrawable::draw(IRenderDevice&)
 		virtual void draw(IDrawable::Ptr drawable) = 0;
 	};

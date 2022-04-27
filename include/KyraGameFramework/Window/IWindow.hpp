@@ -14,6 +14,13 @@ namespace kyra {
 		std::wstring title; //!< The title of the window
 	}WindowSettings;
 	
+	typedef struct {
+		uint32_t x;
+		uint32_t y;
+		uint32_t width;
+		uint32_t height;
+	}Rect;
+	
 	//! Abstract class for window implementations
 	class KYRA_WINDOW_API IWindow : public SystemEventDispatcher {
 				
@@ -42,10 +49,10 @@ namespace kyra {
 		/** Return the window-handle */
 		virtual void* getHandle() const = 0;
 		
-		virtual int getWidth() const = 0;
+		virtual Rect getWindowRect() const = 0;
 		
-		virtual int getHeight() const = 0;
-
+		virtual Rect getClientRect() const = 0;
+		
 	};
 	
 }

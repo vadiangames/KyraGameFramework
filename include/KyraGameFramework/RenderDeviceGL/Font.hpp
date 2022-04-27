@@ -65,35 +65,39 @@ namespace kyra {
 					std::cout << "ERROR::FREETYPE: Failed to load glyph" << c << std::endl;
 					continue;
 				}
-				   // generate texture
-				   unsigned int texture;
-				   GL_CHECK(glGenTextures(1, &texture));
-				   GL_CHECK(glBindTexture(GL_TEXTURE_2D, texture));
-				   GL_CHECK(glTexImage2D(
-						GL_TEXTURE_2D,
-						0,
-						GL_RED,
-						m_Face->glyph->bitmap.width,
-						m_Face->glyph->bitmap.rows,
-						0,
-						GL_RED,
-						GL_UNSIGNED_BYTE,
-						m_Face->glyph->bitmap.buffer
-					));
-					// set texture options
-					GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
-					GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
-					GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
-					GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
-					// now store character for later use
-					Character character = {
-						texture, 
-						glm::ivec2(m_Face->glyph->bitmap.width, m_Face->glyph->bitmap.rows),
-						glm::ivec2(m_Face->glyph->bitmap_left, m_Face->glyph->bitmap_top),
-						m_Face->glyph->advance.x
-					};
-					m_Characters.insert(std::pair<char, Character>(c, character));
+				
+				// generate texture
+				unsigned int texture;
+				GL_CHECK(glGenTextures(1, &texture));
+				GL_CHECK(glBindTexture(GL_TEXTURE_2D, texture));
+				GL_CHECK(glTexImage2D(
+					GL_TEXTURE_2D,
+					0,
+					GL_RED,
+					m_Face->glyph->bitmap.width,
+					m_Face->glyph->bitmap.rows,
+					0,
+					GL_RED,
+					GL_UNSIGNED_BYTE,
+					m_Face->glyph->bitmap.buffer
+				));
+				
+				// set texture options
+				GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
+				GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
+				GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+				GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
+				
+				// now store character for later use
+				Character character = {
+					texture, 
+					glm::ivec2(m_Face->glyph->bitmap.width, m_Face->glyph->bitmap.rows),
+					glm::ivec2(m_Face->glyph->bitmap_left, m_Face->glyph->bitmap_top),
+					m_Face->glyph->advance.x
+				};
+				m_Characters.insert(std::pair<char, Character>(c, character));
 			}
+			return true;
 		}
 		
 		

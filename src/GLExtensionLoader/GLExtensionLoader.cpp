@@ -89,7 +89,6 @@ namespace kyra {
 		INIT_GL_FUNC(glActiveTexture, PFNGLACTIVETEXTUREPROC);
 		
 		INIT_GL_FUNC(wglCreateContextAttribsARB, PFNWGLCREATECONTEXTATTRIBSARBPROC );
-		std::cout << "wglCreateContextAttribsARB " << wglCreateContextAttribsARB << std::endl;
 		return true;
 	}
 	

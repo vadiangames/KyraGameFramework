@@ -40,7 +40,6 @@ namespace kyra {
 			std::cout << "[ERROR] Can not find image " << path.string() << std::endl;
 			return false;
 		}
-		stbi_set_flip_vertically_on_load(true); 
 		m_Data = stbi_load(path.string().c_str(), &m_Width, &m_Height, &m_Channels, 0);
 		if (!m_Data) {
 			std::cout << "[ERROR] " << stbi_failure_reason() << std::endl;

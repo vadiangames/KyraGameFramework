@@ -76,7 +76,7 @@ class BreakoutGame : public kyra::SystemEventListener {
 	
 		//ConfigureShaders
 		//TODO: This should be done by the rendererDevice
-		glm::mat4 projection = glm::ortho(0.0f, 800.0f, 600.f, 0.0f);
+		glm::mat4 projection = glm::ortho(0.0f, 800.0f, 600.f, -39.0f);
 		spriteProgram->setInteger("sprite", 0);
 		spriteProgram->setMatrix4("projection",projection);
 				
@@ -100,7 +100,7 @@ class BreakoutGame : public kyra::SystemEventListener {
 		//Should be m_BackgroundSprite = kyra::Sprite::create(RenderDevice&);
 		m_BackgroundSprite = kyra::Sprite::Ptr(new kyra::Sprite());
 		m_BackgroundSprite->create(renderDevice);
-		m_BackgroundSprite->setTexture(m_Background);
+		m_BackgroundSprite->setTexture(m_Block);
 		
 	}
 	

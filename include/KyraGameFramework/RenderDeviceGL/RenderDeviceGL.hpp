@@ -54,9 +54,6 @@ namespace kyra {
 		
 		void draw(IVertexBuffer::Ptr buffer, IProgram::Ptr program, IVertexLayout::Ptr layout);
 		
-		[[deprecated]]
-		void draw(IDrawable& drawable) final;
-		
 		void draw(IDrawable::Ptr drawable) final;
 	};
 
