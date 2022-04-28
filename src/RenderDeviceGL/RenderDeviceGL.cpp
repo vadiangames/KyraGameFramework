@@ -3,11 +3,13 @@
 #include <KyraGameFramework/RenderDeviceGL/RenderDeviceGL.hpp>
 #include <KyraGameFramework/RenderDeviceGL/VertexBuffer.hpp>
 #include <KyraGameFramework/RenderDeviceGL/Program.hpp>
+#include <KyraGameFramework/RenderDeviceGL/Texture.hpp>
+#include <KyraGameFramework/RenderDeviceGL/Sprite.hpp>
 #include <KyraGameFramework/RenderDeviceGL/VertexLayout.hpp>
 
 namespace kyra {
 	
-	KYRA_RENDERDEVICEGL_API RenderDeviceGL::RenderDeviceGL() :  m_WindowHandle(NULL), m_DeviceContext(NULL), VAO(0) {
+	KYRA_RENDERDEVICEGL_API RenderDeviceGL::RenderDeviceGL() :  m_WindowHandle(NULL), m_DeviceContext(NULL), VAO(0), m_Window(nullptr) {
 		
 	}
 		
@@ -46,10 +48,12 @@ namespace kyra {
 			
 		int pixelFormat = ChoosePixelFormat(hdc, &pfd);
 		if(pixelFormat == 0) {
+			std::cout << "[ERROR] Can not choose pixelFormat" << std::endl;
 			return false;
 		}
 		
 		if(!SetPixelFormat(m_DeviceContext, pixelFormat, &pfd)) {
+			std::cout << "[ERROR] Can not set pixelFormat" << std::endl;
 			return false;
 		}
 			
@@ -60,13 +64,15 @@ namespace kyra {
 			
 		m_WindowHandle = reinterpret_cast<HWND>(window.getHandle());
 		m_DeviceContext = GetDC(m_WindowHandle);
-			
+		m_Window = &window;
+		
 		if(!setPixelFormat(m_DeviceContext)) {
 			return false;
 		}
 			
 		m_RenderContext = wglCreateContext(m_DeviceContext);
 		if(!m_RenderContext) {
+			std::cout << "[ERROR] Can not create OpenGL-Context" << std::endl;
 			return false;
 		}
 		
@@ -103,6 +109,18 @@ namespace kyra {
 		return true;
 	}
 	
+	ISprite::Ptr KYRA_RENDERDEVICEGL_API RenderDeviceGL::createSprite(ITexture::Ptr texture) {
+		ISprite::Ptr sprite = ISprite::Ptr(new Sprite());
+		sprite->create(*this);
+		sprite->setTexture(texture);
+		return sprite;
+	}
+	
+	ITexture::Ptr KYRA_RENDERDEVICEGL_API RenderDeviceGL::createTexture(const std::filesystem::path& path) {
+		ITexture::Ptr texture = ITexture::Ptr(new Texture());
+		texture->loadFromFile(path);
+		return texture;
+	}
 	
 	IVertexBuffer::Ptr KYRA_RENDERDEVICEGL_API RenderDeviceGL::createVertexBuffer() {
 		return IVertexBuffer::Ptr(new VertexBuffer());
@@ -120,64 +138,19 @@ namespace kyra {
 		SwapBuffers(m_DeviceContext);
 	}
 	
-	IProgram::Ptr KYRA_RENDERDEVICEGL_API RenderDeviceGL::createProgramFromFile( const std::string& id, const std::filesystem::path& vertexShader, const std::filesystem::path& fragmentShader ) {
-		if(m_ProgramMap.find(id) == m_ProgramMap.end()) {
-			IProgram::Ptr program = IProgram::Ptr(new Program());
-			program->linkFromFile(vertexShader,fragmentShader);
-			m_ProgramMap[id] = program;
-		}
-		return m_ProgramMap[id];
+	IProgram::Ptr KYRA_RENDERDEVICEGL_API RenderDeviceGL::createProgramFromFile( const std::filesystem::path& vertexShader, const std::filesystem::path& fragmentShader ) {
+		IProgram::Ptr program = IProgram::Ptr(new Program());
+		program->linkFromFile(vertexShader,fragmentShader);
+		return program;
 	}
 	
-	IProgram::Ptr KYRA_RENDERDEVICEGL_API RenderDeviceGL::createProgramFromMemory(const std::string& id, const std::string& vertexShader, const std::string& fragmentShader ) {
-		if(m_ProgramMap.find(id) == m_ProgramMap.end()) {
-			IProgram::Ptr program = IProgram::Ptr(new Program());
-			program->linkFromMemory(vertexShader,fragmentShader);
-			m_ProgramMap[id] = program;
-		}
-		return m_ProgramMap[id];		
+	IProgram::Ptr KYRA_RENDERDEVICEGL_API RenderDeviceGL::createProgramFromMemory( const std::string& vertexShader, const std::string& fragmentShader ) {
+		IProgram::Ptr program = IProgram::Ptr(new Program());
+		program->linkFromMemory(vertexShader,fragmentShader);
+		return program;
 	}
-		
-	IProgram::Ptr KYRA_RENDERDEVICEGL_API RenderDeviceGL::createInternalProgramFromFile(InternalProgramType type, const std::filesystem::path& vertexShader, const std::filesystem::path& fragmentShader ) {
-		if(m_InternalProgramMap.find(type) == m_InternalProgramMap.end()) {
-			IProgram::Ptr program = IProgram::Ptr(new Program());
-			program->linkFromFile(vertexShader,fragmentShader);
-			m_InternalProgramMap[type] = program;
-		}
-		return m_InternalProgramMap[type];
 
-	}
-	
-	IProgram::Ptr KYRA_RENDERDEVICEGL_API RenderDeviceGL::createInternalProgramFromMemory(InternalProgramType type, const std::string& vertexShader, const std::string& fragmentShader ) {
-		if(m_InternalProgramMap.find(type) == m_InternalProgramMap.end()) {
-			IProgram::Ptr program = IProgram::Ptr(new Program());
-			program->linkFromMemory(vertexShader,fragmentShader);
-			m_InternalProgramMap[type] = program;
-		}
-		return m_InternalProgramMap[type];
-	}
-	
-	IProgram::Ptr KYRA_RENDERDEVICEGL_API RenderDeviceGL::getProgram(const std::string& id) {
-		if(m_ProgramMap.find(id) == m_ProgramMap.end()) {
-			std::cout << "[WARN] Can not find program " << id << std::endl;
-			return IProgram::Ptr(nullptr);
-		}
-		return m_ProgramMap[id];
-	}
-	
-	IProgram::Ptr KYRA_RENDERDEVICEGL_API RenderDeviceGL::getInternalProgram(InternalProgramType type) {
-		if(m_InternalProgramMap.find(type) == m_InternalProgramMap.end()) {
-			if(type == InternalProgramType::SPRITE) {
-				std::cout << "[WARN] Can not find internal program SPRITE" << std::endl;
-			} else if(type == InternalProgramType::TEXT) {
-				std::cout << "[WARN] Can not find internal program TEXT" << std::endl;
-			}
-			return IProgram::Ptr(nullptr);
-		}
-		return m_InternalProgramMap[type];
-	}
-		
-	void KYRA_RENDERDEVICEGL_API RenderDeviceGL::draw(IVertexBuffer::Ptr buffer, IProgram::Ptr program, IVertexLayout::Ptr layout) {
+    void KYRA_RENDERDEVICEGL_API RenderDeviceGL::draw(IVertexBuffer::Ptr buffer, IProgram::Ptr program, IVertexLayout::Ptr layout) {
 		if(!buffer) {
 			std::cout << "[WARN] VertexBuffer is not initialized!" << std::endl;
 		}
@@ -198,6 +171,14 @@ namespace kyra {
 	
 	void  KYRA_RENDERDEVICEGL_API RenderDeviceGL::draw(IDrawable::Ptr drawable) {
 		drawable->draw(*this);
+	}
+	
+	void  KYRA_RENDERDEVICEGL_API RenderDeviceGL::draw(IDrawable& drawable) {
+		drawable.draw(*this);
+	}
+	
+	Rect KYRA_RENDERDEVICEGL_API RenderDeviceGL::getClientRect() const {
+		return m_Window->getClientRect();
 	}
 	
 }

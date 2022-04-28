@@ -16,28 +16,23 @@ namespace kyra {
 		HWND m_WindowHandle;
 		HDC m_DeviceContext;
 		HGLRC m_RenderContext;
+		
+		IWindow* m_Window;
+		
 		unsigned int VAO;
 		
 		bool setPixelFormat(HDC hdc);
 		
-		std::map<std::string, IProgram::Ptr> m_ProgramMap;
-		std::map<InternalProgramType, IProgram::Ptr> m_InternalProgramMap;
-		
 		public:
 		RenderDeviceGL();
 		virtual ~RenderDeviceGL();
+				
+		virtual ITexture::Ptr createTexture(const std::filesystem::path& path) final;
+		virtual ISprite::Ptr createSprite(ITexture::Ptr texture) final;
 		
-		
-		virtual IProgram::Ptr createProgramFromFile( const std::string& id, const std::filesystem::path& vertexShader, const std::filesystem::path& fragmentShader );
-		virtual IProgram::Ptr createProgramFromMemory(const std::string& id, const std::string& vertexShader, const std::string& fragmentShader );
-		
-		virtual IProgram::Ptr createInternalProgramFromFile(InternalProgramType type, const std::filesystem::path& vertexShader, const std::filesystem::path& fragmentShader );
-		virtual IProgram::Ptr createInternalProgramFromMemory(InternalProgramType type, const std::string& vertexShader, const std::string& fragmentShader );
-		
-		virtual IProgram::Ptr getProgram(const std::string& id);
-		virtual IProgram::Ptr getInternalProgram(InternalProgramType type);
-		
-		
+		virtual IProgram::Ptr createProgramFromFile( const std::filesystem::path& vertexShader, const std::filesystem::path& fragmentShader );
+		virtual IProgram::Ptr createProgramFromMemory( const std::string& vertexShader, const std::string& fragmentShader );
+				
 		virtual IVertexBuffer::Ptr createVertexBuffer() final;
 		virtual IVertexLayout::Ptr createVertexLayout() final;
 		
@@ -48,6 +43,11 @@ namespace kyra {
 		void draw(IVertexBuffer::Ptr buffer, IProgram::Ptr program, IVertexLayout::Ptr layout);
 		
 		void draw(IDrawable::Ptr drawable) final;
+		
+		void draw(IDrawable& drawable) final;
+		
+		Rect getClientRect() const final;
+
 	};
 
 }

@@ -69,7 +69,7 @@ class MyApplication : public kyra::SystemEventListener {
 				kyra::IVertexBuffer::Ptr vertexBuffer = m_Renderer.createVertexBuffer();
 					vertexBuffer->create(vertexArray);
 				
-				kyra::IProgram::Ptr program = m_Renderer.createProgramFromMemory("DefaultShader",vertexShaderSrc, fragmentShaderSrc);
+				kyra::IProgram::Ptr program = m_Renderer.createProgramFromMemory(vertexShaderSrc, fragmentShaderSrc);
 				
 				kyra::IVertexLayout::Ptr vertexLayout = m_Renderer.createVertexLayout();
 					vertexLayout->add(3, 3*sizeof(float), GL_FLOAT);

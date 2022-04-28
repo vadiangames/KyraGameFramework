@@ -9,19 +9,6 @@
 
 namespace kyra {
 
-	/// A program consists of a vertex shader and a fragment shader. 
-	/// Geometry shaders are currently not supported. 
-	/// Uniforms can also be accessed through the class.
-
-	/// Internal shader programs are managed separately from the rest of the shaders. 
-	/// There are currently internal shaders for text and sprite rendering.
-	
-	/// \brief Type of the internal shader program
-	enum class InternalProgramType{
-		TEXT,
-		SPRITE
-	};
-	
 	//! Abstract class for shader program classes
 	class IProgram {
 		
@@ -41,8 +28,14 @@ namespace kyra {
 		
 		/// \brief Sets the uniform-vector3 id to the value of vec
 		///	\param id The id of the uniform
-		///	\param matrix4 The new value of the uniform 
+		///	\param vec The new value of the uniform 
 		virtual void setVector3(const std::string& id, const glm::vec3& vec) = 0;
+		
+		/// \brief Sets the uniform-vector4 id to the value of vec
+		///	\param id The id of the uniform
+		///	\param vec The new value of the uniform 
+		virtual void setVector4(const std::string& id, const glm::vec4& vec) = 0;
+		
 		
 		/// \brief Links the program - getting the shaders by string 
 		///	\param vertexShader The source code of the vertex shader

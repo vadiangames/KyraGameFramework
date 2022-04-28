@@ -89,7 +89,7 @@ class MyApplication : public kyra::SystemEventListener {
 				glm::vec3 color = glm::vec3(1.0f, 0.0f,1.0f);
 				std::string text = "Hello World";
 								
-				kyra::IProgram::Ptr program = m_Renderer.createProgramFromMemory("DefaultShader", vertexShaderSrc, fragmentShaderSrc);
+				kyra::IProgram::Ptr program = m_Renderer.createProgramFromMemory(vertexShaderSrc, fragmentShaderSrc);
 				program->setMatrix4("projection", projection);
 				
 				kyra::Font font;
@@ -116,7 +116,7 @@ class MyApplication : public kyra::SystemEventListener {
 						GL_CHECK(glBindVertexArray(VAO));
 						float x = 0;
 						float y = 0;
-						float scale = 1.0f;
+						float scale = 1.5f;
 				
 						// iterate through all characters
 						for (c = text.begin(); c != text.end(); c++)
@@ -131,13 +131,13 @@ class MyApplication : public kyra::SystemEventListener {
 							float h = ch.size.y * scale;
 							
 							float vertices[6][4] = {
-								{ xpos,     ypos + 24 - h,   0.0f, 0.0f },            
-								{ xpos,     ypos + 24,       0.0f, 1.0f },
-								{ xpos + w, ypos + 24,       1.0f, 1.0f },
+								{ xpos,     ypos + (48*scale) - h,   0.0f, 0.0f },            
+								{ xpos,     ypos + (48*scale),       0.0f, 1.0f },
+								{ xpos + w, ypos + (48*scale),       1.0f, 1.0f },
 
-								{ xpos,     ypos + 24 - h,   0.0f, 0.0f },
-								{ xpos + w, ypos + 24,       1.0f, 1.0f },
-								{ xpos + w, ypos + 24 - h,   1.0f, 0.0f }           
+								{ xpos,     ypos + (48*scale) - h,   0.0f, 0.0f },
+								{ xpos + w, ypos + (48*scale),       1.0f, 1.0f },
+								{ xpos + w, ypos + (48*scale) - h,   1.0f, 0.0f }           
 							};
 							
 							// render glyph texture over quad

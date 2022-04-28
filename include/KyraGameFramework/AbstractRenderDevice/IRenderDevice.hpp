@@ -6,6 +6,8 @@
 #include <KyraGameFramework/AbstractRenderDevice/IProgram.hpp>
 #include <KyraGameFramework/AbstractRenderDevice/IVertexBuffer.hpp>
 #include <KyraGameFramework/AbstractRenderDevice/IVertexLayout.hpp>
+#include <KyraGameFramework/AbstractRenderDevice/ITexture.hpp>
+#include <KyraGameFramework/AbstractRenderDevice/ISprite.hpp>
 #include <KyraGameFramework/Window/IWindow.hpp>
 
 #include <filesystem>
@@ -22,25 +24,23 @@ namespace kyra {
 		IRenderDevice();
 		virtual ~IRenderDevice();
 		
+		typedef std::shared_ptr<IRenderDevice> Ptr;
+		
 		//! Abstract class to create a vertex buffer
 		virtual IVertexBuffer::Ptr createVertexBuffer() = 0;
 		
+		//! Abstract class to create a texture
+		virtual ITexture::Ptr createTexture(const std::filesystem::path& path) = 0;
+		
+		//! Abstract class to create a sprite
+		virtual ISprite::Ptr createSprite(ITexture::Ptr texture) = 0;
+		
 		//! Abstract class for creating managed program from file
-		virtual IProgram::Ptr createProgramFromFile( const std::string& id, const std::filesystem::path& vertexShader, const std::filesystem::path& fragmentShader ) = 0;
+		virtual IProgram::Ptr createProgramFromFile( const std::filesystem::path& vertexShader, const std::filesystem::path& fragmentShader ) = 0;
 		
 		//! Abstract class for creating managed program from memory
-		virtual IProgram::Ptr createProgramFromMemory(const std::string& id, const std::string& vertexShader, const std::string& fragmentShader ) = 0;
-		
-		//! Abstract class for creating managed program from file
-		virtual IProgram::Ptr createInternalProgramFromFile(InternalProgramType type, const std::filesystem::path& vertexShader, const std::filesystem::path& fragmentShader ) = 0;
-		
-		//! Abstract class for creating managed program from memory
-		virtual IProgram::Ptr createInternalProgramFromMemory(InternalProgramType type, const std::string& vertexShader, const std::string& fragmentShader ) = 0;
-		
-		virtual IProgram::Ptr getProgram(const std::string& id) = 0;
+		virtual IProgram::Ptr createProgramFromMemory( const std::string& vertexShader, const std::string& fragmentShader ) = 0;
 
-		virtual IProgram::Ptr getInternalProgram(InternalProgramType type) = 0;
-		
 		//! Abstract class to create a vertex layout
 		virtual IVertexLayout::Ptr createVertexLayout() = 0;
 		
@@ -58,6 +58,11 @@ namespace kyra {
 
 		//! Draws the IDrawable by calling IDrawable::draw(IRenderDevice&)
 		virtual void draw(IDrawable::Ptr drawable) = 0;
+		
+		//! Draws the IDrawable by calling IDrawable::draw(IRenderDevice&)
+		virtual void draw(IDrawable& drawable) = 0;
+		
+		virtual Rect getClientRect() const = 0;
 	};
 
 }

@@ -3,6 +3,7 @@
 
 #include <glm/glm.hpp>
 #include <filesystem>
+#include <memory>
 
 namespace kyra {
 	
@@ -11,6 +12,8 @@ namespace kyra {
 		public:
 		ITexture() {}
 		virtual ~ITexture() {}
+		
+		typedef std::shared_ptr<ITexture> Ptr;
 		
 		virtual void loadFromFile(const std::filesystem::path& path) = 0;
 		virtual void bind(uint32_t slot = 0) = 0;

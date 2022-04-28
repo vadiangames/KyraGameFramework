@@ -84,6 +84,16 @@ namespace kyra {
 		GL_CHECK(glUniform3fv(location,1,glm::value_ptr(vec)));
 	}
 	
+	void KYRA_RENDERDEVICEGL_API Program::setVector4(const std::string& id, const glm::vec4& vec) {
+		//TODO: Duplicated Code
+		use();
+		GLint location = GL_CHECK(glGetUniformLocation(m_Id,id.c_str()));
+		if(location == -1) {
+			std::cout << "[ERROR] Can not find uniform location " << id << std::endl;
+		}
+		GL_CHECK(glUniform4fv(location,1,glm::value_ptr(vec)));
+	}
+	
 	void KYRA_RENDERDEVICEGL_API Program::use()  {
 		GL_CHECK(glUseProgram(m_Id));
 	}
