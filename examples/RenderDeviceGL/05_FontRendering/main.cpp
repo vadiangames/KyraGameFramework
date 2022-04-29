@@ -2,6 +2,7 @@
 #include <KyraGameFramework/RenderDeviceGL/RenderDeviceGL.hpp>
 #include <KyraGameFramework/RenderDeviceGL/Font.hpp>
 #include <KyraGameFramework/RenderDeviceGL/Text.hpp>
+#include <KyraGameFramework/Math/Matrix4.hpp>
 
 class MyApplication : public kyra::SystemEventListener {
 

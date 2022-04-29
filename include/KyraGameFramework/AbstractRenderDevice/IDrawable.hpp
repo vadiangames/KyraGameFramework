@@ -14,6 +14,7 @@ namespace kyra {
 		
 		typedef std::shared_ptr<IDrawable> Ptr;
 		
+		/// \brief Draws the IDrawable with the given RenderDevice
 		virtual void draw(IRenderDevice& device) = 0;
 		
 	};

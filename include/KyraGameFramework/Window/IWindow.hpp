@@ -9,16 +9,16 @@ namespace kyra {
 	
 	//! Contains all settings for window creation
 	typedef struct {
-		uint32_t width; //!< The width of the window
-		uint32_t height; //!< The height of the window
-		std::wstring title; //!< The title of the window
+		uint32_t width; ///< The width of the window
+		uint32_t height; ///< The height of the window
+		std::wstring title; ///< The title of the window
 	}WindowSettings;
 	
 	typedef struct {
-		uint32_t x;
-		uint32_t y;
-		uint32_t width;
-		uint32_t height;
+		uint32_t x;	///< X coordinate of the rectangle
+		uint32_t y; ///< Y ccordinate of the rectangle
+		uint32_t width; ///< Width of the rectangle
+		uint32_t height; ///< Height of the rectangle
 	}Rect;
 	
 	//! Abstract class for window implementations
@@ -52,6 +52,9 @@ namespace kyra {
 		virtual Rect getWindowRect() const = 0;
 		
 		virtual Rect getClientRect() const = 0;
+		
+		/// \todo Returns the height of the titleBar
+		// virtual float getTitleBarWidth() const = 0;
 		
 	};
 	

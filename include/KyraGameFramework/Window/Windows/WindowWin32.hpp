@@ -44,7 +44,12 @@ namespace kyra {
 		
 		virtual Rect getWindowRect() const final;
 		
+		/// \brief Returns the client rect
 		virtual Rect getClientRect() const final;
+		
+		/// \todo Returns the height of the titleBar
+		// virtual float getTitleBarWidth() const;
+		
 		
 	};
 	
