@@ -34,4 +34,10 @@ namespace kyra {
 			
 	}
 	
+	void KYRA_RENDERDEVICEGL_API VertexLayout::unbind() {
+		std::for_each(m_Entries.begin(), m_Entries.end(), [&](const VertexLayoutEntry& entry) {
+			GL_CHECK(glDisableVertexAttribArray(entry.id));
+		});
+	}
+	
 }

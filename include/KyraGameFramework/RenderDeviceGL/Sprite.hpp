@@ -46,21 +46,21 @@ namespace kyra {
 		
 		~Sprite();
 		
-		virtual glm::vec2 getSize()  const;
+		glm::vec2 getSize() const final;
 		
-		virtual void setSize(const glm::vec2& size);
+		void setSize(const glm::vec2& size) final;
 		
-		virtual glm::vec3 getPosition() const;
+		glm::vec3 getPosition() const final;
 		
-		virtual void setPosition(const glm::vec3& position);
+		void setPosition(const glm::vec3& position) final;
 
-		virtual void create(IRenderDevice& renderDevice) final;
+		void create(IRenderDevice& renderDevice) final;
 		
-		virtual void setTexture(std::shared_ptr<ITexture> texture) final;
+		void setTexture(std::shared_ptr<ITexture> texture) final;
 		
-		virtual void draw(IRenderDevice& renderDevice) final;
+		void draw(IRenderDevice& renderDevice) final;
 
-		
+		void setColor(const glm::vec4& color) final;
 	};
 
 

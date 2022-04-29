@@ -2,7 +2,7 @@
 
 namespace kyra {
 
-	KYRA_RENDERDEVICEGL_API VertexBuffer::VertexBuffer() : m_Id(0), m_ElementCount(0) {
+	KYRA_RENDERDEVICEGL_API VertexBuffer::VertexBuffer() : m_Id(0), m_ElementCount(0), m_PrimitiveType(PrimitiveType::UNKNOWN) {
 			
 	}
 		
@@ -16,16 +16,27 @@ namespace kyra {
 		return m_ElementCount;
 	}
 		
-	void KYRA_RENDERDEVICEGL_API VertexBuffer::create(PrimitiveType type, size_t elementCount, size_t size, void* data) {
+	void KYRA_RENDERDEVICEGL_API VertexBuffer::create(PrimitiveType primitiveType, size_t elementCount, size_t size, void* data, VertexBufferType vertexBufferType) {
 		if(m_Id) {
 			GL_CHECK(glDeleteBuffers(1,&m_Id));
 			m_Id = 0;
 		}			
-		m_PrimitiveType = type;
+		m_PrimitiveType = primitiveType;
 		m_ElementCount = elementCount;
 		GL_CHECK(glGenBuffers(1,&m_Id));
 		GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, m_Id));
-		GL_CHECK(glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW));
+		
+		GLenum type = 0;
+		switch(vertexBufferType) {
+			case VertexBufferType::DYNAMIC_DRAW:
+				type = GL_DYNAMIC_DRAW;
+			break;
+			case VertexBufferType::STATIC_DRAW:
+				type = GL_STATIC_DRAW;
+			break;
+		}
+				
+		GL_CHECK(glBufferData(GL_ARRAY_BUFFER, size, data, type));
 	}
 		
 	void KYRA_RENDERDEVICEGL_API VertexBuffer::create(IVertexArray& vertexArray) {

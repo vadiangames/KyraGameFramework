@@ -1,8 +1,9 @@
 #include <KyraGameFramework/RenderDeviceGL/Texture.hpp>
+#include <KyraGameFramework/GLExtensionLoader/GLExtensionLoader.hpp>
 
 namespace kyra {
 
-	KYRA_RENDERDEVICEGL_API Texture::Texture() : m_Id(0) {
+	KYRA_RENDERDEVICEGL_API Texture::Texture() : m_Id(0), m_Width(0), m_Height(0) {
 
 	}
 		

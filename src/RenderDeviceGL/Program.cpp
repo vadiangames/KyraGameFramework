@@ -28,9 +28,9 @@ namespace kyra {
 			GL_CHECK(glLinkProgram(m_Id));			
 			
 		int success = 0;
-		char infoLog[512];
 		GL_CHECK(glGetProgramiv(m_Id, GL_LINK_STATUS,&success));
 		if(!success) {
+			char infoLog[512];
 			glGetProgramInfoLog(m_Id,512, NULL,infoLog);
 			std::cout << "ERROR::PROGRAM::LINK_FAILED: " << infoLog << std::endl;
 			return false; 

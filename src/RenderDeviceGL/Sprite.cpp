@@ -37,7 +37,7 @@ namespace kyra {
 		
 
 	KYRA_RENDERDEVICEGL_API Sprite::Sprite() {
-		m_Color = glm::vec4(1.f,1.f,0.5f,1.0f);
+		m_Color = glm::vec4(1.f,1.f,1.0f,1.0f);
 		m_Position = glm::vec3(0.f,0.f,0.f);
 	}
 		
@@ -59,6 +59,7 @@ namespace kyra {
 		
 	void KYRA_RENDERDEVICEGL_API Sprite::setPosition(const glm::vec3& position) {
 		m_Position = position;
+		recalculate();
 	}
 
 	void KYRA_RENDERDEVICEGL_API Sprite::create(IRenderDevice& renderDevice) {
@@ -107,6 +108,11 @@ namespace kyra {
 		}
 		renderDevice.draw(Sprite::g_VertexBuffer, Sprite::g_Program, Sprite::g_VertexLayout);
 	}
+	
+	void KYRA_RENDERDEVICEGL_API Sprite::setColor(const glm::vec4& color) {
+		m_Color = color;
+	}
+
 
 	
 }

@@ -29,6 +29,7 @@ namespace kyra {
 		void add(size_t elements, size_t size, int type) final;
 		
 		void bind() final;
+		void unbind() final;
 		
 	};
 }

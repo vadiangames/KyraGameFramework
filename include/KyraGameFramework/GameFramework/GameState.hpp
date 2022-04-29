@@ -17,6 +17,10 @@ namespace kyra {
 		virtual void init(IRenderDevice::Ptr renderDevice) {
 			
 		}
+		
+		virtual void update(double dt) {
+			
+		}
 	
 	};
 

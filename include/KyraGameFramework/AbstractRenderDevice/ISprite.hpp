@@ -27,6 +27,7 @@ namespace kyra {
 		virtual void setSize(const glm::vec2& size) = 0;
 		virtual glm::vec3 getPosition() const = 0;
 		virtual void setPosition(const glm::vec3& position) = 0;
+		virtual void setColor(const glm::vec4& color) = 0;
 	};
 	
 }

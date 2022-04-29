@@ -153,13 +153,17 @@ namespace kyra {
     void KYRA_RENDERDEVICEGL_API RenderDeviceGL::draw(IVertexBuffer::Ptr buffer, IProgram::Ptr program, IVertexLayout::Ptr layout) {
 		if(!buffer) {
 			std::cout << "[WARN] VertexBuffer is not initialized!" << std::endl;
+			return;
 		}
 		if(!program) {
 			std::cout << "[WARN] Program is not initialized!" << std::endl;
+			return;
 		}
 		if(!layout) {
 			std::cout << "[WARN] VertexLayout is not initialized!" << std::endl;
+			return;
 		}
+		
 		buffer->bind();
 		layout->bind();
 		program->use();
@@ -167,6 +171,9 @@ namespace kyra {
 		if(buffer->getPrimitiveType() == PrimitiveType::TRIANGLES) {
 			glDrawArrays(GL_TRIANGLES,0,buffer->getElementCount());
 		}
+		
+		buffer->unbind();
+		layout->unbind();
 	}
 	
 	void  KYRA_RENDERDEVICEGL_API RenderDeviceGL::draw(IDrawable::Ptr drawable) {

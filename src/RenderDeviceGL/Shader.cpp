@@ -34,9 +34,9 @@ namespace kyra {
 		GL_CHECK(glCompileShader(m_Id));
 			
 		int success = 0;
-		char infoLog[512];
 		GL_CHECK(glGetShaderiv(m_Id, GL_COMPILE_STATUS, &success));
 		if(!success) {
+			char infoLog[512];
 			GL_CHECK(glGetShaderInfoLog(m_Id, 512, NULL, infoLog));
 			std::cout << "ERROR::SHADER::COMPILATION_FAILED: " << infoLog << std::endl;
 			std::cout << "SOURCE: " << src << std::endl;

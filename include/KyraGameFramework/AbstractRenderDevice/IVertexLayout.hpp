@@ -11,7 +11,8 @@ namespace kyra {
 		typedef std::shared_ptr<IVertexLayout> Ptr;		
 		
 		virtual void add(size_t elements, size_t size, int type) = 0;
-		virtual void bind() = 0; 	
+		virtual void bind() = 0; 
+		virtual void unbind() = 0;		
 	};
 	
 }

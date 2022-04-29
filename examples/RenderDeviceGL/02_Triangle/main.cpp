@@ -5,7 +5,7 @@
 #include <KyraGameFramework/RenderDeviceGL/VertexBuffer.hpp>
 #include <KyraGameFramework/RenderDeviceGL/VertexLayout.hpp>
 #include <KyraGameFramework/Math/Vector3.hpp>
-#include <KyraGameFramework/Graphics/VertexArray.hpp>
+#include <KyraGameFramework/AbstractRenderDevice/VertexArray.hpp>
 
 #include <iostream>
 

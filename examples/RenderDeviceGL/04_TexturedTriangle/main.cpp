@@ -6,7 +6,7 @@
 #include <KyraGameFramework/RenderDeviceGL/VertexLayout.hpp>
 #include <KyraGameFramework/RenderDeviceGL/Texture.hpp>
 #include <KyraGameFramework/Math/Vector3.hpp>
-#include <KyraGameFramework/Graphics/VertexArray.hpp>
+#include <KyraGameFramework/AbstractRenderDevice/VertexArray.hpp>
 
 
 #include <glm/glm.hpp>
@@ -55,7 +55,7 @@ class MyApplication : public kyra::SystemEventListener {
 	
 	
 	//! Implementation of kyra::SystemEventListener::onClose()
-	virtual void onClose() {
+	virtual void onClose() override {
 		m_Window.close();
 	}
 		

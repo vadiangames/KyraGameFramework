@@ -20,9 +20,9 @@ namespace kyra {
 		
 		~Texture();
 		
-		virtual glm::vec2 getSize() const;
-		void loadFromFile(const std::filesystem::path& path);
-		void bind(uint32_t slot = 0);
+		glm::vec2 getSize() const final;
+		void loadFromFile(const std::filesystem::path& path) final;
+		void bind(uint32_t slot = 0) final;
 		
 	};
 

@@ -44,6 +44,9 @@ namespace kyra {
 		bool isLoaded() const {
 			#if defined(__WIN32__) || defined(__WIN64__)
 				return (m_Module && (m_Instance.get() != nullptr));
+			#else
+				#warning __FILE__ __PRETTY_FUNCTION__ is not implemented for this operating system
+				return false;
 			#endif
 		}
 		

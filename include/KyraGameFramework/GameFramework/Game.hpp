@@ -7,6 +7,7 @@
 #include <KyraGameFramework/GameFramework/GameState.hpp>
 
 #include <iostream>
+#include <chrono>
 
 namespace kyra {
 
@@ -14,6 +15,9 @@ namespace kyra {
 		
 		kyra::Window m_Window;
 		kyra::IRenderDevice::Ptr m_RenderDevice;
+		
+		std::chrono::time_point<std::chrono::high_resolution_clock> m_Start;
+		std::chrono::time_point<std::chrono::high_resolution_clock> m_End;
 		
 		public:
 		Game() {}
@@ -41,11 +45,15 @@ namespace kyra {
 				rootState->init(m_RenderDevice);
 				
 				//Main Loop
+				
 				while(m_Window.isOpen()) {
+					m_Start = std::chrono::high_resolution_clock::now();
 					m_Window.processEvents();
 					m_RenderDevice->clear();
 						m_RenderDevice->draw(rootState);
 					m_RenderDevice->display();
+					m_End = std::chrono::high_resolution_clock::now();
+					rootState->update( std::chrono::duration<double>(m_End - m_Start).count() );
 				}
 				return true;
 		}

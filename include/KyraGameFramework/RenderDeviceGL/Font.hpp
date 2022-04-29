@@ -9,6 +9,8 @@
 #include <glm/gtc/matrix_transform.hpp> 
 #include <map>
 
+#include <KyraGameFramework/AbstractRenderDevice/IFont.hpp>
+
 
 namespace kyra {
 	
@@ -18,8 +20,8 @@ namespace kyra {
 		glm::ivec2 bearing;
 		long int advance;
 	}Character;
-
-	class Font {
+	
+	class Font : public IFont {
 		
 		FT_Library m_FreeType;
 		FT_Face    m_Face;
@@ -99,11 +101,27 @@ namespace kyra {
 			}
 			return true;
 		}
+
+		glm::vec2 getCharacterSize(char c) final {
+			 return m_Characters[c].size;
+		}
+			
+		glm::vec2 getCharacterBearing(char c) final {
+			 return m_Characters[c].bearing;
+		}
+			
+		float getCharacterAdvance(char c) final {
+			return m_Characters[c].advance >> 6;
+		}
 		
-		
-		
+		void bindCharacterTexture(char c) final {
+			glActiveTexture(GL_TEXTURE0);
+			GL_CHECK(glBindTexture(GL_TEXTURE_2D, m_Characters[c].id));
+		}
 		
 	};
+	
+
 	
 	
 	

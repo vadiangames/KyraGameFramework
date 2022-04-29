@@ -30,8 +30,8 @@ namespace kyra {
 		virtual ITexture::Ptr createTexture(const std::filesystem::path& path) final;
 		virtual ISprite::Ptr createSprite(ITexture::Ptr texture) final;
 		
-		virtual IProgram::Ptr createProgramFromFile( const std::filesystem::path& vertexShader, const std::filesystem::path& fragmentShader );
-		virtual IProgram::Ptr createProgramFromMemory( const std::string& vertexShader, const std::string& fragmentShader );
+		virtual IProgram::Ptr createProgramFromFile( const std::filesystem::path& vertexShader, const std::filesystem::path& fragmentShader ) final;
+		virtual IProgram::Ptr createProgramFromMemory( const std::string& vertexShader, const std::string& fragmentShader ) final;
 				
 		virtual IVertexBuffer::Ptr createVertexBuffer() final;
 		virtual IVertexLayout::Ptr createVertexLayout() final;
@@ -40,7 +40,7 @@ namespace kyra {
 		virtual void clear() final;
 		virtual void display() final;
 		
-		void draw(IVertexBuffer::Ptr buffer, IProgram::Ptr program, IVertexLayout::Ptr layout);
+		void draw(IVertexBuffer::Ptr buffer, IProgram::Ptr program, IVertexLayout::Ptr layout) final;
 		
 		void draw(IDrawable::Ptr drawable) final;
 		
