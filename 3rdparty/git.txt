@@ -10,3 +10,9 @@ git submodule add https://github.com/nothings/stb stb
 git submodule add https://github.com/freetype/freetype.git freetype
 cd freetype
 git checkout VER-2-12-0
+
+REMOVE
+
+git submodule deinit <submodule-name>    
+git rm <submodule-name>
+

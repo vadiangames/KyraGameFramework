@@ -5,7 +5,9 @@
 #include <filesystem>
 #include <memory>
 
-#include <glm/glm.hpp>
+#include <KyraGameFramework/Math/Vector3.hpp>
+#include <KyraGameFramework/Math/Vector4.hpp>
+#include <KyraGameFramework/Math/Matrix4.hpp>
 
 namespace kyra {
 
@@ -24,17 +26,18 @@ namespace kyra {
 		/// Sets the uniform to an matrix4 value
 		///	\param id The id of the uniform
 		///	\param matrix4 The new value of the uniform 
-		virtual void setMatrix4(const std::string& id, const glm::mat4& matrix) = 0;
+		//virtual void setMatrix4(const std::string& id, const glm::mat4& matrix) = 0;
+		virtual void setMatrix4(const std::string& id, const kyra::Matrix4<float>& matrix) = 0;
 		
 		/// \brief Sets the uniform-vector3 id to the value of vec
 		///	\param id The id of the uniform
 		///	\param vec The new value of the uniform 
-		virtual void setVector3(const std::string& id, const glm::vec3& vec) = 0;
+		virtual void setVector3(const std::string& id, const kyra::Vector3<float>& vec) = 0;
 		
 		/// \brief Sets the uniform-vector4 id to the value of vec
 		///	\param id The id of the uniform
 		///	\param vec The new value of the uniform 
-		virtual void setVector4(const std::string& id, const glm::vec4& vec) = 0;
+		virtual void setVector4(const std::string& id, const kyra::Vector4<float>& vec) = 0;
 		
 		
 		/// \brief Links the program - getting the shaders by string 

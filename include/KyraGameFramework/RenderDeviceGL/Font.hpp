@@ -5,8 +5,6 @@
 #include FT_FREETYPE_H  
 
 #include <iostream>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp> 
 #include <map>
 
 #include <KyraGameFramework/AbstractRenderDevice/IFont.hpp>
@@ -16,8 +14,8 @@ namespace kyra {
 	
 	typedef struct {
 		unsigned int id;
-		glm::ivec2 size;
-		glm::ivec2 bearing;
+		kyra::Vector2<int> size;
+		kyra::Vector2<int> bearing;
 		long int advance;
 	}Character;
 	
@@ -93,8 +91,8 @@ namespace kyra {
 				// now store character for later use
 				Character character = {
 					texture, 
-					glm::ivec2(m_Face->glyph->bitmap.width, m_Face->glyph->bitmap.rows),
-					glm::ivec2(m_Face->glyph->bitmap_left, m_Face->glyph->bitmap_top),
+					kyra::Vector2<int>(m_Face->glyph->bitmap.width, m_Face->glyph->bitmap.rows),
+					kyra::Vector2<int>(m_Face->glyph->bitmap_left, m_Face->glyph->bitmap_top),
 					m_Face->glyph->advance.x
 				};
 				m_Characters.insert(std::pair<char, Character>(c, character));
@@ -102,11 +100,11 @@ namespace kyra {
 			return true;
 		}
 
-		glm::vec2 getCharacterSize(char c) final {
+		kyra::Vector2<int> getCharacterSize(char c) final {
 			 return m_Characters[c].size;
 		}
 			
-		glm::vec2 getCharacterBearing(char c) final {
+		kyra::Vector2<int> getCharacterBearing(char c) final {
 			 return m_Characters[c].bearing;
 		}
 			

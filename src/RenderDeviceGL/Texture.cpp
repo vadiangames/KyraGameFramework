@@ -1,5 +1,6 @@
 #include <KyraGameFramework/RenderDeviceGL/Texture.hpp>
 #include <KyraGameFramework/GLExtensionLoader/GLExtensionLoader.hpp>
+#include <KyraGameFramework/Math/Vector2.hpp>
 
 namespace kyra {
 
@@ -42,8 +43,8 @@ namespace kyra {
 			
 	}
 	
-	glm::vec2 KYRA_RENDERDEVICEGL_API Texture::getSize() const {
-		return glm::vec2( static_cast<float>(m_Width), static_cast<float>(m_Height));
+	kyra::Vector2<float> KYRA_RENDERDEVICEGL_API Texture::getSize() const {
+		return kyra::Vector2<float>( static_cast<float>(m_Width), static_cast<float>(m_Height));
 	}
 		
 	void KYRA_RENDERDEVICEGL_API Texture::bind(uint32_t slot) {

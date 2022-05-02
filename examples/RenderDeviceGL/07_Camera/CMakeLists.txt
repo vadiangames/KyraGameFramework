@@ -1,0 +1,5 @@
+
+add_executable(RendererGL_Example_Camera main.cpp)
+target_link_libraries(RendererGL_Example_Camera PRIVATE KyraWindow KyraGLExtensionLoader KyraRenderDeviceGL opengl32 freetype)
+
+install(TARGETS RendererGL_Example_Camera RUNTIME DESTINATION ${PROJECT_SOURCE_DIR}/bin)

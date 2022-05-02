@@ -5,14 +5,20 @@
 #include <KyraGameFramework/AbstractRenderDevice/IText.hpp>
 #include <KyraGameFramework/AbstractRenderDevice/IFont.hpp>
 
+
+#include <KyraGameFramework/Math/Vector3.hpp>
+#include <KyraGameFramework/Math/Vector4.hpp>
+#include <KyraGameFramework/Math/Matrix4.hpp>
+
 namespace kyra {
 	
 	class Text : public IText {
 		
-		glm::ivec3 m_Position;
-		glm::mat4 m_Transformation;
+		kyra::Vector3<float> m_Position;
+		//glm::mat4 m_Transformation;
+		kyra::Matrix4<float> m_Transformation;
 		IVertexBuffer::Ptr m_VertexBuffer;
-		glm::vec4 m_Color;
+		kyra::Vector4<float> m_Color;
 		IFont::Ptr m_Font;
 		
 		GLuint m_VAO;
@@ -28,9 +34,10 @@ namespace kyra {
 		
 		public:
 		Text()  { 
-			m_Transformation = glm::mat4(1.0f);
-			m_Color = glm::vec4(1.0f,1.0f,1.0f,1.0f);
-			m_Position = glm::vec3(0.0f,0.0f,0.0f);
+			//m_Transformation = glm::mat4(1.0f);
+			m_Transformation = kyra::Matrix4<float>::getIdentity();
+			m_Color = kyra::Vector4<float>(1.0f,1.0f,1.0f,1.0f);
+			m_Position = kyra::Vector3<float>(0.0f,0.0f,0.0f);
 		}
 		
 		~Text() {
@@ -54,11 +61,11 @@ namespace kyra {
 			m_Text = text;
 		}
 	
-		void setPosition(const glm::vec3& vec) final {
+		void setPosition(const kyra::Vector3<float>& vec) final {
 			m_Position = vec;
 		}
 
-		glm::vec3 getPosition() const {
+		kyra::Vector3<float> getPosition() const {
 			return m_Position;
 		}
 
@@ -67,8 +74,10 @@ namespace kyra {
 			if(!Text::g_Program) { std::cout << "[WARNING] Text::g_Program is not intialised" << std::endl; return;	}
 			
 			Rect clientRect = renderDevice.getClientRect();
-			glm::mat4 projection = glm::ortho(0.f, float(clientRect.width), float(clientRect.height),-39.0f, -1.f, 1.f);
+			
+			kyra::Matrix4<float> projection = kyra::Matrix4<float>::getOrtho(0.f, float(clientRect.width), float(clientRect.height), -39.f);
 			Text::g_Program->setMatrix4("projection", projection);
+			
 			Text::g_Program->setVector4("textColor", m_Color);
 						
 			if(!Text::g_VertexLayout) {std::cout << "[WARNING] Text::g_VertexLayout is not intialised" << std::endl;return;}
@@ -78,7 +87,7 @@ namespace kyra {
 			std::string::iterator c;
 			float scale = 1.0f;
 			
-			float x = m_Position.x;
+			float x = m_Position[0];
 			float xpos = 0;
 			float ypos = 0;
 			float w = 0;
@@ -86,11 +95,11 @@ namespace kyra {
 			
 			for(c = m_Text.begin(); c != m_Text.end(); ++c) {
 				
-				xpos = x + m_Font->getCharacterBearing(*c).x * scale;
-				ypos = m_Position.y;
+				xpos = x + m_Font->getCharacterBearing(*c)[0] * scale;
+				ypos = m_Position[1];
 				
-				w = m_Font->getCharacterSize(*c).x * scale;
-				h = m_Font->getCharacterSize(*c).y * scale;
+				w = m_Font->getCharacterSize(*c)[0] * scale;
+				h = m_Font->getCharacterSize(*c)[1] * scale;
 				
 				float vertices[6][4] = {
 				

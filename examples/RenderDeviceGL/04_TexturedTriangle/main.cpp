@@ -6,10 +6,8 @@
 #include <KyraGameFramework/RenderDeviceGL/VertexLayout.hpp>
 #include <KyraGameFramework/RenderDeviceGL/Texture.hpp>
 #include <KyraGameFramework/Math/Vector3.hpp>
+#include <KyraGameFramework/Math/Vector2.hpp>
 #include <KyraGameFramework/AbstractRenderDevice/VertexArray.hpp>
-
-
-#include <glm/glm.hpp>
 
 #include <iostream>
 #include <filesystem>
@@ -39,11 +37,11 @@ std::string fragmentShaderSrc = "#version 330 core\n"
 
 
 typedef struct {
-	glm::vec3 position;
-	glm::vec3 color;
-	glm::vec2 uv;
+	kyra::Vector3<float> position;
+	kyra::Vector3<float> color;
+	kyra::Vector2<float> uv;
 }ColorVertex;
-								
+
 class MyApplication : public kyra::SystemEventListener {
 
 	kyra::Window m_Window;
@@ -81,15 +79,16 @@ class MyApplication : public kyra::SystemEventListener {
 					texture.loadFromFile("Test.png");
 				
 				kyra::VertexArray<ColorVertex> vertexArray(kyra::PrimitiveType::TRIANGLES,3);
-					vertexArray[0].position = glm::vec3(-0.5f,-0.5f,0.0f);
-					vertexArray[0].color    = glm::vec3(1.0f,0.0f,0.0f);
-					vertexArray[0].uv       = glm::vec2(0,0);
-					vertexArray[1].position = glm::vec3(0.5f,-0.5f,0.0f);
-					vertexArray[1].color    = glm::vec3(0.0f,1.0f,0.0f);
-					vertexArray[1].uv       = glm::vec2(1,0);
-					vertexArray[2].position = glm::vec3(0.0f,0.5f,0.0f);
-					vertexArray[2].color    = glm::vec3(0.0f,0.0f,1.0f);
-					vertexArray[2].uv       = glm::vec2(1,1);
+					vertexArray[0].position = kyra::Vector3<float>(-0.5f,-0.5f,0.0f);
+					vertexArray[0].color    = kyra::Vector3<float>(1.0f,0.0f,0.0f);
+					vertexArray[0].uv       = kyra::Vector2<float>(0,0);
+					vertexArray[1].position = kyra::Vector3<float>(0.5f,-0.5f,0.0f);
+					vertexArray[1].color    = kyra::Vector3<float>(0.0f,1.0f,0.0f);
+					vertexArray[1].uv       = kyra::Vector2<float>(1,0);
+					vertexArray[2].position = kyra::Vector3<float>(0.0f,0.5f,0.0f);
+					vertexArray[2].color    = kyra::Vector3<float>(0.0f,0.0f,1.0f);
+					vertexArray[2].uv       = kyra::Vector2<float>(1,1);					
+					
 					
 				kyra::IVertexBuffer::Ptr vertexBuffer = m_Renderer.createVertexBuffer();
 					vertexBuffer->create(vertexArray);
@@ -118,10 +117,6 @@ class MyApplication : public kyra::SystemEventListener {
 
 int main(int argc, char** argv) {
 
-	//kyra::Image image;
-	//image.load("Test.bmp");
-	//image.save("Test.png");
-	
 	MyApplication().run();
 	
 	return 0;

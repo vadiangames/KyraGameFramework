@@ -20,7 +20,7 @@ namespace kyra {
 		
 		~Texture();
 		
-		glm::vec2 getSize() const final;
+		kyra::Vector2<float> getSize() const final;
 		void loadFromFile(const std::filesystem::path& path) final;
 		void bind(uint32_t slot = 0) final;
 		

@@ -2,7 +2,6 @@
 #include <KyraGameFramework/RenderDeviceGL/Program.hpp>
 #include <fstream>
 #include <string>
-#include <glm/gtc/type_ptr.hpp>
 
 namespace kyra {
 	
@@ -64,7 +63,7 @@ namespace kyra {
 		GL_CHECK(glUniform1i(location, value));
 	}
 	
-	void KYRA_RENDERDEVICEGL_API Program::setMatrix4(const std::string& id, const glm::mat4& matrix) {
+	/*void KYRA_RENDERDEVICEGL_API Program::setMatrix4(const std::string& id, const glm::mat4& matrix) {
 		//TODO: Duplicated Code
 		use();
 		GLint location = GL_CHECK(glGetUniformLocation(m_Id,id.c_str()));
@@ -72,26 +71,36 @@ namespace kyra {
 			std::cout << "[ERROR] Can not find uniform location " << id << std::endl;
 		}
 		GL_CHECK(glUniformMatrix4fv(location,1,GL_FALSE,glm::value_ptr(matrix)));
-	}
+	}*/
 	
-	void KYRA_RENDERDEVICEGL_API Program::setVector3(const std::string& id, const glm::vec3& vec) {
+	void KYRA_RENDERDEVICEGL_API Program::setMatrix4(const std::string& id, const kyra::Matrix4<float>& matrix) {
 		//TODO: Duplicated Code
 		use();
 		GLint location = GL_CHECK(glGetUniformLocation(m_Id,id.c_str()));
 		if(location == -1) {
 			std::cout << "[ERROR] Can not find uniform location " << id << std::endl;
 		}
-		GL_CHECK(glUniform3fv(location,1,glm::value_ptr(vec)));
+		GL_CHECK(glUniformMatrix4fv(location,1,GL_FALSE,(float*)(&matrix)));
 	}
 	
-	void KYRA_RENDERDEVICEGL_API Program::setVector4(const std::string& id, const glm::vec4& vec) {
+	void KYRA_RENDERDEVICEGL_API Program::setVector3(const std::string& id, const kyra::Vector3<float>& vec) {
 		//TODO: Duplicated Code
 		use();
 		GLint location = GL_CHECK(glGetUniformLocation(m_Id,id.c_str()));
 		if(location == -1) {
 			std::cout << "[ERROR] Can not find uniform location " << id << std::endl;
 		}
-		GL_CHECK(glUniform4fv(location,1,glm::value_ptr(vec)));
+		GL_CHECK(glUniform3fv(location,1,(float*)(&vec)));
+	}
+	
+	void KYRA_RENDERDEVICEGL_API Program::setVector4(const std::string& id, const kyra::Vector4<float>& vec) {
+		//TODO: Duplicated Code
+		use();
+		GLint location = GL_CHECK(glGetUniformLocation(m_Id,id.c_str()));
+		if(location == -1) {
+			std::cout << "[ERROR] Can not find uniform location " << id << std::endl;
+		}
+		GL_CHECK(glUniform4fv(location,1,(float*)(&vec)));
 	}
 	
 	void KYRA_RENDERDEVICEGL_API Program::use()  {

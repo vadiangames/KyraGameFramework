@@ -1,10 +1,11 @@
 #ifndef KYRAGAMEFRAMEWORK_ABSTRACTRENDERDEVICE_ITEXT_HPP
 #define KYRAGAMEFRAMEWORK_ABSTRACTRENDERDEVICE_ITEXT_HPP
 
-#include <glm/glm.hpp>
+
 #include <filesystem>
 #include <memory>
 
+#include <KyraGameFramework/Math/Vector3.hpp>
 #include <KyraGameFramework/AbstractRenderDevice/IDrawable.hpp>
 
 namespace kyra {
@@ -23,8 +24,8 @@ namespace kyra {
 		//virtual void create(IRenderDevice& renderDevice) = 0;
 		virtual void setText(std::shared_ptr<IFont> font, const std::string& text, IRenderDevice& renderDevice) = 0;
 		
-		virtual glm::vec3 getPosition() const = 0;
-		virtual void setPosition(const glm::vec3& position) = 0;
+		virtual kyra::Vector3<float> getPosition() const = 0;
+		virtual void setPosition(const kyra::Vector3<float>& position) = 0;
 	};
 	
 }

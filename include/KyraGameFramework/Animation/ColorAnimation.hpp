@@ -9,8 +9,8 @@ namespace kyra {
 	class ColorAnimation : public IAnimation {
 		
 		std::shared_ptr<T> m_Target;
-		glm::vec4 m_From;
-		glm::vec4 m_To;
+		kyra::Vector4<float> m_From;
+		kyra::Vector4<float> m_To;
 		float m_Runtime;
 		bool m_Loop;
 		bool m_IsRunning;
@@ -24,7 +24,7 @@ namespace kyra {
 			m_Target = target;
 		}
 		
-		void set( const glm::vec4& from, const glm::vec4& to, float runtime, bool loop) {
+		void set( const kyra::Vector4<float>& from, const kyra::Vector4<float>& to, float runtime, bool loop) {
 			m_From = from;
 			m_To = to;
 			m_Runtime = runtime;
@@ -53,8 +53,8 @@ namespace kyra {
 					}
 				}
 
-				glm::vec4 difference = (m_To - m_From);
-				glm::vec4 targetColor = m_From + ((m_To - m_From) * ( m_Time / m_Runtime));
+				kyra::Vector4<float> difference = (m_To - m_From);
+				kyra::Vector4<float> targetColor = m_From + ((m_To - m_From) * ( m_Time / m_Runtime));
 				m_Target->setColor( targetColor );
 			}
 		}

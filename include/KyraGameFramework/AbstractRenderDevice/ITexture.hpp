@@ -1,7 +1,7 @@
 #ifndef KYRAGAMEFRAMEWORK_ABSTRACTRENDERDEVICE_ITEXTURE_HPP
 #define KYRAGAMEFRAMEWORK_ABSTRACTRENDERDEVICE_ITEXTURE_HPP
 
-#include <glm/glm.hpp>
+#include <KyraGameFramework/Math/Vector2.hpp>
 #include <filesystem>
 #include <memory>
 
@@ -17,7 +17,7 @@ namespace kyra {
 		
 		virtual void loadFromFile(const std::filesystem::path& path) = 0;
 		virtual void bind(uint32_t slot = 0) = 0;
-		virtual glm::vec2 getSize() const = 0;
+		virtual kyra::Vector2<float> getSize() const = 0;
 	};
 	
 }

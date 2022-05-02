@@ -7,7 +7,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include_directories( ${PROJECT_SOURCE_DIR}/include
 					 ${PROJECT_SOURCE_DIR}/deps/include
-					 ${PROJECT_SOURCE_DIR}/3rdparty/glm
 					 ${PROJECT_SOURCE_DIR}/3rdparty/stb
 					 ${PROJECT_SOURCE_DIR}/deps/include/freetype2)
 					 

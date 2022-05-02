@@ -11,18 +11,23 @@
 #include <KyraGameFramework/AbstractRenderDevice/IRenderDevice.hpp>
 
 
+
 #include <filesystem>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp> 
+//#include <glm/glm.hpp>
+//#include <glm/gtc/matrix_transform.hpp> 
 
 namespace kyra {
 	
 	class KYRA_RENDERDEVICEGL_API Sprite : public ISprite {
 		
-		glm::vec2 m_Size;
-		glm::vec3 m_Position;
-		glm::vec4 m_Color;
-		glm::mat4 m_Transformation;
+		kyra::Vector2<float> m_Size;
+		kyra::Vector3<float> m_Position;
+		//glm::vec2 m_Size;
+		//glm::vec3 m_Position;
+		kyra::Vector4<float> m_Color;
+		//glm::mat4 m_Transformation;
+		kyra::Matrix4<float> m_Transformation;
+		
 		
 		ITexture::Ptr m_Texture;
 		
@@ -33,10 +38,10 @@ namespace kyra {
 		static std::string g_VertexShader;
 		static std::string g_FragmentShader;
 		
-		glm::mat4 m_Projection;
+		kyra::Matrix4<float> m_Projection;
 		
 		typedef struct {
-			glm::vec4 data;
+			kyra::Vector4<float> data;
 		}Vertex;
 		
 		void recalculate();
@@ -46,13 +51,13 @@ namespace kyra {
 		
 		~Sprite();
 		
-		glm::vec2 getSize() const final;
+		kyra::Vector2<float> getSize() const final;
 		
-		void setSize(const glm::vec2& size) final;
+		void setSize(const kyra::Vector2<float>& size) final;
 		
-		glm::vec3 getPosition() const final;
+		kyra::Vector3<float> getPosition() const final;
 		
-		void setPosition(const glm::vec3& position) final;
+		void setPosition(const kyra::Vector3<float>& position) final;
 
 		void create(IRenderDevice& renderDevice) final;
 		
@@ -60,7 +65,7 @@ namespace kyra {
 		
 		void draw(IRenderDevice& renderDevice) final;
 
-		void setColor(const glm::vec4& color) final;
+		void setColor(const kyra::Vector4<float>& color) final;
 	};
 
 
