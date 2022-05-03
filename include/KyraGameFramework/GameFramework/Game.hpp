@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <chrono>
+#include <thread>
 
 namespace kyra {
 
@@ -46,14 +47,20 @@ namespace kyra {
 				
 				//Main Loop
 				
+				std::chrono::duration<double> frameTime = std::chrono::duration<double>( 1.f / 60.f);
+				m_Start = std::chrono::high_resolution_clock::now();
 				while(m_Window.isOpen()) {
-					m_Start = std::chrono::high_resolution_clock::now();
 					m_Window.processEvents();
 					m_RenderDevice->clear();
 						m_RenderDevice->draw(rootState);
 					m_RenderDevice->display();
 					m_End = std::chrono::high_resolution_clock::now();
-					rootState->update( std::chrono::duration<double>(m_End - m_Start).count() );
+					std::chrono::duration<double> duration(m_End-m_Start);
+					m_Start = std::chrono::high_resolution_clock::now();
+					rootState->update( duration.count() );
+					if( duration < frameTime) {
+						std::this_thread::sleep_for(frameTime - duration);
+					}
 				}
 				return true;
 		}

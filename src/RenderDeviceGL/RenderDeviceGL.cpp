@@ -15,7 +15,6 @@ namespace kyra {
 	}
 		
 	KYRA_RENDERDEVICEGL_API RenderDeviceGL::~RenderDeviceGL() {
-		std::cout << "Delete OpenGL-RenderDevice" << std::endl;		
 		if(VAO) {
 			GL_CHECK(glDeleteVertexArrays(1, &VAO));
 		}
@@ -223,6 +222,14 @@ namespace kyra {
 	
 	Rect KYRA_RENDERDEVICEGL_API RenderDeviceGL::getClientRect() const {
 		return m_Window->getClientRect();
+	}
+	
+	void KYRA_RENDERDEVICEGL_API RenderDeviceGL::setActiveSyncEnabled(bool value) {
+		if(value) {
+			((BOOL(WINAPI*)(int))wglGetProcAddress("wglSwapIntervalEXT"))(1);
+		} else {
+			((BOOL(WINAPI*)(int))wglGetProcAddress("wglSwapIntervalEXT"))(0);
+		}
 	}
 	
 }

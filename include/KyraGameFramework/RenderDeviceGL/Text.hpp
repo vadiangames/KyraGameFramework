@@ -15,7 +15,6 @@ namespace kyra {
 	class Text : public IText {
 		
 		kyra::Vector3<float> m_Position;
-		//glm::mat4 m_Transformation;
 		kyra::Matrix4<float> m_Transformation;
 		IVertexBuffer::Ptr m_VertexBuffer;
 		kyra::Vector4<float> m_Color;
@@ -34,7 +33,6 @@ namespace kyra {
 		
 		public:
 		Text()  { 
-			//m_Transformation = glm::mat4(1.0f);
 			m_Transformation = kyra::Matrix4<float>::getIdentity();
 			m_Color = kyra::Vector4<float>(1.0f,1.0f,1.0f,1.0f);
 			m_Position = kyra::Vector3<float>(0.0f,0.0f,0.0f);

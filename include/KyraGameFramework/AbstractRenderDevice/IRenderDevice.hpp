@@ -27,6 +27,8 @@ namespace kyra {
 		
 		typedef std::shared_ptr<IRenderDevice> Ptr;
 		
+		virtual void setActiveSyncEnabled(bool value) = 0;
+		
 		//! Abstract class to create a vertex buffer
 		virtual IVertexBuffer::Ptr createVertexBuffer() = 0;
 		

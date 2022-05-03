@@ -26,7 +26,9 @@ namespace kyra {
 		public:
 		RenderDeviceGL();
 		virtual ~RenderDeviceGL();
-				
+		
+		void setActiveSyncEnabled(bool value) final;
+		
 		ITexture::Ptr createTexture(const std::filesystem::path& path) final;
 		ISprite::Ptr createSprite(ITexture::Ptr texture) final;
 		

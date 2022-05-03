@@ -9,8 +9,11 @@ class MyApplication : public kyra::SystemEventListener {
 	kyra::RenderDeviceGL m_Renderer;
 	
 	public:
-	MyApplication() {}
-	~MyApplication() {}
+	MyApplication() {
+	}
+	
+	~MyApplication() {
+	}
 	
 	
 	//! Implementation of kyra::SystemEventListener::onClose()
@@ -19,7 +22,6 @@ class MyApplication : public kyra::SystemEventListener {
 	}
 		
 	void run() {
-		
 		kyra::WindowSettings windowSettings;
 			windowSettings.width = 800;
 			windowSettings.height = 600;
@@ -43,10 +45,10 @@ class MyApplication : public kyra::SystemEventListener {
 						m_Renderer.draw(txt);
 					m_Renderer.display();
 				}
-			}			
-			
+			}
+					
 		}
-		
+
 	}
 
 };
