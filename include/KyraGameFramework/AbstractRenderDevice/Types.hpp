@@ -12,6 +12,11 @@ namespace kyra {
 		UNKNOWN,
 		TRIANGLES
 	};
+	
+	enum class BufferType {
+		STATIC_DRAW,
+		DYNAMIC_DRAW
+	};
 		
 }
 

@@ -16,7 +16,7 @@ namespace kyra {
 		return m_ElementCount;
 	}
 		
-	void KYRA_RENDERDEVICEGL_API VertexBuffer::create(PrimitiveType primitiveType, size_t elementCount, size_t size, void* data, VertexBufferType vertexBufferType) {
+	void KYRA_RENDERDEVICEGL_API VertexBuffer::create(PrimitiveType primitiveType, size_t elementCount, size_t size, void* data, BufferType vertexBufferType) {
 		if(m_Id) {
 			GL_CHECK(glDeleteBuffers(1,&m_Id));
 			m_Id = 0;
@@ -28,10 +28,10 @@ namespace kyra {
 		
 		GLenum type = 0;
 		switch(vertexBufferType) {
-			case VertexBufferType::DYNAMIC_DRAW:
+			case BufferType::DYNAMIC_DRAW:
 				type = GL_DYNAMIC_DRAW;
 			break;
-			case VertexBufferType::STATIC_DRAW:
+			case BufferType::STATIC_DRAW:
 				type = GL_STATIC_DRAW;
 			break;
 		}

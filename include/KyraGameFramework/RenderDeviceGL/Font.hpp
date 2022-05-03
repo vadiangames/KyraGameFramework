@@ -33,7 +33,7 @@ namespace kyra {
 		
 		~Font() {
 			for(auto& character : m_Characters) {
-				glDeleteTextures(1,&(character.second.id));
+				GL_CHECK(glDeleteTextures(1,&(character.second.id)));
 			}
 			if(m_Face) {
 				FT_Done_Face(m_Face);
@@ -113,7 +113,7 @@ namespace kyra {
 		}
 		
 		void bindCharacterTexture(char c) final {
-			glActiveTexture(GL_TEXTURE0);
+			GL_CHECK(glActiveTexture(GL_TEXTURE0));
 			GL_CHECK(glBindTexture(GL_TEXTURE_2D, m_Characters[c].id));
 		}
 		

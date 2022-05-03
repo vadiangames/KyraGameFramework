@@ -53,7 +53,7 @@ namespace kyra {
 				Text::g_VertexLayout->add(4, 4*sizeof(float), GL_FLOAT);
 			}
 			m_VertexBuffer = renderDevice.createVertexBuffer();
-			m_VertexBuffer->create(PrimitiveType::TRIANGLES, 6, sizeof(float) * 6 * 4, NULL, VertexBufferType::DYNAMIC_DRAW );
+			m_VertexBuffer->create(PrimitiveType::TRIANGLES, 6, sizeof(float) * 6 * 4, NULL, BufferType::DYNAMIC_DRAW );
 			m_Font = font;
 			if(!m_Font) {
 				std::cout << "[WARNING] Font is not initialized" << std::endl;

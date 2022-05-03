@@ -19,7 +19,7 @@ namespace kyra {
 		
 		virtual size_t getElementCount() const final;
 		
-		void create(PrimitiveType primitiveType, size_t elementCount, size_t size, void* data, VertexBufferType type) final;
+		void create(PrimitiveType primitiveType, size_t elementCount, size_t size, void* data, BufferType type) final;
 		
 		virtual void create(IVertexArray& vertexArray) final;
 		

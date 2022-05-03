@@ -5,6 +5,7 @@
 #include <KyraGameFramework/AbstractRenderDevice/IDrawable.hpp>
 #include <KyraGameFramework/AbstractRenderDevice/IProgram.hpp>
 #include <KyraGameFramework/AbstractRenderDevice/IVertexBuffer.hpp>
+#include <KyraGameFramework/AbstractRenderDevice/IIndexBuffer.hpp>
 #include <KyraGameFramework/AbstractRenderDevice/IVertexLayout.hpp>
 #include <KyraGameFramework/AbstractRenderDevice/ITexture.hpp>
 #include <KyraGameFramework/AbstractRenderDevice/ISprite.hpp>
@@ -44,6 +45,8 @@ namespace kyra {
 		//! Abstract class to create a vertex layout
 		virtual IVertexLayout::Ptr createVertexLayout() = 0;
 		
+		virtual IIndexBuffer::Ptr createIndexBuffer() = 0;
+		
 		//! Initializes the shader
 		virtual bool create(IWindow& window) = 0;
 		
@@ -55,6 +58,10 @@ namespace kyra {
 		
 		//! Draw call to draw the vertex buffer
 		virtual void draw(IVertexBuffer::Ptr buffer, IProgram::Ptr program, IVertexLayout::Ptr layout) = 0;
+
+		//! Draw call to draw the vertex buffer
+		virtual void draw(IVertexBuffer::Ptr vertexBuffer, IIndexBuffer::Ptr indexBuffer, IProgram::Ptr program, IVertexLayout::Ptr layout) = 0;
+
 
 		//! Draws the IDrawable by calling IDrawable::draw(IRenderDevice&)
 		virtual void draw(IDrawable::Ptr drawable) = 0;

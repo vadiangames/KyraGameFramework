@@ -6,6 +6,7 @@
 #include <KyraGameFramework/RenderDeviceGL/Texture.hpp>
 #include <KyraGameFramework/RenderDeviceGL/Program.hpp>
 #include <KyraGameFramework/RenderDeviceGL/VertexBuffer.hpp>
+#include <KyraGameFramework/RenderDeviceGL/IndexBuffer.hpp>
 #include <KyraGameFramework/RenderDeviceGL/VertexLayout.hpp>
 #include <KyraGameFramework/AbstractRenderDevice/VertexArray.hpp>
 #include <KyraGameFramework/AbstractRenderDevice/IRenderDevice.hpp>
@@ -13,8 +14,6 @@
 
 
 #include <filesystem>
-//#include <glm/glm.hpp>
-//#include <glm/gtc/matrix_transform.hpp> 
 
 namespace kyra {
 	
@@ -22,18 +21,17 @@ namespace kyra {
 		
 		kyra::Vector2<float> m_Size;
 		kyra::Vector3<float> m_Position;
-		//glm::vec2 m_Size;
-		//glm::vec3 m_Position;
 		kyra::Vector4<float> m_Color;
-		//glm::mat4 m_Transformation;
 		kyra::Matrix4<float> m_Transformation;
 		
 		
 		ITexture::Ptr m_Texture;
 		
+		static size_t g_References;
 		static IProgram::Ptr g_Program;
 		static IVertexLayout::Ptr  g_VertexLayout;
 		static IVertexBuffer::Ptr  g_VertexBuffer;
+		static IIndexBuffer::Ptr g_IndexBuffer;
 		
 		static std::string g_VertexShader;
 		static std::string g_FragmentShader;

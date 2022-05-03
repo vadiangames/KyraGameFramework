@@ -27,20 +27,25 @@ namespace kyra {
 		RenderDeviceGL();
 		virtual ~RenderDeviceGL();
 				
-		virtual ITexture::Ptr createTexture(const std::filesystem::path& path) final;
-		virtual ISprite::Ptr createSprite(ITexture::Ptr texture) final;
+		ITexture::Ptr createTexture(const std::filesystem::path& path) final;
+		ISprite::Ptr createSprite(ITexture::Ptr texture) final;
 		
-		virtual IProgram::Ptr createProgramFromFile( const std::filesystem::path& vertexShader, const std::filesystem::path& fragmentShader ) final;
-		virtual IProgram::Ptr createProgramFromMemory( const std::string& vertexShader, const std::string& fragmentShader ) final;
+		IProgram::Ptr createProgramFromFile( const std::filesystem::path& vertexShader, const std::filesystem::path& fragmentShader ) final;
+		IProgram::Ptr createProgramFromMemory( const std::string& vertexShader, const std::string& fragmentShader ) final;
 				
-		virtual IVertexBuffer::Ptr createVertexBuffer() final;
-		virtual IVertexLayout::Ptr createVertexLayout() final;
+		IVertexBuffer::Ptr createVertexBuffer() final;
+		IVertexLayout::Ptr createVertexLayout() final;
+		IIndexBuffer::Ptr createIndexBuffer() final;
 		
-		virtual bool create(IWindow& window) final;
-		virtual void clear() final;
-		virtual void display() final;
+		
+		bool create(IWindow& window) final;
+		void clear() final;
+		void display() final;
 		
 		void draw(IVertexBuffer::Ptr buffer, IProgram::Ptr program, IVertexLayout::Ptr layout) final;
+		
+		void draw(IVertexBuffer::Ptr vertexBuffer, IIndexBuffer::Ptr indexBuffer, IProgram::Ptr program, IVertexLayout::Ptr layout) final;
+
 		
 		void draw(IDrawable::Ptr drawable) final;
 		

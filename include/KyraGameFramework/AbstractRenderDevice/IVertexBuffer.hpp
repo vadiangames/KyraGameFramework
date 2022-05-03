@@ -3,15 +3,11 @@
 
 
 #include <KyraGameFramework/AbstractRenderDevice/IVertexArray.hpp>
+#include <KyraGameFramework/AbstractRenderDevice/Types.hpp>
 #include <memory>
 
 namespace kyra {
-	
-	enum class VertexBufferType {
-		STATIC_DRAW,
-		DYNAMIC_DRAW
-	};
-	
+		
 	class IVertexBuffer {
 		
 		public:
@@ -20,7 +16,7 @@ namespace kyra {
 		
 		virtual size_t getElementCount() const = 0;
 		
-		virtual void create(PrimitiveType primitiveType, size_t elementCount, size_t size, void* data, VertexBufferType type) = 0;
+		virtual void create(PrimitiveType primitiveType, size_t elementCount, size_t size, void* data, BufferType type) = 0;
 	
 		virtual void create(IVertexArray& vertexArray) = 0;
 		

@@ -2,6 +2,7 @@
 #include <KyraGameFramework/GLExtensionLoader/GLExtensionLoader.hpp>
 #include <KyraGameFramework/RenderDeviceGL/RenderDeviceGL.hpp>
 #include <KyraGameFramework/RenderDeviceGL/VertexBuffer.hpp>
+#include <KyraGameFramework/RenderDeviceGL/IndexBuffer.hpp>
 #include <KyraGameFramework/RenderDeviceGL/Program.hpp>
 #include <KyraGameFramework/RenderDeviceGL/Texture.hpp>
 #include <KyraGameFramework/RenderDeviceGL/Sprite.hpp>
@@ -14,6 +15,7 @@ namespace kyra {
 	}
 		
 	KYRA_RENDERDEVICEGL_API RenderDeviceGL::~RenderDeviceGL() {
+		std::cout << "Delete OpenGL-RenderDevice" << std::endl;		
 		if(VAO) {
 			GL_CHECK(glDeleteVertexArrays(1, &VAO));
 		}
@@ -125,13 +127,17 @@ namespace kyra {
 	IVertexBuffer::Ptr KYRA_RENDERDEVICEGL_API RenderDeviceGL::createVertexBuffer() {
 		return IVertexBuffer::Ptr(new VertexBuffer());
 	}
+	
+	IIndexBuffer::Ptr KYRA_RENDERDEVICEGL_API RenderDeviceGL::createIndexBuffer() {
+		return IIndexBuffer::Ptr(new IndexBuffer());
+	}
 
 	IVertexLayout::Ptr KYRA_RENDERDEVICEGL_API RenderDeviceGL::createVertexLayout() {
 		return IVertexLayout::Ptr(new VertexLayout());
 	}
 
 	void KYRA_RENDERDEVICEGL_API RenderDeviceGL::clear() {
-		glClear(GL_COLOR_BUFFER_BIT);
+		GL_CHECK(glClear(GL_COLOR_BUFFER_BIT));
 	}
 		
 	void KYRA_RENDERDEVICEGL_API RenderDeviceGL::display()  {
@@ -169,9 +175,40 @@ namespace kyra {
 		program->use();
 		
 		if(buffer->getPrimitiveType() == PrimitiveType::TRIANGLES) {
-			glDrawArrays(GL_TRIANGLES,0,buffer->getElementCount());
+			GL_CHECK(glDrawArrays(GL_TRIANGLES,0,buffer->getElementCount()));
 		}
 		
+		buffer->unbind();
+		layout->unbind();
+	}
+	
+	 void KYRA_RENDERDEVICEGL_API RenderDeviceGL::draw(IVertexBuffer::Ptr buffer, IIndexBuffer::Ptr indexBuffer, IProgram::Ptr program, IVertexLayout::Ptr layout) {
+		if(!buffer) {
+			std::cout << "[WARN] VertexBuffer is not initialized!" << std::endl;
+			return;
+		}
+		if(!program) {
+			std::cout << "[WARN] Program is not initialized!" << std::endl;
+			return;
+		}
+		if(!layout) {
+			std::cout << "[WARN] VertexLayout is not initialized!" << std::endl;
+			return;
+		}
+		if(!indexBuffer) {
+			std::cout << "[WARN] IndexBuffer not initialised!" << std::endl;
+		}
+		
+		buffer->bind();
+		layout->bind();
+		program->use();
+		indexBuffer->bind();
+		
+		if(buffer->getPrimitiveType() == PrimitiveType::TRIANGLES) {
+			GL_CHECK(glDrawElements(GL_TRIANGLES,indexBuffer->getElementCount(), GL_UNSIGNED_INT, 0));
+		}
+		
+		indexBuffer->unbind();
 		buffer->unbind();
 		layout->unbind();
 	}

@@ -4,7 +4,9 @@ namespace kyra {
 	
 	IProgram::Ptr KYRA_RENDERDEVICEGL_API Sprite::g_Program;
 	IVertexBuffer::Ptr KYRA_RENDERDEVICEGL_API  Sprite::g_VertexBuffer;
+	IIndexBuffer::Ptr KYRA_RENDERDEVICEGL_API  Sprite::g_IndexBuffer;
 	IVertexLayout::Ptr KYRA_RENDERDEVICEGL_API  Sprite::g_VertexLayout;
+	size_t KYRA_RENDERDEVICEGL_API Sprite::g_References = 0;
 	
 	std::string KYRA_RENDERDEVICEGL_API  Sprite::g_VertexShader = "#version 330 core\n"
 										 "layout (location = 0) in vec4 vertex;\n"
@@ -42,7 +44,13 @@ namespace kyra {
 	}
 		
 	KYRA_RENDERDEVICEGL_API Sprite::~Sprite() {
-			
+		Sprite::g_References--;
+		if(Sprite::g_References == 0) {
+			Sprite::g_Program = IProgram::Ptr(nullptr);
+			Sprite::g_VertexBuffer = IVertexBuffer::Ptr(nullptr);
+			Sprite::g_IndexBuffer = IIndexBuffer::Ptr(nullptr);
+			Sprite::g_VertexLayout = IVertexLayout::Ptr(nullptr);		
+		}
 	}
 	
 	kyra::Vector2<float> KYRA_RENDERDEVICEGL_API Sprite::getSize()  const {
@@ -67,21 +75,35 @@ namespace kyra {
 			Sprite::g_Program = renderDevice.createProgramFromMemory(Sprite::g_VertexShader, Sprite::g_FragmentShader);	
 		}
 		if(!Sprite::g_VertexBuffer) {
-			VertexArray<Sprite::Vertex> vertexArray(PrimitiveType::TRIANGLES, 6);
+			/*VertexArray<Sprite::Vertex> vertexArray(PrimitiveType::TRIANGLES, 6);
 			vertexArray.resize(6);
 			vertexArray[0].data = kyra::Vector4<float>(0.0f, 1.0f, 0.0f, 1.0f);
 			vertexArray[1].data = kyra::Vector4<float>(1.0f, 0.0f, 1.0f, 0.0f);
 			vertexArray[2].data = kyra::Vector4<float>(0.0f, 0.0f, 0.0f, 0.0f);
 			vertexArray[3].data = kyra::Vector4<float>(0.0f, 1.0f, 0.0f, 1.0f);
 			vertexArray[4].data = kyra::Vector4<float>(1.0f, 1.0f, 1.0f, 1.0f);
-			vertexArray[5].data = kyra::Vector4<float>(1.0f, 0.0f, 1.0f, 0.0f);
+			vertexArray[5].data = kyra::Vector4<float>(1.0f, 0.0f, 1.0f, 0.0f);*/
+			
+			VertexArray<Sprite::Vertex> vertexArray(PrimitiveType::TRIANGLES, 4);
+			vertexArray.resize(4);
+			vertexArray[0].data = kyra::Vector4<float>(0.0f, 1.0f, 0.0f, 1.0f);
+			vertexArray[1].data = kyra::Vector4<float>(1.0f, 0.0f, 1.0f, 0.0f);
+			vertexArray[2].data = kyra::Vector4<float>(0.0f, 0.0f, 0.0f, 0.0f);
+			vertexArray[3].data = kyra::Vector4<float>(1.0f, 1.0f, 1.0f, 1.0f);
+			
 			Sprite::g_VertexBuffer = renderDevice.createVertexBuffer();
 			Sprite::g_VertexBuffer->create(vertexArray);
+			
+			unsigned int indices[6] = {0,1,2,0,3,1};
+			Sprite::g_IndexBuffer = renderDevice.createIndexBuffer();
+			Sprite::g_IndexBuffer->create( 6, sizeof(indices), &indices[0], BufferType::STATIC_DRAW);
+						
 		}
 		if(!Sprite::g_VertexLayout) {
 			Sprite::g_VertexLayout = renderDevice.createVertexLayout();
 			Sprite::g_VertexLayout->add(4,4*sizeof(float),GL_FLOAT);
 		}
+		Sprite::g_References++;
 	}
 
 	void KYRA_RENDERDEVICEGL_API Sprite::setTexture(std::shared_ptr<ITexture> texture)  {
@@ -106,7 +128,7 @@ namespace kyra {
 		} else {
 			std::cout << "[WARNING] No texture assigned" << std::endl;
 		}
-		renderDevice.draw(Sprite::g_VertexBuffer, Sprite::g_Program, Sprite::g_VertexLayout);
+		renderDevice.draw(Sprite::g_VertexBuffer,Sprite::g_IndexBuffer, Sprite::g_Program, Sprite::g_VertexLayout);
 	}
 	
 	void KYRA_RENDERDEVICEGL_API Sprite::setColor(const kyra::Vector4<float>& color) {

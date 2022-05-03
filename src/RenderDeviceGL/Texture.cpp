@@ -10,13 +10,13 @@ namespace kyra {
 		
 	KYRA_RENDERDEVICEGL_API Texture::~Texture() {
 		if(m_Id) {
-			glDeleteTextures(1,&m_Id);
+			GL_CHECK(glDeleteTextures(1,&m_Id));
 		}
 	}
 		
 	void KYRA_RENDERDEVICEGL_API Texture::loadFromFile(const std::filesystem::path& path) {
 		if(m_Id) {
-			glDeleteTextures(1,&m_Id);
+			GL_CHECK(glDeleteTextures(1,&m_Id));
 			m_Id = 0;
 		}
 		
@@ -48,7 +48,7 @@ namespace kyra {
 	}
 		
 	void KYRA_RENDERDEVICEGL_API Texture::bind(uint32_t slot) {
-		glActiveTexture(GL_TEXTURE0 + slot);
+		GL_CHECK(glActiveTexture(GL_TEXTURE0 + slot));
 		GL_CHECK(glBindTexture(GL_TEXTURE_2D, m_Id));
 	}
 
