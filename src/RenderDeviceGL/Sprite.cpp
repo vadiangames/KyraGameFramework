@@ -75,14 +75,6 @@ namespace kyra {
 			Sprite::g_Program = renderDevice.createProgramFromMemory(Sprite::g_VertexShader, Sprite::g_FragmentShader);	
 		}
 		if(!Sprite::g_VertexBuffer) {
-			/*VertexArray<Sprite::Vertex> vertexArray(PrimitiveType::TRIANGLES, 6);
-			vertexArray.resize(6);
-			vertexArray[0].data = kyra::Vector4<float>(0.0f, 1.0f, 0.0f, 1.0f);
-			vertexArray[1].data = kyra::Vector4<float>(1.0f, 0.0f, 1.0f, 0.0f);
-			vertexArray[2].data = kyra::Vector4<float>(0.0f, 0.0f, 0.0f, 0.0f);
-			vertexArray[3].data = kyra::Vector4<float>(0.0f, 1.0f, 0.0f, 1.0f);
-			vertexArray[4].data = kyra::Vector4<float>(1.0f, 1.0f, 1.0f, 1.0f);
-			vertexArray[5].data = kyra::Vector4<float>(1.0f, 0.0f, 1.0f, 0.0f);*/
 			
 			VertexArray<Sprite::Vertex> vertexArray(PrimitiveType::TRIANGLES, 4);
 			vertexArray.resize(4);

@@ -26,6 +26,10 @@ namespace kyra {
 			return m_Data[index];
 		}
 		
+		Vector2<T> operator + (const Vector2<T>& vec) const {
+			return Vector2<T>(m_Data.at(0) + vec.m_Data.at(0), m_Data.at(1) + vec.m_Data.at(1) );
+		}
+		
 	};
 }
 
