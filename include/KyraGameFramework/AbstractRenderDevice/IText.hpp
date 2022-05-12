@@ -24,8 +24,8 @@ namespace kyra {
 		//virtual void create(IRenderDevice& renderDevice) = 0;
 		virtual void setText(std::shared_ptr<IFont> font, const std::string& text, IRenderDevice& renderDevice) = 0;
 		
-		virtual kyra::Vector3<float> getPosition() const = 0;
-		virtual void setPosition(const kyra::Vector3<float>& position) = 0;
+		virtual kyra::math::Vector3<float> getPosition() const = 0;
+		virtual void setPosition(const kyra::math::Vector3<float>& position) = 0;
 	};
 	
 }

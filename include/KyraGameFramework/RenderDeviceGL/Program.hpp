@@ -18,10 +18,9 @@ namespace kyra {
 		~Program();
 		
 		void setInteger(const std::string& id, int value) final;
-		//void setMatrix4(const std::string& id, const glm::mat4& matrix) final;
-		void setMatrix4(const std::string& id, const kyra::Matrix4<float>& matrix) final;
-		void setVector3(const std::string& id, const kyra::Vector3<float>& vec) final;
-		void setVector4(const std::string& id, const kyra::Vector4<float>& vec) final;
+		void setMatrix4(const std::string& id, const kyra::math::Matrix4<float>& matrix) final;
+		void setVector3(const std::string& id, const kyra::math::Vector3<float>& vec) final;
+		void setVector4(const std::string& id, const kyra::math::Vector4<float>& vec) final;
 		
 		bool linkFromMemory(const std::string& vertexShaderSrc, const std::string& fragmentShaderSrc) final;
 		bool linkFromFile(const std::filesystem::path& vertexShader, const std::filesystem::path& fragmentShader) final;

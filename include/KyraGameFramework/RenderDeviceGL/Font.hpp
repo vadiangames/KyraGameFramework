@@ -8,14 +8,15 @@
 #include <map>
 
 #include <KyraGameFramework/AbstractRenderDevice/IFont.hpp>
+#include <KyraGameFramework/GLExtensionLoader/GLExtensionLoader.hpp>
 
 
 namespace kyra {
 	
 	typedef struct {
 		unsigned int id;
-		kyra::Vector2<int> size;
-		kyra::Vector2<int> bearing;
+		math::Vector2<int> size;
+		math::Vector2<int> bearing;
 		long int advance;
 	}Character;
 	
@@ -43,7 +44,7 @@ namespace kyra {
 			}
 		}
 		
-		Character getCharacter(char c) {
+		inline Character getCharacter(char c) {
 			return m_Characters[c];
 		}
 		
@@ -91,8 +92,8 @@ namespace kyra {
 				// now store character for later use
 				Character character = {
 					texture, 
-					kyra::Vector2<int>(m_Face->glyph->bitmap.width, m_Face->glyph->bitmap.rows),
-					kyra::Vector2<int>(m_Face->glyph->bitmap_left, m_Face->glyph->bitmap_top),
+					math::Vector2<int>(m_Face->glyph->bitmap.width, m_Face->glyph->bitmap.rows),
+					math::Vector2<int>(m_Face->glyph->bitmap_left, m_Face->glyph->bitmap_top),
 					m_Face->glyph->advance.x
 				};
 				m_Characters.insert(std::pair<char, Character>(c, character));
@@ -100,19 +101,19 @@ namespace kyra {
 			return true;
 		}
 
-		kyra::Vector2<int> getCharacterSize(char c) final {
+		inline math::Vector2<int> getCharacterSize(char c) final {
 			 return m_Characters[c].size;
 		}
 			
-		kyra::Vector2<int> getCharacterBearing(char c) final {
+		inline math::Vector2<int> getCharacterBearing(char c) final {
 			 return m_Characters[c].bearing;
 		}
 			
-		float getCharacterAdvance(char c) final {
+		inline float getCharacterAdvance(char c) final {
 			return m_Characters[c].advance >> 6;
 		}
 		
-		void bindCharacterTexture(char c) final {
+		inline void bindCharacterTexture(char c) final {
 			GL_CHECK(glActiveTexture(GL_TEXTURE0));
 			GL_CHECK(glBindTexture(GL_TEXTURE_2D, m_Characters[c].id));
 		}

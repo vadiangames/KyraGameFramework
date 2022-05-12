@@ -1,0 +1,5 @@
+
+add_executable(RendererGL_Example_RectangleShape main.cpp)
+target_link_libraries(RendererGL_Example_RectangleShape PRIVATE KyraWindow KyraGLExtensionLoader KyraRenderDeviceGL opengl32 freetype)
+
+install(TARGETS RendererGL_Example_RectangleShape RUNTIME DESTINATION ${PROJECT_SOURCE_DIR}/bin)

@@ -19,10 +19,10 @@ namespace kyra {
 	
 	class KYRA_RENDERDEVICEGL_API Sprite : public ISprite {
 		
-		kyra::Vector2<float> m_Size;
-		kyra::Vector3<float> m_Position;
-		kyra::Vector4<float> m_Color;
-		kyra::Matrix4<float> m_Transformation;
+		math::Vector2<float> m_Size;
+		math::Vector3<float> m_Position;
+		math::Vector4<float> m_Color;
+		math::Matrix4<float> m_Transformation;
 		
 		
 		ITexture::Ptr m_Texture;
@@ -36,10 +36,10 @@ namespace kyra {
 		static std::string g_VertexShader;
 		static std::string g_FragmentShader;
 		
-		kyra::Matrix4<float> m_Projection;
+		math::Matrix4<float> m_Projection;
 		
 		typedef struct {
-			kyra::Vector4<float> data;
+			math::Vector4<float> data;
 		}Vertex;
 		
 		void recalculate();
@@ -49,13 +49,13 @@ namespace kyra {
 		
 		~Sprite();
 		
-		kyra::Vector2<float> getSize() const final;
+		math::Vector2<float> getSize() const final;
 		
-		void setSize(const kyra::Vector2<float>& size) final;
+		void setSize(const math::Vector2<float>& size) final;
 		
-		kyra::Vector3<float> getPosition() const final;
+		math::Vector3<float> getPosition() const final;
 		
-		void setPosition(const kyra::Vector3<float>& position) final;
+		void setPosition(const math::Vector3<float>& position) final;
 
 		void create(IRenderDevice& renderDevice) final;
 		
@@ -63,7 +63,7 @@ namespace kyra {
 		
 		void draw(IRenderDevice& renderDevice) final;
 
-		void setColor(const kyra::Vector4<float>& color) final;
+		void setColor(const math::Vector4<float>& color) final;
 	};
 
 

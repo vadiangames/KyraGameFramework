@@ -43,8 +43,8 @@ namespace kyra {
 			
 	}
 	
-	kyra::Vector2<float> KYRA_RENDERDEVICEGL_API Texture::getSize() const {
-		return kyra::Vector2<float>( static_cast<float>(m_Width), static_cast<float>(m_Height));
+	math::Vector2<float> KYRA_RENDERDEVICEGL_API Texture::getSize() const {
+		return math::Vector2<float>( static_cast<float>(m_Width), static_cast<float>(m_Height));
 	}
 		
 	void KYRA_RENDERDEVICEGL_API Texture::bind(uint32_t slot) {

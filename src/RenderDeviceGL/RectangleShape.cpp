@@ -1,0 +1,116 @@
+#include <KyraGameFramework/RenderDeviceGL/RectangleShape.hpp>
+
+namespace kyra {
+	
+	IProgram::Ptr KYRA_RENDERDEVICEGL_API RectangleShape::g_Program;
+	IVertexBuffer::Ptr KYRA_RENDERDEVICEGL_API  RectangleShape::g_VertexBuffer;
+	IIndexBuffer::Ptr KYRA_RENDERDEVICEGL_API  RectangleShape::g_IndexBuffer;
+	IVertexLayout::Ptr KYRA_RENDERDEVICEGL_API  RectangleShape::g_VertexLayout;
+	size_t KYRA_RENDERDEVICEGL_API RectangleShape::g_References = 0;
+	
+	std::string KYRA_RENDERDEVICEGL_API  RectangleShape::g_VertexShader = "#version 330 core\n"
+										 "layout (location = 0) in vec3 vertex;\n"
+										 "uniform mat4 model;\n"
+										 "uniform mat4 projection;\n"
+										 "void main()\n"
+										 "{\n"
+										 "gl_Position = projection * model * vec4(vertex.xyz, 1.0);\n"
+										 "}";
+	
+	std::string KYRA_RENDERDEVICEGL_API RectangleShape::g_FragmentShader = "#version 330 core\n"
+										   "out vec4 color;\n"
+										   "uniform vec4 RectangleShapeColor;\n"
+										   "void main()\n"
+										   "{\n"
+										   "color = RectangleShapeColor;\n"
+										   "}\n";
+										   
+										   
+										  
+	void KYRA_RENDERDEVICEGL_API RectangleShape::recalculate() {
+		m_Transformation = math::Matrix4<float>::getIdentity();
+		m_Transformation.translate(m_Position);
+		m_Transformation.scale(math::Vector3<float>(m_Size[0], m_Size[1], 1.0f));
+	}
+		
+
+	KYRA_RENDERDEVICEGL_API RectangleShape::RectangleShape() {
+		m_Color = math::Vector4<float>(1.f,1.f,1.0f,1.0f);
+		m_Position = math::Vector3<float>(0.f,0.f,0.f);
+	}
+		
+	KYRA_RENDERDEVICEGL_API RectangleShape::~RectangleShape() {
+		RectangleShape::g_References--;
+		if(RectangleShape::g_References == 0) {
+			RectangleShape::g_Program = IProgram::Ptr(nullptr);
+			RectangleShape::g_VertexBuffer = IVertexBuffer::Ptr(nullptr);
+			RectangleShape::g_IndexBuffer = IIndexBuffer::Ptr(nullptr);
+			RectangleShape::g_VertexLayout = IVertexLayout::Ptr(nullptr);		
+		}
+	}
+	
+	math::Vector2<float> KYRA_RENDERDEVICEGL_API RectangleShape::getSize()  const {
+		return m_Size;
+	}
+		
+	void KYRA_RENDERDEVICEGL_API RectangleShape::setSize(const math::Vector2<float>& size)  {
+		m_Size = size;
+		recalculate();
+	}
+		
+	math::Vector3<float> KYRA_RENDERDEVICEGL_API RectangleShape::getPosition() const {
+		return m_Position;
+	}
+		
+	void KYRA_RENDERDEVICEGL_API RectangleShape::setPosition(const math::Vector3<float>& position) {
+		m_Position = position;
+		recalculate();
+	}
+
+	void KYRA_RENDERDEVICEGL_API RectangleShape::create(IRenderDevice& renderDevice) {
+		if(!RectangleShape::g_Program) {
+			RectangleShape::g_Program = renderDevice.createProgramFromMemory(RectangleShape::g_VertexShader, RectangleShape::g_FragmentShader);	
+		}
+		if(!RectangleShape::g_VertexBuffer) {
+			
+			VertexArray<RectangleShape::Vertex> vertexArray(PrimitiveType::TRIANGLES, 4);
+			vertexArray.resize(4);
+			vertexArray[0].data = math::Vector3<float>(0.0f, 1.0f, 1.0f);
+			vertexArray[1].data = math::Vector3<float>(1.0f, 0.0f, 1.0f);
+			vertexArray[2].data = math::Vector3<float>(0.0f, 0.0f, 1.0f);
+			vertexArray[3].data = math::Vector3<float>(1.0f, 1.0f, 1.0f);
+			
+			RectangleShape::g_VertexBuffer = renderDevice.createVertexBuffer();
+			RectangleShape::g_VertexBuffer->create(vertexArray);
+			
+			unsigned int indices[6] = {0,1,2,0,3,1};
+			RectangleShape::g_IndexBuffer = renderDevice.createIndexBuffer();
+			RectangleShape::g_IndexBuffer->create( 6, sizeof(indices), &indices[0], BufferType::STATIC_DRAW);
+						
+		}
+		if(!RectangleShape::g_VertexLayout) {
+			RectangleShape::g_VertexLayout = renderDevice.createVertexLayout();
+			RectangleShape::g_VertexLayout->add(3,3*sizeof(float),GL_FLOAT);
+		}
+		RectangleShape::g_References++;
+	}
+
+		void KYRA_RENDERDEVICEGL_API RectangleShape::draw(IRenderDevice& renderDevice) {
+		
+		Rect clientRect = renderDevice.getClientRect();
+		math::Matrix4<float> projection = math::Matrix4<float>::getOrtho(0.f, (float)(clientRect.width), (float)(clientRect.height), -39.0f);
+		RectangleShape::g_Program->setMatrix4("projection", projection);
+				
+		RectangleShape::g_Program->setMatrix4("model", m_Transformation);
+		RectangleShape::g_Program->setVector4("RectangleShapeColor", m_Color);
+		
+		renderDevice.draw(RectangleShape::g_VertexBuffer,RectangleShape::g_IndexBuffer, RectangleShape::g_Program, RectangleShape::g_VertexLayout);
+	}
+	
+	void KYRA_RENDERDEVICEGL_API RectangleShape::setColor(const math::Vector4<float>& color) {
+		m_Color = color;
+	}
+
+
+	
+}

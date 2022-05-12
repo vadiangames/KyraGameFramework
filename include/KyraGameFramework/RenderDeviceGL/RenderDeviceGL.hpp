@@ -5,6 +5,7 @@
 #include <KyraGameFramework/GLExtensionLoader/GLExtensionLoader.hpp>
 #include <KyraGameFramework/RenderDeviceGL/DLL.hpp>
 #include <KyraGameFramework/AbstractRenderDevice/IRenderDevice.hpp>
+#include <KyraGameFramework/AbstractRenderDevice/IRectangleShape.hpp>
 
 #include <windows.h>
 #include <map>
@@ -34,11 +35,12 @@ namespace kyra {
 		
 		IProgram::Ptr createProgramFromFile( const std::filesystem::path& vertexShader, const std::filesystem::path& fragmentShader ) final;
 		IProgram::Ptr createProgramFromMemory( const std::string& vertexShader, const std::string& fragmentShader ) final;
-				
+						
 		IVertexBuffer::Ptr createVertexBuffer() final;
 		IVertexLayout::Ptr createVertexLayout() final;
 		IIndexBuffer::Ptr createIndexBuffer() final;
 		
+		IRectangleShape::Ptr createRectangleShape( const math::Vector3<float>& position, const math::Vector2<float>& size) final;
 		
 		bool create(IWindow& window) final;
 		void clear() final;

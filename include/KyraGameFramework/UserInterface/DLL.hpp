@@ -1,0 +1,10 @@
+#ifndef KYRAGAMEFRAMEWORK_USERINTERFACE_DLL_HPP
+#define KYRAGAMEFRAMEWORK_USERINTERFACE_DLL_HPP
+
+#ifdef KYRA_USERINTERFACE_EXPORTS
+  #define KYRA_USERINTERFACE_API __declspec(dllexport)
+#else
+  #define KYRA_USERINTERFACE_API __declspec(dllimport)
+#endif
+
+#endif

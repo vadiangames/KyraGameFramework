@@ -17,7 +17,7 @@ namespace kyra {
 		
 		virtual void loadFromFile(const std::filesystem::path& path) = 0;
 		virtual void bind(uint32_t slot = 0) = 0;
-		virtual kyra::Vector2<float> getSize() const = 0;
+		virtual kyra::math::Vector2<float> getSize() const = 0;
 	};
 	
 }

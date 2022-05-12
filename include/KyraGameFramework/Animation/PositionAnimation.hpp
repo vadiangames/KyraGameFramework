@@ -9,8 +9,8 @@ namespace kyra {
 	class PositionAnimation : public IAnimation {
 		
 		std::shared_ptr<T> m_Target;
-		kyra::Vector3<float> m_From;
-		kyra::Vector3<float> m_To;
+		kyra::math::Vector3<float> m_From;
+		kyra::math::Vector3<float> m_To;
 		float m_Runtime;
 		bool m_Loop;
 		bool m_IsRunning;
@@ -24,7 +24,7 @@ namespace kyra {
 			m_Target = target;
 		}
 		
-		void set( const kyra::Vector3<float>& from, const kyra::Vector3<float>& to, float runtime, bool loop) {
+		void set( const kyra::math::Vector3<float>& from, const kyra::math::Vector3<float>& to, float runtime, bool loop) {
 			m_From = from;
 			m_To = to;
 			m_Runtime = runtime;
@@ -52,8 +52,7 @@ namespace kyra {
 						return;
 					}
 				}
-				kyra::Vector3<float> difference = (m_To - m_From);
-				kyra::Vector3<float> targetPosition = m_From + ((m_To - m_From) * ( m_Time / m_Runtime));
+				kyra::math::Vector3<float> targetPosition = m_From + ((m_To - m_From) * ( m_Time / m_Runtime));
 				m_Target->setPosition( targetPosition );
 			}
 		}

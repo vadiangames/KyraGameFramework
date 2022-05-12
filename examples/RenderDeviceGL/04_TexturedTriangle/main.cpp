@@ -37,9 +37,9 @@ std::string fragmentShaderSrc = "#version 330 core\n"
 
 
 typedef struct {
-	kyra::Vector3<float> position;
-	kyra::Vector3<float> color;
-	kyra::Vector2<float> uv;
+	kyra::math::Vector3<float> position;
+	kyra::math::Vector3<float> color;
+	kyra::math::Vector2<float> uv;
 }ColorVertex;
 
 class MyApplication : public kyra::SystemEventListener {
@@ -79,15 +79,15 @@ class MyApplication : public kyra::SystemEventListener {
 					texture.loadFromFile("Test.png");
 				
 				kyra::VertexArray<ColorVertex> vertexArray(kyra::PrimitiveType::TRIANGLES,3);
-					vertexArray[0].position = kyra::Vector3<float>(-0.5f,-0.5f,0.0f);
-					vertexArray[0].color    = kyra::Vector3<float>(1.0f,0.0f,0.0f);
-					vertexArray[0].uv       = kyra::Vector2<float>(0,0);
-					vertexArray[1].position = kyra::Vector3<float>(0.5f,-0.5f,0.0f);
-					vertexArray[1].color    = kyra::Vector3<float>(0.0f,1.0f,0.0f);
-					vertexArray[1].uv       = kyra::Vector2<float>(1,0);
-					vertexArray[2].position = kyra::Vector3<float>(0.0f,0.5f,0.0f);
-					vertexArray[2].color    = kyra::Vector3<float>(0.0f,0.0f,1.0f);
-					vertexArray[2].uv       = kyra::Vector2<float>(1,1);					
+					vertexArray[0].position = kyra::math::Vector3<float>(-0.5f,-0.5f,0.0f);
+					vertexArray[0].color    = kyra::math::Vector3<float>(1.0f,0.0f,0.0f);
+					vertexArray[0].uv       = kyra::math::Vector2<float>(0,0);
+					vertexArray[1].position = kyra::math::Vector3<float>(0.5f,-0.5f,0.0f);
+					vertexArray[1].color    = kyra::math::Vector3<float>(0.0f,1.0f,0.0f);
+					vertexArray[1].uv       = kyra::math::Vector2<float>(1,0);
+					vertexArray[2].position = kyra::math::Vector3<float>(0.0f,0.5f,0.0f);
+					vertexArray[2].color    = kyra::math::Vector3<float>(0.0f,0.0f,1.0f);
+					vertexArray[2].uv       = kyra::math::Vector2<float>(1,1);					
 					
 					
 				kyra::IVertexBuffer::Ptr vertexBuffer = m_Renderer.createVertexBuffer();

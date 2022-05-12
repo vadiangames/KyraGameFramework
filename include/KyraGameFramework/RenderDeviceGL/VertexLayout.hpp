@@ -28,8 +28,8 @@ namespace kyra {
 		
 		void add(size_t elements, size_t size, int type) final;
 		
-		void bind() final;
-		void unbind() final;
+		inline void bind() final;
+		inline void unbind() final;
 		
 	};
 }

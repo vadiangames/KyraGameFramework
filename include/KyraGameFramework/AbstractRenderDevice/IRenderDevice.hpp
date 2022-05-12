@@ -9,6 +9,7 @@
 #include <KyraGameFramework/AbstractRenderDevice/IVertexLayout.hpp>
 #include <KyraGameFramework/AbstractRenderDevice/ITexture.hpp>
 #include <KyraGameFramework/AbstractRenderDevice/ISprite.hpp>
+#include <KyraGameFramework/AbstractRenderDevice/IRectangleShape.hpp>
 #include <KyraGameFramework/Window/IWindow.hpp>
 
 #include <filesystem>
@@ -16,7 +17,7 @@
 namespace kyra {
 
 	/// The RenderDevice is the most important class within the rendering API. 
-	/// Programs, fonts, textures and buffers are created via the class.
+	/// Programs, fonts, textures and buffers are created and managed via the class.
 
 	//! Abstract class for all RenderDevice-Classes
 	class KYRA_ARD_API IRenderDevice {
@@ -43,11 +44,13 @@ namespace kyra {
 		
 		//! Abstract class for creating managed program from memory
 		virtual IProgram::Ptr createProgramFromMemory( const std::string& vertexShader, const std::string& fragmentShader ) = 0;
-
+		
 		//! Abstract class to create a vertex layout
 		virtual IVertexLayout::Ptr createVertexLayout() = 0;
 		
 		virtual IIndexBuffer::Ptr createIndexBuffer() = 0;
+		
+		virtual IRectangleShape::Ptr createRectangleShape( const math::Vector3<float>& position, const math::Vector2<float>& size) = 0;
 		
 		//! Initializes the shader
 		virtual bool create(IWindow& window) = 0;

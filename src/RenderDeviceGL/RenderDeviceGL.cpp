@@ -7,6 +7,8 @@
 #include <KyraGameFramework/RenderDeviceGL/Texture.hpp>
 #include <KyraGameFramework/RenderDeviceGL/Sprite.hpp>
 #include <KyraGameFramework/RenderDeviceGL/VertexLayout.hpp>
+#include <KyraGameFramework/RenderDeviceGL/RectangleShape.hpp>
+
 
 namespace kyra {
 	
@@ -153,6 +155,14 @@ namespace kyra {
 		IProgram::Ptr program = IProgram::Ptr(new Program());
 		program->linkFromMemory(vertexShader,fragmentShader);
 		return program;
+	}
+	
+	IRectangleShape::Ptr KYRA_RENDERDEVICEGL_API RenderDeviceGL::createRectangleShape( const math::Vector3<float>& position, const math::Vector2<float>& size) {
+		IRectangleShape::Ptr shape = IRectangleShape::Ptr(new RectangleShape());
+		shape->create( *this );
+		shape->setPosition(position);
+		shape->setSize(size);
+		return shape;
 	}
 
     void KYRA_RENDERDEVICEGL_API RenderDeviceGL::draw(IVertexBuffer::Ptr buffer, IProgram::Ptr program, IVertexLayout::Ptr layout) {

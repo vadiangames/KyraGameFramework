@@ -32,15 +32,15 @@ namespace kyra {
 										   
 										  
 	void KYRA_RENDERDEVICEGL_API Sprite::recalculate() {
-		m_Transformation = kyra::Matrix4<float>::getIdentity();
+		m_Transformation = math::Matrix4<float>::getIdentity();
 		m_Transformation.translate(m_Position);
-		m_Transformation.scale(kyra::Vector3<float>(m_Size[0], m_Size[1], 1.0f));
+		m_Transformation.scale(math::Vector3<float>(m_Size[0], m_Size[1], 1.0f));
 	}
 		
 
 	KYRA_RENDERDEVICEGL_API Sprite::Sprite() {
-		m_Color = kyra::Vector4<float>(1.f,1.f,1.0f,1.0f);
-		m_Position = kyra::Vector3<float>(0.f,0.f,0.f);
+		m_Color = math::Vector4<float>(1.f,1.f,1.0f,1.0f);
+		m_Position = math::Vector3<float>(0.f,0.f,0.f);
 	}
 		
 	KYRA_RENDERDEVICEGL_API Sprite::~Sprite() {
@@ -53,19 +53,19 @@ namespace kyra {
 		}
 	}
 	
-	kyra::Vector2<float> KYRA_RENDERDEVICEGL_API Sprite::getSize()  const {
+	math::Vector2<float> KYRA_RENDERDEVICEGL_API Sprite::getSize()  const {
 		return m_Size;
 	}
 		
-	void KYRA_RENDERDEVICEGL_API Sprite::setSize(const kyra::Vector2<float>& size)  {
+	void KYRA_RENDERDEVICEGL_API Sprite::setSize(const math::Vector2<float>& size)  {
 		m_Size = size;
 	}
 		
-	kyra::Vector3<float> KYRA_RENDERDEVICEGL_API Sprite::getPosition() const {
+	math::Vector3<float> KYRA_RENDERDEVICEGL_API Sprite::getPosition() const {
 		return m_Position;
 	}
 		
-	void KYRA_RENDERDEVICEGL_API Sprite::setPosition(const kyra::Vector3<float>& position) {
+	void KYRA_RENDERDEVICEGL_API Sprite::setPosition(const math::Vector3<float>& position) {
 		m_Position = position;
 		recalculate();
 	}
@@ -78,10 +78,10 @@ namespace kyra {
 			
 			VertexArray<Sprite::Vertex> vertexArray(PrimitiveType::TRIANGLES, 4);
 			vertexArray.resize(4);
-			vertexArray[0].data = kyra::Vector4<float>(0.0f, 1.0f, 0.0f, 1.0f);
-			vertexArray[1].data = kyra::Vector4<float>(1.0f, 0.0f, 1.0f, 0.0f);
-			vertexArray[2].data = kyra::Vector4<float>(0.0f, 0.0f, 0.0f, 0.0f);
-			vertexArray[3].data = kyra::Vector4<float>(1.0f, 1.0f, 1.0f, 1.0f);
+			vertexArray[0].data = math::Vector4<float>(0.0f, 1.0f, 0.0f, 1.0f);
+			vertexArray[1].data = math::Vector4<float>(1.0f, 0.0f, 1.0f, 0.0f);
+			vertexArray[2].data = math::Vector4<float>(0.0f, 0.0f, 0.0f, 0.0f);
+			vertexArray[3].data = math::Vector4<float>(1.0f, 1.0f, 1.0f, 1.0f);
 			
 			Sprite::g_VertexBuffer = renderDevice.createVertexBuffer();
 			Sprite::g_VertexBuffer->create(vertexArray);
@@ -108,7 +108,7 @@ namespace kyra {
 	void KYRA_RENDERDEVICEGL_API Sprite::draw(IRenderDevice& renderDevice) {
 		
 		Rect clientRect = renderDevice.getClientRect();
-		kyra::Matrix4<float> projection = kyra::Matrix4<float>::getOrtho(0.f, (float)(clientRect.width), (float)(clientRect.height), -39.0f);
+		math::Matrix4<float> projection = math::Matrix4<float>::getOrtho(0.f, (float)(clientRect.width), (float)(clientRect.height), -39.0f);
 		Sprite::g_Program->setMatrix4("projection", projection);
 				
 		Sprite::g_Program->setInteger("sprite",0);
@@ -123,7 +123,7 @@ namespace kyra {
 		renderDevice.draw(Sprite::g_VertexBuffer,Sprite::g_IndexBuffer, Sprite::g_Program, Sprite::g_VertexLayout);
 	}
 	
-	void KYRA_RENDERDEVICEGL_API Sprite::setColor(const kyra::Vector4<float>& color) {
+	void KYRA_RENDERDEVICEGL_API Sprite::setColor(const math::Vector4<float>& color) {
 		m_Color = color;
 	}
 
