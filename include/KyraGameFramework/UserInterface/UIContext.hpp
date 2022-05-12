@@ -9,6 +9,7 @@ namespace kyra {
 	
 	namespace ui {
 	
+		/// \todo rename to Context
 		class UIContext : public SystemEventListener {
 			
 			std::list<Widget::Ptr> m_WidgetList;
@@ -16,6 +17,10 @@ namespace kyra {
 			public:
 			UIContext() {}
 			~UIContext() {}
+			
+			typedef std::list<Widget::Ptr>::iterator Iterator;
+			Iterator begin() {return m_WidgetList.begin();}
+			Iterator end() {return m_WidgetList.end();}
 			
 			void add(Widget::Ptr widget) {
 				m_WidgetList.push_back(widget);

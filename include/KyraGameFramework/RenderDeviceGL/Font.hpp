@@ -26,6 +26,7 @@ namespace kyra {
 		FT_Face    m_Face;
 		
 		std::map<char, Character> m_Characters;
+		unsigned int m_CharacterSize;
 		
 		public:
 		Font() : m_FreeType(NULL), m_Face(NULL) {
@@ -49,7 +50,7 @@ namespace kyra {
 		}
 		
 		bool loadFromFile(const std::string& file, unsigned int charSize) {
-			
+						
 			if(FT_Init_FreeType(&m_FreeType)) {
 				std::cout << "[ERROR] Can not initialize FreeType" << std::endl;
 				return false;
@@ -98,6 +99,7 @@ namespace kyra {
 				};
 				m_Characters.insert(std::pair<char, Character>(c, character));
 			}
+			m_CharacterSize = charSize;
 			return true;
 		}
 
@@ -116,6 +118,10 @@ namespace kyra {
 		inline void bindCharacterTexture(char c) final {
 			GL_CHECK(glActiveTexture(GL_TEXTURE0));
 			GL_CHECK(glBindTexture(GL_TEXTURE_2D, m_Characters[c].id));
+		}
+		
+		float getFontSize() const final {
+			return (float)(m_CharacterSize);
 		}
 		
 	};

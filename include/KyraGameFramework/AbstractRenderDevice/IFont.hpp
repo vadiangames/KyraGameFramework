@@ -22,6 +22,8 @@ namespace kyra {
 		virtual kyra::math::Vector2<int> getCharacterBearing(char c) = 0;
 		virtual float getCharacterAdvance(char c) = 0;
 		virtual void bindCharacterTexture(char c) = 0;
+		virtual float getFontSize() const = 0;
+		
 	};
 	
 }

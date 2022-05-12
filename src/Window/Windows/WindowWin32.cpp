@@ -137,8 +137,8 @@ namespace kyra {
 		Rect rectangle;
 		rectangle.x = window_rectangle.top;
 		rectangle.y = window_rectangle.left;
-		rectangle.width = window_rectangle.bottom - window_rectangle.top;
-		rectangle.height = window_rectangle.right - window_rectangle.left; 
+		rectangle.width = window_rectangle.right - window_rectangle.left;
+		rectangle.height = window_rectangle.bottom - window_rectangle.top; 
 		return rectangle;
 	}
 		
@@ -147,7 +147,6 @@ namespace kyra {
 		GetWindowRect(m_WindowHandle, &window_rect);
 		RECT client_rectangle;
 		GetClientRect(m_WindowHandle, &client_rectangle);
-		
 		Rect rectangle;
 		rectangle.x = client_rectangle.left;
 		rectangle.y = (window_rect.bottom - window_rect.top) - client_rectangle.bottom;
@@ -155,5 +154,6 @@ namespace kyra {
 		rectangle.height =client_rectangle.bottom - client_rectangle.top; 
 		return rectangle;		
 	}
+	
 	
 }

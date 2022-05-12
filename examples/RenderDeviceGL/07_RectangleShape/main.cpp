@@ -38,7 +38,7 @@ class MyApplication : public kyra::SystemEventListener {
 		m_Shape = kyra::IRectangleShape::Ptr( new kyra::RectangleShape() );
 		m_Shape->create(m_Renderer);
 			m_Shape->setSize( kyra::math::Vector2<float>(100.0f,100.0f) );
-			m_Shape->setPosition( kyra::math::Vector3<float>(10.f,10.f,0.0f));
+			m_Shape->setPosition( kyra::math::Vector3<float>(0.f,0.f,0.0f));
 			m_Shape->setColor( kyra::math::Vector4<float>(1.0f,1.0f,0.0f,0.5f));
 				
 		while(m_Window.isOpen()) {

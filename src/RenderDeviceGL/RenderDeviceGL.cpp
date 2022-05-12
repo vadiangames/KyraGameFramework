@@ -103,7 +103,17 @@ namespace kyra {
 		}
 		
 		Rect clientRect = window.getClientRect();
-		GL_CHECK(glViewport(clientRect.x, clientRect.y, clientRect.width, clientRect.height));
+		std::cout << "[CLIENT RECT]" << std::endl;
+		std::cout << clientRect.x << " " << clientRect.y << " " << clientRect.width << " " << clientRect.height << std::endl;
+		
+		Rect windowRect = window.getWindowRect();
+		std::cout << "[WINDOW RECT]" << std::endl;
+		std::cout << windowRect.x << " " << windowRect.y << " " << windowRect.width << " " << windowRect.height << std::endl;
+		
+		
+		
+		
+		GL_CHECK(glViewport(0, 0, clientRect.width, clientRect.height));
 		GL_CHECK(glEnable(GL_BLEND));
 		GL_CHECK(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 		GL_CHECK(glGenVertexArrays(1, &VAO));
@@ -229,9 +239,9 @@ namespace kyra {
 	void  KYRA_RENDERDEVICEGL_API RenderDeviceGL::draw(IDrawable& drawable) {
 		drawable.draw(*this);
 	}
-	
-	Rect KYRA_RENDERDEVICEGL_API RenderDeviceGL::getClientRect() const {
-		return m_Window->getClientRect();
+		
+	const IWindow& KYRA_RENDERDEVICEGL_API RenderDeviceGL::getWindow() const {
+		return *m_Window;
 	}
 	
 	void KYRA_RENDERDEVICEGL_API RenderDeviceGL::setActiveSyncEnabled(bool value) {

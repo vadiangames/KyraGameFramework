@@ -74,7 +74,7 @@ namespace kyra {
 		//! Draws the IDrawable by calling IDrawable::draw(IRenderDevice&)
 		virtual void draw(IDrawable& drawable) = 0;
 		
-		virtual Rect getClientRect() const = 0;
+		virtual const IWindow& getWindow() const = 0;
 	};
 
 }
