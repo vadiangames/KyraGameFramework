@@ -1,6 +1,8 @@
 #ifndef KYRAGAMEFRAMEWORK_MATH_VECTOR3_HPP
 #define KYRAGAMEFRAMEWORK_MATH_VECTOR3_HPP
 
+#include <KyraGameFramework/Math/Vector2.hpp>
+
 #include <array>
 
 namespace kyra {
@@ -52,6 +54,10 @@ namespace kyra {
 			/// \brief Adds the Vector2<T> vec to the vector
 			Vector3<T> operator + (const Vector3<float>& vec) const {
 				return Vector3<T>( m_Data[0] + vec.m_Data[0], m_Data[1] + vec.m_Data[1],m_Data[2] + vec.m_Data[2]);
+			}
+			
+			Vector3<T> operator + (const Vector2<float>& vec) const {
+				return Vector3<T>( m_Data[0] + vec.get(0), m_Data[1] + vec.get(1),m_Data[2]);
 			}
 			
 			/// \brief Multiplies the vector by value

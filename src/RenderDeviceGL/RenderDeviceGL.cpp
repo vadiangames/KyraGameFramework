@@ -240,7 +240,7 @@ namespace kyra {
 		drawable.draw(*this);
 	}
 		
-	const IWindow& KYRA_RENDERDEVICEGL_API RenderDeviceGL::getWindow() const {
+	IWindow& KYRA_RENDERDEVICEGL_API RenderDeviceGL::getWindow() const {
 		return *m_Window;
 	}
 	

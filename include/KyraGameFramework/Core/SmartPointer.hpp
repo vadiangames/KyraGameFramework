@@ -13,8 +13,8 @@ namespace kyra {
 			T* m_Object;
 			
 			public:
-			/// \brief Default constructor, sets m_Object to nullptr
-			SmartPointer() : m_Object(nullptr) {
+			/// \brief Default constructor, sets m_Object to the object or nullptr
+			SmartPointer(T* object = nullptr) : m_Object(object) {
 				
 			}
 			

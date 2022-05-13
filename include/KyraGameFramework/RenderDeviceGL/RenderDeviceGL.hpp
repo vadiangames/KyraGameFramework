@@ -55,7 +55,7 @@ namespace kyra {
 		
 		void draw(IDrawable& drawable) final;
 		
-		const IWindow& getWindow() const final;
+		IWindow& getWindow() const final;
 
 	};
 
