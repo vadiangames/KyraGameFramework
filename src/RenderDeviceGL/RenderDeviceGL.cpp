@@ -103,15 +103,7 @@ namespace kyra {
 		}
 		
 		Rect clientRect = window.getClientRect();
-		std::cout << "[CLIENT RECT]" << std::endl;
-		std::cout << clientRect.x << " " << clientRect.y << " " << clientRect.width << " " << clientRect.height << std::endl;
-		
 		Rect windowRect = window.getWindowRect();
-		std::cout << "[WINDOW RECT]" << std::endl;
-		std::cout << windowRect.x << " " << windowRect.y << " " << windowRect.width << " " << windowRect.height << std::endl;
-		
-		
-		
 		
 		GL_CHECK(glViewport(0, 0, clientRect.width, clientRect.height));
 		GL_CHECK(glEnable(GL_BLEND));

@@ -6,6 +6,7 @@
 #include <memory>
 
 #include <KyraGameFramework/Math/Vector3.hpp>
+#include <KyraGameFramework/Math/Vector4.hpp>
 #include <KyraGameFramework/AbstractRenderDevice/IDrawable.hpp>
 
 namespace kyra {
@@ -21,8 +22,8 @@ namespace kyra {
 		
 		typedef std::shared_ptr<IText> Ptr;
 		
-		//virtual void create(IRenderDevice& renderDevice) = 0;
 		virtual void setText(std::shared_ptr<IFont> font, const std::string& text, IRenderDevice& renderDevice) = 0;
+		virtual void setColor( const kyra::math::Vector4<float>& vec ) = 0;
 		
 		virtual kyra::math::Vector3<float> getPosition() const = 0;
 		virtual void setPosition(const kyra::math::Vector3<float>& position) = 0;

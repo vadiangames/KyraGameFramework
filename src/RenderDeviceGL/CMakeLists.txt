@@ -10,7 +10,7 @@ add_library(KyraRenderDeviceGL SHARED RenderDeviceGL.cpp
 									  Text.cpp
 									  RectangleShape.cpp)
 									  
-target_link_libraries(KyraRenderDeviceGL PRIVATE KyraAbstractRenderDevice KyraGLExtensionLoader opengl32 gdi32)							  
+target_link_libraries(KyraRenderDeviceGL PRIVATE KyraGLExtensionLoader opengl32 gdi32)							  
 target_compile_definitions(KyraRenderDeviceGL PRIVATE -DKYRA_RENDERDEVICEGL_EXPORTS)
 target_compile_options(KyraRenderDeviceGL PRIVATE -Wall -O3 -Winline)
 

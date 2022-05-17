@@ -1,12 +1,16 @@
 #ifndef KYRAGAMEFRAMEWORK_USERINTERFACE_BUTTON_HPP
 #define KYRAGAMEFRAMEWORK_USERINTERFACE_BUTTON_HPP
 
+
 #include <KyraGameFramework/UserInterface/Widget.hpp>
 #include <KyraGameFramework/AbstractRenderDevice/IFont.hpp>
 #include <KyraGameFramework/AbstractRenderDevice/IText.hpp>
 #include <KyraGameFramework/AbstractRenderDevice/ISprite.hpp>
 #include <KyraGameFramework/AbstractRenderDevice/IRectangleShape.hpp>
 #include <KyraGameFramework/RenderDeviceGL/Text.hpp>
+
+
+#include <iostream>
 
 namespace kyra {
 	
@@ -64,8 +68,7 @@ namespace kyra {
 			}
 			
 			static Button::Ptr create(IFont::Ptr font, const std::string& text, IRenderDevice::Ptr renderDevice) {
-				Button::Ptr button = Button::Ptr(new Button(font, text, renderDevice));
-				return button;
+				return Button::Ptr(new Button(font, text, renderDevice));;
 			} 
 			
 			void draw(IRenderDevice& device) final {

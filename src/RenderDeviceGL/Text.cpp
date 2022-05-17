@@ -39,6 +39,11 @@ namespace kyra {
 	math::Vector3<float> KYRA_RENDERDEVICEGL_API Text::getPosition() const {
 		return m_Position;
 	}
+	
+	void KYRA_RENDERDEVICEGL_API Text::setColor( const kyra::math::Vector4<float>& vec ) {
+		m_Color = vec;
+	}
+	
 
 	void KYRA_RENDERDEVICEGL_API Text::draw(IRenderDevice& renderDevice)  {
 			

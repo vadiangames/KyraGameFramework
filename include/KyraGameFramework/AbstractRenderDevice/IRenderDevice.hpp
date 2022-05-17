@@ -23,9 +23,7 @@ namespace kyra {
 	class KYRA_ARD_API IRenderDevice {
 		
 		public:
-		IRenderDevice();
-		virtual ~IRenderDevice();
-		
+
 		typedef std::shared_ptr<IRenderDevice> Ptr;
 		
 		virtual void setActiveSyncEnabled(bool value) = 0;
