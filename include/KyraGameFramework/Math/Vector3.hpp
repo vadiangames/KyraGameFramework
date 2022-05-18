@@ -18,17 +18,42 @@ namespace kyra {
 			std::array<T,3> m_Data;
 			
 			public:
-			/// \brief Constructor
-			Vector3() : m_Data{0,0,0} {
-			
+
+#if _MSC_VER == 1800
+
+			//Microsoft Visual Studio 2013 implementation
+			Vector3() {
+				m_Data[0] = 0;
+				m_Data[1] = 0;
+				m_Data[2] = 0;
 			}
+#else 
+			/// \brief Constructor
+			Vector3() : m_Data{ 0, 0, 0 } {
+
+			}
+#endif
 			
+#if _MSC_VER == 1800
+
+			//Microsoft Visual Studio 2013 implementation
+
+			Vector3(T x, T y, T z) {
+				m_Data[0] = x;
+				m_Data[1] = y;
+				m_Data[2] = z;
+			}
+
+#else
 			/// \brief The data of the vector
 			/// \param x The x-coordinate of the vector
 			/// \param y The y-coordinate of the vector
 			/// \param z The z-coordinate of the vector
-			Vector3(T x, T y, T z) : m_Data{x,y,z} {}
-			
+
+			Vector3(T x, T y, T z) : m_Data{ x, y, z } {}
+
+#endif
+
 			/// \brief Returns a pointer to the first data-element
 			void* getData() {
 				return &m_Data[0];

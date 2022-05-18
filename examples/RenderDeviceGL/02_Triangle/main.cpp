@@ -32,14 +32,14 @@ class MyApplication : public kyra::SystemEventListener {
 
 	kyra::Window m_Window;
 	kyra::RenderDeviceGL m_Renderer;
-	
+
 	public:
 	MyApplication() {}
 	~MyApplication() {}
 	
 	
 	//! Implementation of kyra::SystemEventListener::onClose()
-	virtual void onClose() {
+	virtual void onClose() final {
 		m_Window.close();
 	}
 		

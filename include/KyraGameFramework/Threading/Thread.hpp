@@ -2,50 +2,29 @@
 #define KYRAGAMEFRAMEWORK_THREADING_THREAD_HPP
 
 #include <KyraGameFramework/Threading/Task.hpp>
+#include <thread>
 
 namespace kyra {
 	
 	namespace threading {
 		
 		/// A thread is used to run parallell tasks
-		class Thread {
+		class KYRA_THREADING_API Thread {
 			
 			std::thread m_Thread;	/// The operating system thread to run the task
 			Task* m_Task;			/// The task to run
 			
 			public:
-			Thread() : m_Task(nullptr) {
+			Thread();
 
-			}
-
-			~Thread() {
-				/// Check if the thread runs in the background, we have to join it if it runs
-				if(m_Thread.joinable()) {
-					m_Thread.join();
-				}
-			}
+			~Thread();
 			
-			void run(Task& task) {
-				/// Initialise the task und run it
-				m_Task = &task;
-				m_Task->init();
-				m_Thread = std::thread(Task::runFunc,m_Task);
-			}
+			void run(Task& task);
 			
-			void wait() {
-				/// Wait for the end of the task
-				if(m_Thread.joinable()) {
-					m_Thread.join();
-				}
-			}
+			void wait();
 			
 			/// Returns true if the task if finished or if there was no task to run
-			bool isFinished() {
-				if(m_Task) {
-					return m_Task->isFinished();
-				}
-				return true;
-			}
+			bool isFinished();
 			
 		};
 

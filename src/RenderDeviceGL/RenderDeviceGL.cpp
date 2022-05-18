@@ -103,7 +103,6 @@ namespace kyra {
 		}
 		
 		Rect clientRect = window.getClientRect();
-		Rect windowRect = window.getWindowRect();
 		
 		GL_CHECK(glViewport(0, 0, clientRect.width, clientRect.height));
 		GL_CHECK(glEnable(GL_BLEND));
@@ -208,6 +207,7 @@ namespace kyra {
 		}
 		if(!indexBuffer) {
 			std::cout << "[WARN] IndexBuffer not initialised!" << std::endl;
+			return;
 		}
 		
 		buffer->bind();
@@ -232,7 +232,7 @@ namespace kyra {
 		drawable.draw(*this);
 	}
 		
-	IWindow& KYRA_RENDERDEVICEGL_API RenderDeviceGL::getWindow() const {
+	KYRA_RENDERDEVICEGL_API IWindow& RenderDeviceGL::getWindow() const {
 		return *m_Window;
 	}
 	

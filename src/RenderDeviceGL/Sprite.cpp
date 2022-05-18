@@ -38,9 +38,8 @@ namespace kyra {
 	}
 		
 
-	KYRA_RENDERDEVICEGL_API Sprite::Sprite() {
-		m_Color = math::Vector4<float>(1.f,1.f,1.0f,1.0f);
-		m_Position = math::Vector3<float>(0.f,0.f,0.f);
+	KYRA_RENDERDEVICEGL_API Sprite::Sprite() : m_Position(math::Vector3<float>(0.f,0.f,0.f)), m_Color(math::Vector4<float>(1.f,1.f,1.0f,1.0f)) {
+		
 	}
 		
 	KYRA_RENDERDEVICEGL_API Sprite::~Sprite() {

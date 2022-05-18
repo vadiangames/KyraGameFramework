@@ -13,7 +13,7 @@ namespace kyra {
 		size_t m_Elements;
 		
 		public:
-		IndexBuffer() : m_Id(0) {
+		IndexBuffer() : m_Id(0), m_Elements(0) {
 			
 		}
 		
@@ -23,11 +23,11 @@ namespace kyra {
 			}
 		}
 		
-		size_t getElementCount() const {
+		size_t getElementCount() const final {
 			return m_Elements;
 		}
 		
-		void create(size_t indizes, size_t totalSize, void* data, BufferType type ) {
+		void create(size_t indizes, size_t totalSize, void* data, BufferType type ) final {
 			if(m_Id) {
 				GL_CHECK(glDeleteBuffers(1,&m_Id));
 				m_Id = 0;
@@ -42,11 +42,11 @@ namespace kyra {
 			GL_CHECK(glBufferData(GL_ELEMENT_ARRAY_BUFFER, totalSize, data, glType));
 		}
 		
-		void bind() {
+		void bind() final {
 			GL_CHECK(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_Id));
 		}
 		
-		void unbind() {
+		void unbind() final {
 			GL_CHECK(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
 		}
 				

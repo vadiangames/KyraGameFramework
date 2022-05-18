@@ -20,7 +20,7 @@ namespace kyra {
 	/// Programs, fonts, textures and buffers are created and managed via the class.
 
 	//! Abstract class for all RenderDevice-Classes
-	class KYRA_ARD_API IRenderDevice {
+	class IRenderDevice {
 		
 		public:
 

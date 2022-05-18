@@ -5,7 +5,7 @@
 #include <memory>
 #include <filesystem>
 
-#if defined(__WIN32__) || defined(__WIN64__)
+#if defined(__WIN32__) || defined(__WIN64__) || defined(_WIN32) || defined(_WIN64)
 	#include <windows.h>
 #endif 
 
@@ -20,14 +20,14 @@ namespace kyra {
 	template<class T>
 	class Plugin {
 		
-		#if defined(__WIN32__) || defined(__WIN64__)
+		#if defined(__WIN32__) || defined(__WIN64__) || defined(_WIN32) || defined(_WIN64)
 			HMODULE m_Module;
 		#endif 
 		
 		std::shared_ptr<T> m_Instance;
 		
 		public:
-		#if defined(__WIN32__) || defined(__WIN64__)
+		#if defined(__WIN32__) || defined(__WIN64__) || defined(_WIN32) || defined(_WIN64)
 			Plugin() : m_Module(NULL) {
 			
 			}
@@ -42,7 +42,7 @@ namespace kyra {
 		}
 		
 		bool isLoaded() const {
-			#if defined(__WIN32__) || defined(__WIN64__)
+			#if defined(__WIN32__) || defined(__WIN64__) || defined(_WIN32) || defined(_WIN64)
 				return (m_Module && (m_Instance.get() != nullptr));
 			#else
 				#warning __FILE__ __PRETTY_FUNCTION__ is not implemented for this operating system

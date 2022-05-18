@@ -6,7 +6,7 @@
 #include <KyraGameFramework/Window/SystemEventListener.hpp>
 #include <KyraGameFramework/Window/SystemEventDispatcher.hpp>
 
-#if defined(__WIN32__) || defined(__WIN64__)
+#if defined(__WIN32__) || defined(__WIN64__) || defined(_WIN32) || defined(_WIN64)
 
 #include <KyraGameFramework/Window/Windows/WindowWin32.hpp>
 

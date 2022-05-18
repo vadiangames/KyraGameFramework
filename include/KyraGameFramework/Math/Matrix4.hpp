@@ -3,6 +3,12 @@
 
 #include <array>
 
+#ifdef _MSC_VER
+
+#define constexpr
+
+#endif
+
 namespace kyra {
 	
 	namespace math {
@@ -17,8 +23,35 @@ namespace kyra {
 			
 			public:
 			/// \brief Constructor, sets identity matrix
-			constexpr Matrix4() : m_Data{1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1} {}
+#if _MSC_VER == 1800
+				
+			//Visual Studio 2013 implementation
+			Matrix4() {
+				m_Data[0][0] = (T)(1);
+				m_Data[0][1] = (T)(0);
+				m_Data[0][2] = (T)(0);
+				m_Data[0][3] = (T)(0);
+
+				m_Data[1][0] = (T)(0);
+				m_Data[1][1] =  (T)(1);
+				m_Data[1][2] =  (T)(0);
+				m_Data[1][3] =  (T)(0);
 			
+				m_Data[2][0] =  (T)(0);
+				m_Data[2][1] =  (T)(0);
+				m_Data[2][2] = (T)(1);
+				m_Data[2][3] = (T)(0);
+
+				m_Data[3][0] = (T)(0);
+				m_Data[3][1] = (T)(0);
+				m_Data[3][2] = (T)(0);
+				m_Data[3][3] = (T)(1);
+			}
+
+#else
+			constexpr Matrix4() : m_Data{1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1} {}
+	
+#endif
 			/// \brief returns the n-th elemen of the matrix, given by the index
 			std::array<T,4>& operator[](size_t index) {
 				return m_Data[index];

@@ -37,28 +37,28 @@ namespace kyra {
 		/// \brief creates the vertexarray
 		/// \param the primitive type of the vertexarray
 		/// \param the number of entries in the vertexarray
-		void create(PrimitiveType type, size_t size) {
+		void create(PrimitiveType type, size_t size) final {
 			m_PrimitiveType = type;
 		    resize(size);
 		}	
 				
 		/// \brief returns the total size of the vertices data
-		size_t getSize() const {
+		size_t getSize() const final {
 			return m_Data.size() * sizeof(VertexType);
 		}
 		
 		/// \brief returns the number of entries in the vertexarray
-		size_t count() const {
+		size_t count() const final {
 			return m_Data.size();
 		}
 		
 		/// \brief resizes the vertexarray to the given size
-		void resize(size_t size) {
+		void resize(size_t size) final {
 			m_Data.resize(size);
 		}
 		
 		/// \brief returns a pointer to the first entry of the vertices-data
-		void* getData() {
+		void* getData() final {
 			return &m_Data[0];
 		}
 		
@@ -68,12 +68,12 @@ namespace kyra {
 		}
 		
 		/// \brief changes the PrimitiveType
-		void setPrimitiveType(PrimitiveType type) {
+		void setPrimitiveType(PrimitiveType type) final {
 			m_PrimitiveType = type;
 		}
 		
 		/// \brief returns the PrimitiveType
-		PrimitiveType getPrimitiveType() const {
+		PrimitiveType getPrimitiveType() const final {
 			return m_PrimitiveType;
 		}
 		

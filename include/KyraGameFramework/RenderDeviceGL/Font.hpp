@@ -29,7 +29,7 @@ namespace kyra {
 		unsigned int m_CharacterSize;
 		
 		public:
-		Font() : m_FreeType(NULL), m_Face(NULL) {
+		Font() : m_FreeType(NULL), m_Face(NULL), m_CharacterSize(12) {
 			
 		}
 		
@@ -49,7 +49,7 @@ namespace kyra {
 			return m_Characters[c];
 		}
 		
-		bool loadFromFile(const std::string& file, unsigned int charSize) {
+		bool loadFromFile(const std::string& file, unsigned int charSize) final {
 						
 			if(FT_Init_FreeType(&m_FreeType)) {
 				std::cout << "[ERROR] Can not initialize FreeType" << std::endl;

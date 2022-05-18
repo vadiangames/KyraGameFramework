@@ -1,8 +1,7 @@
 #ifndef KYRAGAMEFRAMEWORK_RENDERDEVICEGL_IMAGE_HPP
 #define KYRAGAMEFRAMEWORK_RENDERDEVICEGL_IMAGE_HPP
 
-#include <filesystem>
-
+#include <KyraGameFramework/Core/Filesystem.hpp>
 #include <KyraGameFramework/RenderDeviceGL/DLL.hpp>
 
 namespace kyra {

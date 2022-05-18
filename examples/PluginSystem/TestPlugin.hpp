@@ -18,7 +18,7 @@ class KYRA_TESTPLUGIN_API MyPlugin : public TestPluginInterface {
 	~MyPlugin();
 	
 	
-	virtual std::string getDescription() const;
+	virtual std::string getDescription() const final;
 };
 
 extern "C" {

@@ -1,41 +1,28 @@
 #ifndef KYRAGAMEFRAMEWORK_THREADING_TASK_HPP
 #define KYRAGAMEFRAMEWORK_THREADING_TASK_HPP
 
+#include <KyraGameFramework/Threading/DLL.hpp>
 #include <atomic>
 #include <functional>
 
 namespace kyra {
 	namespace threading {
-		class Task {
+		class Thread;
+		class KYRA_THREADING_API Task {
 	
 			std::atomic<bool> m_IsFinished;
 			std::function<void()> m_Function;
 		
 			public:
-			Task() : m_IsFinished(true) {
-			
-			}
+			Task();
+			explicit Task(std::function<void()> func);
+			~Task();
 	
-			Task(std::function<void()> func) : m_IsFinished(true), m_Function(func) {
-			
-			}
+			void init();
 	
-			~Task() {
-
-			}
-	
-			void init() {
-				m_IsFinished = false;
-			}
-	
-			bool isFinished() const {
-				return m_IsFinished;
-			}
+			bool isFinished() const;
 		
-			static void runFunc(Task* task, Thread* thread) {
-				task->m_Function();
-				task->m_IsFinished = true;
-			}
+			static void runFunc(Task* task);
 		};
 	}
 }

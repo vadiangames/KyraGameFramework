@@ -58,7 +58,7 @@ namespace kyra {
 		}
 	}
 		
-	unsigned char* KYRA_RENDERDEVICEGL_API Image::getData() {
+	KYRA_RENDERDEVICEGL_API unsigned char*  Image::getData() {
 		return m_Data;
 	}
 

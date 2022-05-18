@@ -40,16 +40,12 @@ namespace kyra {
 		virtual void close() final;
 		
 		/** Return the window-handle */
-		virtual void* getHandle() const final;
+		virtual size_t getHandle() const final;
 		
 		virtual Rect getWindowRect() const final;
 		
 		/// \brief Returns the client rect
 		virtual Rect getClientRect() const final;
-		
-		/// \todo Returns the height of the titleBar
-		// virtual float getTitleBarWidth() const;
-		
 		
 	};
 	

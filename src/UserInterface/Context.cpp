@@ -29,30 +29,25 @@ namespace kyra {
 			m_WidgetList.remove(widget);
 		}
 		
-		/// \todo Can we make this function a little bit nicer?
 		void KYRA_USERINTERFACE_API Context::onMouseMoved(uint32_t x, uint32_t y) {
-			//Check for a hovered widget
-			for(auto& widget : m_WidgetList) {
-				if(widget->contains(math::Vector2<float>( (float)(x), (float)(y)))) {
-					//Was the hovered widget already hovered, do nothing and leave the function
-					if(m_HoveredWidget != widget) {
-						if(m_HoveredWidget) {
-							m_HoveredWidget->execute(WidgetEvent::ON_LEAVE);
-						}
-						m_HoveredWidget = widget;
-						if(m_HoveredWidget) {
-								m_HoveredWidget->execute(WidgetEvent::ON_HOVER);
-						}
-					}
-					return;
+		
+			std::list<Widget::Ptr>::iterator hoveredWidget = std::find_if(m_WidgetList.begin(), 
+																		  m_WidgetList.end(),
+																		  [&](Widget::Ptr widget){
+																			return widget->contains(math::Vector2<float>( (float)(x), (float)(y)));
+			});
+			
+			if(m_HoveredWidget != *hoveredWidget) {
+				if(m_HoveredWidget) {
+					m_HoveredWidget->execute(WidgetEvent::ON_LEAVE);
+				}
+				m_HoveredWidget = (hoveredWidget == m_WidgetList.end()) ? nullptr : *hoveredWidget;
+				if(m_HoveredWidget) {
+					m_HoveredWidget->execute(WidgetEvent::ON_HOVER);	
 				}
 			}
-			//There is no hovered widget, check if m_HoveredWidget is set and leave it
-			if(m_HoveredWidget) {
-				m_HoveredWidget->execute(WidgetEvent::ON_LEAVE);
-			}
-			m_HoveredWidget = Widget::Ptr(nullptr);
 		}
+			
 		
 	}
 }

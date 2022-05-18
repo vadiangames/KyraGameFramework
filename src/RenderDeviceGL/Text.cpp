@@ -5,10 +5,10 @@
 
 namespace kyra {
 
-	KYRA_RENDERDEVICEGL_API Text::Text()  { 
-		m_Transformation = math::Matrix4<float>::getIdentity();
-		m_Color = math::Vector4<float>(1.0f,1.0f,1.0f,1.0f);
-		m_Position = math::Vector3<float>(0.0f,0.0f,0.0f);
+	KYRA_RENDERDEVICEGL_API Text::Text() : m_Position(math::Vector3<float>(0.0f,0.0f,0.0f)),  
+										   m_Transformation(math::Matrix4<float>::getIdentity()),
+										   m_Color(math::Vector4<float>(1.0f,1.0f,1.0f,1.0f)) {
+
 	}
 		
 	KYRA_RENDERDEVICEGL_API Text::~Text() {
@@ -64,18 +64,14 @@ namespace kyra {
 		float scale = 1.0f;
 			
 		float x = m_Position[0];
-		float xpos = 0;
-		float ypos = 0;
-		float w = 0;
-		float h = 0;
 		
 		for(c = m_Text.begin(); c != m_Text.end(); ++c) {
 			
-			xpos = x + m_Font->getCharacterBearing(*c)[0] * scale;
-			ypos = m_Position[1];
+			float xpos = x + m_Font->getCharacterBearing(*c)[0] * scale;
+			float ypos = m_Position[1];
 				
-			w = m_Font->getCharacterSize(*c)[0] * scale;
-			h = m_Font->getCharacterSize(*c)[1] * scale;
+			float w = m_Font->getCharacterSize(*c)[0] * scale;
+			float h = m_Font->getCharacterSize(*c)[1] * scale;
 			
 			float v = (m_Font->getCharacterBearing(*c)[1] * scale) - (m_Font->getCharacterSize(*c)[1] * scale);
 			

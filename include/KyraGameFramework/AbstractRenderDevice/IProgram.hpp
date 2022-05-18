@@ -2,7 +2,8 @@
 #define KYRAGAMEFRAMEWORK_ABSTRACTRENDERDEVICE_IPROGRAM_HPP
 
 #include <string>
-#include <filesystem>
+#include <KyraGameFramework/Core/Filesystem.hpp>
+
 #include <memory>
 
 #include <KyraGameFramework/Math/Vector3.hpp>

@@ -18,8 +18,7 @@ namespace kyra {
 		UnregisterClassW(L"KYRA_WINDOW_CLASS", GetModuleHandle(NULL) );
 	}
 	
-	LRESULT CALLBACK KYRA_WINDOW_API WindowWin32::windowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-		
+	LRESULT CALLBACK WindowWin32::windowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 			SystemEventDispatcher* dispatcher = reinterpret_cast<SystemEventDispatcher*>(GetWindowLongPtr( hWnd, GWLP_USERDATA));
 			if(dispatcher) {
 				switch(msg) {
@@ -72,10 +71,7 @@ namespace kyra {
 		if(!registerWindowClass()) {
 			return false;
 		}
-		
-		int width = windowSettings.width;
-		int height = windowSettings.height;
-		
+	
 		//Adjust the window size ( Solves the rendering behind title-bar-problem )
 		RECT rect;
 		rect.left = 0;
@@ -83,8 +79,8 @@ namespace kyra {
 		rect.top = 0;
 		rect.bottom = windowSettings.height;
 		AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, false);
-		width = (rect.right - rect.left);
-		height = (rect.bottom - rect.top);
+		int width = (rect.right - rect.left);
+		int height = (rect.bottom - rect.top);
 			
 		m_WindowHandle = CreateWindowW( L"KYRA_WINDOW_CLASS", 
 										windowSettings.title.c_str(),
@@ -126,9 +122,10 @@ namespace kyra {
 		m_WindowHandle = NULL;
 	}
 	
-	void* KYRA_WINDOW_API WindowWin32::getHandle() const {
-		return reinterpret_cast<void*>(m_WindowHandle);
+	size_t KYRA_WINDOW_API WindowWin32::getHandle() const {
+			return reinterpret_cast<size_t>(m_WindowHandle);
 	}
+
 	
 		
 	Rect KYRA_WINDOW_API WindowWin32::getWindowRect() const {

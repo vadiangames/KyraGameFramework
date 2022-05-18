@@ -2,6 +2,7 @@
 #define KYRAGAMEFRAMEWORK_PLUGINSYSTEM_PLUGINSYSTEM_HPP
 
 #include <KyraGameFramework/PluginSystem/Plugin.hpp>
+#include <KyraGameFramework/Core/Filesystem.hpp>
 
 namespace kyra {
 	

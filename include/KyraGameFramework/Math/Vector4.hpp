@@ -15,12 +15,40 @@ namespace kyra {
 			std::array<T,4> m_Data;
 			
 			public:
+
+#if _MSC_VER == 1800	
+			//Visual Studio 2013 implementation
+			Vector4()  {
+				m_Data[0] = 0;
+				m_Data[1] = 0;
+				m_Data[2] = 0;
+				m_Data[3] = 0;
+			}
+#else 
 			/// \brief Constructor
-			Vector4() : m_Data{0,0,0,0} {}
+			Vector4() : m_Data{0,0,0,0} {
 			
+			}
+#endif
+
+#if _MSC_VER == 1800
+			
+			// Visual Studio 2013 implementation
+			Vector4(T x, T y, T z, T v)  {
+				m_Data[0] = x;
+				m_Data[1] = y;
+				m_Data[2] = z;
+				m_Data[3] = v;
+			}
+
+#else
 			/// \brief Constructor
-			Vector4(T x, T y, T z, T v ) : m_Data{x,y,z,v} {}
+			Vector4(T x, T y, T z, T v ) : m_Data{x,y,z,v} {
 			
+			}
+		
+#endif
+
 			/// \brief Returns a pointer to the first element
 			void* getData() {
 				return &m_Data[0];

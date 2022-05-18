@@ -26,8 +26,6 @@ namespace kyra {
 
 		virtual void create(IRenderDevice& renderDevice) = 0;
 		
-		virtual void draw(IRenderDevice& renderDevice) = 0;
-
 		virtual void setColor(const math::Vector4<float>& color) = 0;
 	};
 

@@ -14,7 +14,7 @@ class MyApplication : public kyra::SystemEventListener {
 	MyApplication() {}
 	~MyApplication() {}
 	
-	virtual void onClose() {
+	virtual void onClose() final {
 		m_Window.close();
 	}
 	

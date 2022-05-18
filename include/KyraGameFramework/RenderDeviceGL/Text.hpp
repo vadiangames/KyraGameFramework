@@ -24,8 +24,6 @@ namespace kyra {
 		kyra::math::Vector4<float> m_Color;
 		IFont::Ptr m_Font;
 		
-		GLuint m_VAO;
-		
 		std::string m_Text;
 		
 		static IProgram::Ptr g_Program;
@@ -46,7 +44,7 @@ namespace kyra {
 		
 		void setColor( const kyra::math::Vector4<float>& vec ) final;
 
-		inline kyra::math::Vector3<float> getPosition() const;
+		inline kyra::math::Vector3<float> getPosition() const final;
 
 		void draw(IRenderDevice& renderDevice) final;
 

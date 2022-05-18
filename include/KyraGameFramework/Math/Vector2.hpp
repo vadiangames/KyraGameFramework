@@ -16,13 +16,37 @@ namespace kyra {
 			
 			public:
 			/// \brief Constructor
-			Vector2() : m_Data{0,0} {}
+
+#if _MSC_VER == 1800
+			Vector2() {
+				m_Data[0] = 0;
+				m_Data[1] = 0;
+			}
+#else
+			Vector2() : m_Data{ 0, 0 } {
+
+			}
+#endif
 			
+
+#if _MSC_VER == 1800
+
+			Vector2(T x, T y)  {
+				m_Data[0] = x;
+				m_Data[1] = y;
+			}
+
+
+#else
 			/// \brief Constructor
 			/// \param x The x coordinate of the vector
 			/// \param y The y coordinate of the vector
-			Vector2(T x, T y) : m_Data{x,y} {}
-			
+			Vector2(T x, T y) : m_Data{ x, y } {
+
+			}
+
+#endif	
+
 			/// \brief Returns a poiner to the first data-element
 			void* getData() {
 				return &m_Data[0];
