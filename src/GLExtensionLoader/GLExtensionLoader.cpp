@@ -47,7 +47,7 @@ KYRA_GLEXTENSIONLOADER_API PFNGLDISABLEVERTEXATTRIBARRAYPROC glDisableVertexAttr
 KYRA_GLEXTENSIONLOADER_API PFNGLGENERATEMIPMAPPROC glGenerateMipmap = NULL;
 KYRA_GLEXTENSIONLOADER_API PFNGLACTIVETEXTUREPROC glActiveTexture = NULL;
 
-#if defined( _WIN32 ) || defined( _WIN64 ) 
+#if defined( _WIN32 ) || defined( _WIN64 ) || defined(__WIN32__) || defined(__WIN64__)
 	KYRA_GLEXTENSIONLOADER_API PFNWGLCREATECONTEXTATTRIBSARBPROC wglCreateContextAttribsARB = NULL;
 #endif
 
@@ -96,7 +96,7 @@ namespace kyra {
 		INIT_GL_FUNC(glGenerateMipmap, PFNGLGENERATEMIPMAPPROC);
 		INIT_GL_FUNC(glActiveTexture, PFNGLACTIVETEXTUREPROC);
 		
-		#if defined( _WIN32 ) || defined( _WIN64 ) || defined(__WIN32__) || defined(__WIN64__)
+		#if defined( _WIN32 ) || defined( _WIN64 ) || defined(__WIN32__) || defined(__WIN64__) 
 			INIT_GL_FUNC(wglCreateContextAttribsARB, PFNWGLCREATECONTEXTATTRIBSARBPROC );
 		#endif
 			

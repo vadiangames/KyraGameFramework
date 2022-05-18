@@ -2,7 +2,6 @@
 #define KYRAGAMEFRAMEWORK_ABSTRACTRENDERDEVICE_IRECTANGLESHAPE_HPP
 
 #include <KyraGameFramework/AbstractRenderDevice/IDrawable.hpp>
-#include <KyraGameFramework/AbstractRenderDevice/IRenderDevice.hpp>
 #include <KyraGameFramework/Math/Vector2.hpp>
 #include <KyraGameFramework/Math/Vector3.hpp>
 #include <KyraGameFramework/Math/Vector4.hpp>
@@ -10,6 +9,7 @@
 
 namespace kyra {
 	
+	class IRenderDevice;
 	class IRectangleShape : public IDrawable {
 		
 		public:

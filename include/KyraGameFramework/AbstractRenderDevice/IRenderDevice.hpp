@@ -13,7 +13,7 @@
 #include <KyraGameFramework/Window/IWindow.hpp>
 
 #include <filesystem>
- 
+
 namespace kyra {
 
 	/// The RenderDevice is the most important class within the rendering API. 
