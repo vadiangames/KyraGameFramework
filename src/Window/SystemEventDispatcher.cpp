@@ -62,5 +62,13 @@ namespace kyra {
 		});
 	}
 	
+	void KYRA_WINDOW_API SystemEventDispatcher::sendOnTextEnteredEvent(char character) {
+		std::for_each(m_Listeners.begin(),m_Listeners.end(), [&](SystemEventListener* listener) {
+			listener->onTextEntered(character);
+		});
+	}
+	
+		
+	
 	
 }

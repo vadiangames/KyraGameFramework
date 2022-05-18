@@ -24,6 +24,7 @@ namespace kyra {
 		void sendOnKeyPressedEvent(size_t key);
 		void sendOnKeyReleasedEvent(size_t key);
 		void sendOnMouseMovedEvent(int x, int y);
+		void sendOnTextEnteredEvent(char character);
 	};
 	
 }

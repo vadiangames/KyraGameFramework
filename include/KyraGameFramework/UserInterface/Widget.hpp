@@ -30,6 +30,10 @@ namespace kyra {
 			
 			typedef std::shared_ptr<Widget> Ptr;
 			
+			virtual void onTextEntered( char character ) {
+				
+			}
+			
 			virtual void setSize( const math::Vector2<float>& vec ) = 0;
 			virtual math::Vector2<float> getSize() const = 0;
 			virtual bool contains(const math::Vector2<float>& vec) const = 0;

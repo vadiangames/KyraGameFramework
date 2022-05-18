@@ -2,7 +2,8 @@
 add_library(KyraUserInterface SHARED Widget.cpp
 									 Context.cpp 
 									 Button.cpp
-									 ImageButton.cpp )
+									 ImageButton.cpp
+									 EditBox.cpp )
 									 
 target_compile_definitions(KyraUserInterface PRIVATE -DKYRA_USERINTERFACE_EXPORTS)
 

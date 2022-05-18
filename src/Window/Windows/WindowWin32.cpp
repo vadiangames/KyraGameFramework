@@ -43,6 +43,9 @@ namespace kyra {
 					case WM_MOUSEMOVE:
 						dispatcher->sendOnMouseMovedEvent(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
 					return 0;
+					case WM_CHAR:
+						dispatcher->sendOnTextEntered( (char)(wParam) );
+					break;
 				}
 			}
 			return DefWindowProcW(hWnd, msg, wParam, lParam);

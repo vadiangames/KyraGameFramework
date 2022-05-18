@@ -19,7 +19,7 @@ namespace kyra {
 		virtual void onFocusGained();
 		virtual void onKeyPressed(size_t key);
 		virtual void onKeyReleased(size_t key);
-		virtual void onTextEntered();
+		virtual void onTextEntered(char character);
 		virtual void onMouseMoved( uint32_t x, uint32_t y);
 		virtual void onMouseWheelMoved();
 		virtual void onMouseButtonPressed();
