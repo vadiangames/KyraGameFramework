@@ -39,7 +39,7 @@ namespace kyra {
 		~Text();
 
 		void setText(IFont::Ptr font, const std::string& text, IRenderDevice& renderDevice) final;
-	
+		std::string getText() const final;
 		void setPosition(const kyra::math::Vector3<float>& vec) final;
 		
 		void setColor( const kyra::math::Vector4<float>& vec ) final;

@@ -5,7 +5,7 @@ namespace kyra	{
 	
 	namespace ui {
 	
-		KYRA_USERINTERFACE_API Widget::Widget() {
+		KYRA_USERINTERFACE_API Widget::Widget(IRenderDevice::Ptr renderDevice) : m_RenderDevice(renderDevice) {
 		
 		}
 	

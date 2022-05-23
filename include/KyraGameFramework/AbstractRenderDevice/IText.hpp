@@ -23,6 +23,7 @@ namespace kyra {
 		typedef std::shared_ptr<IText> Ptr;
 		
 		virtual void setText(std::shared_ptr<IFont> font, const std::string& text, IRenderDevice& renderDevice) = 0;
+		virtual std::string getText() const = 0;
 		virtual void setColor( const kyra::math::Vector4<float>& vec ) = 0;
 		
 		virtual kyra::math::Vector3<float> getPosition() const = 0;

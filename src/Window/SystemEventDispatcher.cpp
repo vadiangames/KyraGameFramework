@@ -68,6 +68,18 @@ namespace kyra {
 		});
 	}
 	
+	void KYRA_WINDOW_API SystemEventDispatcher::sendOnMouseButtonPressedEvent() {
+		std::for_each(m_Listeners.begin(),m_Listeners.end(), [&](SystemEventListener* listener) {
+			listener->onMouseButtonPressed();
+		});
+	}
+	
+	void KYRA_WINDOW_API SystemEventDispatcher::sendOnMouseButtonReleasedEvent() {
+		std::for_each(m_Listeners.begin(),m_Listeners.end(), [&](SystemEventListener* listener) {
+			listener->onMouseButtonReleased();
+		});
+	}
+	
 		
 	
 	

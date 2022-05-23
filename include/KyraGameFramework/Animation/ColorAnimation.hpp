@@ -32,6 +32,10 @@ namespace kyra {
 			m_Loop = loop;
 		}
 		
+		bool isRunning() const {
+			return m_IsRunning;
+		}
+		
 		void start() {
 			m_IsRunning = true;
 		}

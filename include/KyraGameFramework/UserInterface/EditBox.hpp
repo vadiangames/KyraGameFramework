@@ -18,6 +18,7 @@ namespace kyra {
 				
 		class KYRA_USERINTERFACE_API EditBox : public Widget {
 			
+			IFont::Ptr m_Font;
 			IText::Ptr m_Text;
 			IRectangleShape::Ptr m_Shape;
 			IRenderDevice::Ptr m_RenderDevice;
@@ -28,10 +29,33 @@ namespace kyra {
 			~EditBox();
 			
 			virtual void onTextEntered( char character ) {
-				m_Text.append(character);
+				std::string text = m_Text->getText();
+				switch(character) {
+					case 0x08: // Backspace
+						if(text.size() > 0) {
+							text.pop_back();
+						}
+					break;
+					case 0x0D: // Carriage return
+						return;
+					case 0x09:
+						return;
+					default:
+						text = text + character;
+				}
+				m_Text->setText( m_Font, text, *(getRenderDevice()) );
 			}
 			
-			typedef std::shared_ptr<Button> Ptr;
+			constexpr virtual bool hasChildElements() const final {
+				return false;
+			}
+			
+			virtual Widget::Ptr getHoveredChild( const math::Vector2<float>& vec) {
+				return Widget::Ptr(nullptr);
+			}
+			
+			
+			typedef std::shared_ptr<EditBox> Ptr;
 			
 			void setPosition(const math::Vector3<float>& position);
 			
@@ -43,7 +67,7 @@ namespace kyra {
 			
 			bool contains(const math::Vector2<float>& vec) const final;
 			
-			static Button::Ptr create(IFont::Ptr font, const std::string& text, IRenderDevice::Ptr renderDevice);
+			static EditBox::Ptr create(IFont::Ptr font, const std::string& text, IRenderDevice::Ptr renderDevice);
 			
 			void draw(IRenderDevice& device) final;
 		};

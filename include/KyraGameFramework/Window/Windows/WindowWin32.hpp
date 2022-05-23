@@ -10,6 +10,7 @@ namespace kyra {
 	class KYRA_WINDOW_API WindowWin32 : public IWindow {
 		
 		HWND m_WindowHandle;
+		HCURSOR m_Cursor;
 		
 		//! Callback for the system-events, sends event to the registered SystemEventListeners
 		static LRESULT CALLBACK windowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);

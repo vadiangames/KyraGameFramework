@@ -44,6 +44,12 @@ namespace kyra {
 			/// \brief Handle the onMouseMoved-Event
 			void onMouseMoved(uint32_t x, uint32_t y) final;
 			
+			void onMouseButtonPressed() final;
+			
+			void onMouseButtonReleased() final;
+			
+			void onTextEntered(char character) final;
+			
 		};
 	}
 }

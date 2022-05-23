@@ -6,7 +6,7 @@ namespace kyra {
 	
 	namespace ui {
 		
-		KYRA_USERINTERFACE_API ImageButton::ImageButton(IFont::Ptr font, const std::string& text, ITexture::Ptr texture, IRenderDevice::Ptr renderDevice) {
+		KYRA_USERINTERFACE_API ImageButton::ImageButton(IFont::Ptr font, const std::string& text, ITexture::Ptr texture, IRenderDevice::Ptr renderDevice) : Widget(renderDevice) {
 			m_Text = IText::Ptr(new Text());
 			m_Text->setText(font, text, *renderDevice);
 			m_Texture = texture;

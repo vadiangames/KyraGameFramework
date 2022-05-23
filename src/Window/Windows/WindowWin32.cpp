@@ -1,16 +1,19 @@
 
 #include <KyraGameFramework/Window/Windows/WindowWin32.hpp>
-#include <iostream>
 #include <windowsx.h>
 
 namespace kyra {
 	
-	KYRA_WINDOW_API WindowWin32::WindowWin32() : m_WindowHandle(NULL) {
+	KYRA_WINDOW_API WindowWin32::WindowWin32() : m_WindowHandle(NULL), m_Cursor(NULL) {
 	
 	}
 		
 	KYRA_WINDOW_API WindowWin32::~WindowWin32() {
 			
+		if(m_Cursor) {
+			DestroyCursor(m_Cursor);
+		}
+		
 		if(m_WindowHandle) {
 			DestroyWindow(m_WindowHandle);
 		}
@@ -22,11 +25,35 @@ namespace kyra {
 			SystemEventDispatcher* dispatcher = reinterpret_cast<SystemEventDispatcher*>(GetWindowLongPtr( hWnd, GWLP_USERDATA));
 			if(dispatcher) {
 				switch(msg) {
-					case WM_CLOSE:
-						dispatcher->sendOnCloseEvent();
+					case WM_MOUSEMOVE:
+						dispatcher->sendOnMouseMovedEvent(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+					return 0;
+					case WM_KEYDOWN:
+						dispatcher->sendOnKeyPressedEvent(wParam);
+					return 0;
+					case WM_CHAR:
+						dispatcher->sendOnTextEnteredEvent( (char)(wParam) );
+					return 0;
+					case WM_LBUTTONDOWN:
+						dispatcher->sendOnMouseButtonPressedEvent();
+					return 0;
+					case WM_RBUTTONDOWN:
+						dispatcher->sendOnMouseButtonPressedEvent();
+					return 0;
+					case WM_LBUTTONUP:
+						dispatcher->sendOnMouseButtonReleasedEvent();
+					return 0;
+					case WM_RBUTTONUP:
+						dispatcher->sendOnMouseButtonReleasedEvent();
 					return 0;
 					case WM_SIZE:
 						dispatcher->sendOnResizeEvent(LOWORD(lParam),HIWORD(lParam));
+					return 0;
+					case WM_KEYUP:
+						dispatcher->sendOnKeyReleasedEvent(wParam);
+					return 0;
+					case WM_CLOSE:
+						dispatcher->sendOnCloseEvent();
 					return 0;
 					case WM_KILLFOCUS:
 						dispatcher->sendOnFocusLostEvent();
@@ -34,18 +61,6 @@ namespace kyra {
 					case WM_SETFOCUS:
 						dispatcher->sendOnFocusGainedEvent();
 					return 0;
-					case WM_KEYUP:
-						dispatcher->sendOnKeyReleasedEvent(wParam);
-					return 0;
-					case WM_KEYDOWN:
-						dispatcher->sendOnKeyPressedEvent(wParam);
-					return 0;
-					case WM_MOUSEMOVE:
-						dispatcher->sendOnMouseMovedEvent(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-					return 0;
-					case WM_CHAR:
-						dispatcher->sendOnTextEntered( (char)(wParam) );
-					break;
 				}
 			}
 			return DefWindowProcW(hWnd, msg, wParam, lParam);
@@ -104,6 +119,9 @@ namespace kyra {
 		SetWindowLongPtr( m_WindowHandle, GWLP_USERDATA, reinterpret_cast<LONG_PTR>( this ) );
 		UpdateWindow(m_WindowHandle);
 		ShowWindow(m_WindowHandle, SW_SHOW);
+
+		m_Cursor = LoadCursor(NULL, IDC_ARROW);
+		SetCursor(m_Cursor);
 
 		return true;
 	}

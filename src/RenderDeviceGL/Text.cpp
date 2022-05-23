@@ -32,6 +32,10 @@ namespace kyra {
 		m_Text = text;
 	}
 	
+	std::string KYRA_RENDERDEVICEGL_API Text::getText() const {
+		return m_Text;
+	}
+	
 	void KYRA_RENDERDEVICEGL_API Text::setPosition(const math::Vector3<float>& vec)  {
 		m_Position = vec;
 	}

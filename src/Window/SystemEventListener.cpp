@@ -35,7 +35,7 @@ namespace kyra {
 		
 	}
 	
-	void KYRA_WINDOW_API SystemEventListener::onTextEntered() {
+	void KYRA_WINDOW_API SystemEventListener::onTextEntered(char character) {
 	
 	}
 	

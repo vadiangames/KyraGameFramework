@@ -3,6 +3,7 @@
 
 #include <KyraGameFramework/AbstractRenderDevice/IFont.hpp>
 #include <KyraGameFramework/AbstractRenderDevice/IText.hpp>
+#include <KyraGameFramework/RenderDeviceGL/Text.hpp>
 
 namespace kyra {
 	
@@ -13,7 +14,7 @@ namespace kyra {
 			IText::Ptr m_Text;
 			
 			
-			Label(IFont::Ptr font, const std::string& text, IRenderDevice::Ptr renderDevice) {
+			Label(IFont::Ptr font, const std::string& text, IRenderDevice::Ptr renderDevice) : Widget(renderDevice) {
 				m_Text = IText::Ptr(new Text());
 				m_Text->setText(font, text, *renderDevice);
 			}
@@ -26,6 +27,15 @@ namespace kyra {
 			static Label::Ptr create(IFont::Ptr font, const std::string& text, IRenderDevice::Ptr renderDevice) {
 				return Label::Ptr(new Label(font, text, renderDevice));
 			}
+			
+			constexpr virtual bool hasChildElements() const final {
+				return false;
+			}
+			
+			virtual Widget::Ptr getHoveredChild( const math::Vector2<float>& vec) {
+				return Widget::Ptr(nullptr);
+			}
+			
 			
 			math::Vector2<float> getSize() const final {
 				return math::Vector2<float>(0,0);

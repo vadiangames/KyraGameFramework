@@ -3,9 +3,12 @@
 
 #include <memory>
 #include <KyraGameFramework/AbstractRenderDevice/IDrawable.hpp>
+#include <KyraGameFramework/AbstractRenderDevice/IRenderDevice.hpp>
+
 
 namespace kyra {
 
+	class GameStateOwner;
 	class GameState : public IDrawable {
 
 		public:
@@ -14,11 +17,19 @@ namespace kyra {
 	
 		typedef std::shared_ptr<GameState> Ptr;
 		
+		virtual void pause() {
+			
+		}
+		
+		virtual void resume() {
+			
+		}
+		
 		virtual void init(IRenderDevice::Ptr renderDevice) {
 			
 		}
 		
-		virtual void update(double dt) {
+		virtual void update(double dt, GameStateOwner* owner) {
 			
 		}
 	

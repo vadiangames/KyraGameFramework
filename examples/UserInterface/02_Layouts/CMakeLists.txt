@@ -1,0 +1,5 @@
+
+add_executable(UserInterface_Layouts main.cpp)
+target_link_libraries(UserInterface_Layouts PRIVATE KyraWindow KyraGLExtensionLoader KyraRenderDeviceGL KyraUserInterface opengl32 freetype)
+
+install(TARGETS UserInterface_Layouts RUNTIME DESTINATION ${PROJECT_SOURCE_DIR}/bin)

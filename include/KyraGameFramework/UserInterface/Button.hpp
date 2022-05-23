@@ -29,6 +29,15 @@ namespace kyra {
 			
 			typedef std::shared_ptr<Button> Ptr;
 			
+			constexpr virtual bool hasChildElements() const final {
+				return false;
+			}
+			
+			virtual Widget::Ptr getHoveredChild( const math::Vector2<float>& vec) {
+				return Widget::Ptr(nullptr);
+			}
+			
+			
 			void setPosition(const math::Vector3<float>& position);
 			
 			void setSize(const math::Vector2<float>& size);
