@@ -77,11 +77,7 @@ namespace kyra {
 		wcex.lpfnWndProc = WindowWin32::windowProc;
 		wcex.lpszClassName = L"KYRA_WINDOW_CLASS";
 		
-		if(!RegisterClassExW(&wcex)) {
-			return false;
-		}
-		
-		return true;
+		return RegisterClassExW(&wcex);
 	}
 
 		

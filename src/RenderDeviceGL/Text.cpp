@@ -55,7 +55,6 @@ namespace kyra {
 
 		Text::g_Program->setVector4("textColor", m_Color);
 		
-		//TODO We have to calculate this once and after resizing the window
 		Rect clientRect = renderDevice.getWindow().getClientRect();
 		math::Matrix4<float> projection = math::Matrix4<float>::getOrtho(0.f, float(clientRect.width), float(clientRect.height), 0.0f ); 
 		Text::g_Program->setMatrix4("projection", projection);

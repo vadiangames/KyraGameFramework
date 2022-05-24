@@ -8,9 +8,10 @@ add_library(KyraRenderDeviceGL SHARED RenderDeviceGL.cpp
 									  Image.cpp
 									  Sprite.cpp
 									  Text.cpp
-									  RectangleShape.cpp)
+									  RectangleShape.cpp
+									  IndexBuffer.cpp)
 									  
-target_link_libraries(KyraRenderDeviceGL PRIVATE KyraGLExtensionLoader opengl32 gdi32)							  
+target_link_libraries(KyraRenderDeviceGL PRIVATE KyraGLExtensionLoader opengl32 gdi32 freetype)							  
 target_compile_definitions(KyraRenderDeviceGL PRIVATE -DKYRA_RENDERDEVICEGL_EXPORTS)
 
 if(${KYRA_COMPILER_IS_GCC} EQUAL true)

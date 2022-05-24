@@ -9,7 +9,10 @@
 #include <KyraGameFramework/AbstractRenderDevice/IVertexLayout.hpp>
 #include <KyraGameFramework/AbstractRenderDevice/ITexture.hpp>
 #include <KyraGameFramework/AbstractRenderDevice/ISprite.hpp>
+#include <KyraGameFramework/AbstractRenderDevice/IFont.hpp>
+#include <KyraGameFramework/AbstractRenderDevice/IText.hpp>
 #include <KyraGameFramework/AbstractRenderDevice/IRectangleShape.hpp>
+#include <KyraGameFramework/AbstractRenderDevice/View.hpp>
 #include <KyraGameFramework/Window/IWindow.hpp>
 
 #include <filesystem>
@@ -26,7 +29,15 @@ namespace kyra {
 
 		typedef std::shared_ptr<IRenderDevice> Ptr;
 		
+		virtual void setView(const View& view) = 0;
+		
+		virtual View getView() const = 0;
+		
 		virtual void setActiveSyncEnabled(bool value) = 0;
+		
+		virtual IFont::Ptr createFont(const std::filesystem::path& path, unsigned int charSize) = 0;
+		
+		virtual IText::Ptr createText(IFont::Ptr font, const std::string& text) = 0;
 		
 		//! Abstract class to create a vertex buffer
 		virtual IVertexBuffer::Ptr createVertexBuffer() = 0;
@@ -71,6 +82,7 @@ namespace kyra {
 		
 		//! Draws the IDrawable by calling IDrawable::draw(IRenderDevice&)
 		virtual void draw(IDrawable& drawable) = 0;
+	
 		
 		//! Returns the window 
 		virtual IWindow& getWindow() const = 0;

@@ -3,7 +3,8 @@
 
 
 #include <KyraGameFramework/AbstractRenderDevice/IRenderDevice.hpp>
-//#include <KyraGameFramework/Graphics/Sprite.hpp>
+#include <KyraGameFramework/AbstractRenderDevice/IText.hpp>
+#include <KyraGameFramework/AbstractRenderDevice/IFont.hpp>
 
 
 #endif

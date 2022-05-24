@@ -4,51 +4,29 @@
 
 #include <KyraGameFramework/AbstractRenderDevice/IIndexBuffer.hpp>
 #include <KyraGameFramework/AbstractRenderDevice/Types.hpp>
+#include <KyraGameFramework/GLExtensionLoader/GLExtensionLoader.hpp>
+#include <KyraGameFramework/RenderDeviceGL/DLL.hpp>
+
 
 namespace kyra {
 	
-	class IndexBuffer : public IIndexBuffer {
+	class KYRA_RENDERDEVICEGL_API IndexBuffer : public IIndexBuffer {
 		
 		unsigned int m_Id;
 		size_t m_Elements;
 		
 		public:
-		IndexBuffer() : m_Id(0), m_Elements(0) {
-			
-		}
+		IndexBuffer();
 		
-		~IndexBuffer() {
-			if(m_Id) {
-				GL_CHECK(glDeleteBuffers(1,&m_Id));
-			}
-		}
+		~IndexBuffer();
 		
-		size_t getElementCount() const final {
-			return m_Elements;
-		}
+		size_t getElementCount() const final;
 		
-		void create(size_t indizes, size_t totalSize, void* data, BufferType type ) final {
-			if(m_Id) {
-				GL_CHECK(glDeleteBuffers(1,&m_Id));
-				m_Id = 0;
-			}
-			GLuint glType = GL_STATIC_DRAW;
-			if(type == BufferType::DYNAMIC_DRAW) {
-				glType = GL_DYNAMIC_DRAW;
-			}
-			m_Elements = indizes;
-			GL_CHECK(glGenBuffers(1,&m_Id));
-			GL_CHECK(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_Id));
-			GL_CHECK(glBufferData(GL_ELEMENT_ARRAY_BUFFER, totalSize, data, glType));
-		}
+		void create(size_t indizes, size_t totalSize, void* data, BufferType type ) final;
 		
-		void bind() final {
-			GL_CHECK(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_Id));
-		}
+		void bind() final;
 		
-		void unbind() final {
-			GL_CHECK(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
-		}
+		void unbind() final;
 				
 	};
 	

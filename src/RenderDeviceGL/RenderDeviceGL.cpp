@@ -8,6 +8,8 @@
 #include <KyraGameFramework/RenderDeviceGL/Sprite.hpp>
 #include <KyraGameFramework/RenderDeviceGL/VertexLayout.hpp>
 #include <KyraGameFramework/RenderDeviceGL/RectangleShape.hpp>
+#include <KyraGameFramework/RenderDeviceGL/Text.hpp>
+
 
 
 namespace kyra {
@@ -63,8 +65,18 @@ namespace kyra {
 		return true;
 	}
 	
+	void KYRA_RENDERDEVICEGL_API RenderDeviceGL::setView(const View& view) {
+		m_View = view;
+		GL_CHECK(glViewport(m_View.getX(), m_View.getY(), m_View.getWidth(), m_View.getHeight()));
+	}
+	
+	View KYRA_RENDERDEVICEGL_API RenderDeviceGL::getView() const {
+		return m_View;
+	}
+		
+	
 	bool KYRA_RENDERDEVICEGL_API RenderDeviceGL::create(IWindow& window) {
-			
+		
 		m_WindowHandle = reinterpret_cast<HWND>(window.getHandle());
 		m_DeviceContext = GetDC(m_WindowHandle);
 		m_Window = &window;
@@ -103,14 +115,29 @@ namespace kyra {
 		}
 		
 		Rect clientRect = window.getClientRect();
+		setView(View(0,0,clientRect.width,clientRect.height));
 		
-		GL_CHECK(glViewport(0, 0, clientRect.width, clientRect.height));
+		//GL_CHECK(glViewport(0, 0, clientRect.width, clientRect.height));
 		GL_CHECK(glEnable(GL_BLEND));
 		GL_CHECK(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 		GL_CHECK(glGenVertexArrays(1, &VAO));
 		GL_CHECK(glBindVertexArray(VAO));
 		
 		return true;
+	}
+	
+	
+	IFont::Ptr KYRA_RENDERDEVICEGL_API RenderDeviceGL::createFont(const std::filesystem::path& path, unsigned int charSize) {
+		IFont::Ptr font = IFont::Ptr(new Font());
+		font->loadFromFile(path.string(),24);
+		return font;
+	}
+	
+	
+	IText::Ptr KYRA_RENDERDEVICEGL_API RenderDeviceGL::createText(IFont::Ptr font, const std::string& text) {
+		IText::Ptr textPtr = IText::Ptr(new Text());
+		textPtr->setText(font, text, *this);
+		return textPtr;
 	}
 	
 	ISprite::Ptr KYRA_RENDERDEVICEGL_API RenderDeviceGL::createSprite(ITexture::Ptr texture) {

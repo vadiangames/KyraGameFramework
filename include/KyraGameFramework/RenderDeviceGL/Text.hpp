@@ -28,8 +28,6 @@ namespace kyra {
 		
 		static IProgram::Ptr g_Program;
 		static IVertexLayout::Ptr g_VertexLayout;
-		
-		
 		static std::string vertexShaderSrc;
 		static std::string fragmentShaderSrc;
 		

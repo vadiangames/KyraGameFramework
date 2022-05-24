@@ -35,7 +35,6 @@ namespace kyra {
 		
 		
 		virtual void onStateChange(GameState::Ptr oldState, GameState::Ptr newState) final {
-			std::cout << "Change State" << std::endl;
 			if(newState) {
 				newState->init(m_RenderDevice);
 			}
@@ -44,7 +43,6 @@ namespace kyra {
 		bool run(const kyra::WindowSettings& settings, GameState::Ptr rootState) {
 				
 				//Create window
-				std::cout << "Create window" << std::endl;
 				if(!m_Window.create(settings)) {
 					return false;
 				}
@@ -76,6 +74,7 @@ namespace kyra {
 					if( duration < frameTime) {
 						std::this_thread::sleep_for(frameTime - duration);
 					}
+					limitFPS();
 				}
 				
 				// Clear all active states

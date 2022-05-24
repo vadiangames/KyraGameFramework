@@ -10,23 +10,26 @@
 #include <KyraGameFramework/AbstractRenderDevice/IFont.hpp>
 #include <KyraGameFramework/GLExtensionLoader/GLExtensionLoader.hpp>
 
+/// \todo Could we move this to the AbstractRenderDevice? Need some abstraction but could be possible!
 
 namespace kyra {
 	
+    /// Holds the texture and all informations for a character
 	typedef struct {
-		unsigned int id;
-		math::Vector2<int> size;
-		math::Vector2<int> bearing;
-		long int advance;
+		unsigned int id;				///< The texture id of the character
+		math::Vector2<int> size; 		///< The size the character
+		math::Vector2<int> bearing; 	///< The bearing informations of this character
+		long int advance; 				///< Number of pixels to advance after this character
 	}Character;
 	
+	/// The font loads, renders and hold all character informations for the font and its characters
 	class Font : public IFont {
 		
-		FT_Library m_FreeType;
-		FT_Face    m_Face;
+		FT_Library m_FreeType;	///< Handle to the freetype-system-handle
+		FT_Face    m_Face;		///< Handle to the freetype-face
 		
-		std::map<char, Character> m_Characters;
-		unsigned int m_CharacterSize;
+		std::map<char, Character> m_Characters;	///< Maps the char to the rendered character
+		unsigned int m_CharacterSize;			///< The character-size the characters were rendered for
 		
 		public:
 		Font() : m_FreeType(NULL), m_Face(NULL), m_CharacterSize(12) {
@@ -34,21 +37,29 @@ namespace kyra {
 		}
 		
 		~Font() {
+			// Release all character textures
 			for(auto& character : m_Characters) {
 				GL_CHECK(glDeleteTextures(1,&(character.second.id)));
 			}
+			// Release the font-face
 			if(m_Face) {
 				FT_Done_Face(m_Face);
 			}
+			// Release the freetype-system
 			if(m_FreeType) {
 				FT_Done_FreeType(m_FreeType);
 			}
 		}
 		
+		/// Returns the data for the character c
+		/// \todo Check if there is an entry for the character
 		inline Character getCharacter(char c) {
 			return m_Characters[c];
 		}
 		
+		/// Loads a ttf-file and renders the characters	
+		/// \param file the ttf-file to load
+		/// \param charSize the character size used for character-rendering
 		bool loadFromFile(const std::string& file, unsigned int charSize) final {
 						
 			if(FT_Init_FreeType(&m_FreeType)) {
@@ -69,6 +80,8 @@ namespace kyra {
 				}
 				
 				// generate texture
+				/// \todo Texture-generation should be part of the render-device
+				
 				unsigned int texture;
 				GL_CHECK(glGenTextures(1, &texture));
 				GL_CHECK(glBindTexture(GL_TEXTURE_2D, texture));
@@ -83,12 +96,15 @@ namespace kyra {
 					GL_UNSIGNED_BYTE,
 					m_Face->glyph->bitmap.buffer
 				));
-				
+								
 				// set texture options
 				GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
 				GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
 				GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
 				GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
+				
+				/// end of todo
+				
 				
 				// now store character for later use
 				Character character = {
@@ -103,23 +119,33 @@ namespace kyra {
 			return true;
 		}
 
+
+		/// Returns the size of the character
+		/// \todo Why do we not get the information from getCharacter(c)
 		inline math::Vector2<int> getCharacterSize(char c) final {
 			 return m_Characters[c].size;
 		}
 			
+		/// Returns the bearing of the character
+		/// \todo Why do we not get the information from getCharacter(c)
 		inline math::Vector2<int> getCharacterBearing(char c) final {
 			 return m_Characters[c].bearing;
 		}
-			
+		
+		/// Returns the needed advancement after the character
+		/// \todo Why do we not get the information from getCharacter(c)
 		inline float getCharacterAdvance(char c) final {
 			return m_Characters[c].advance >> 6;
 		}
 		
+		/// Binds the charater-texture
+		/// \todo Couldn't we move this to the RenderDevice
 		inline void bindCharacterTexture(char c) final {
 			GL_CHECK(glActiveTexture(GL_TEXTURE0));
 			GL_CHECK(glBindTexture(GL_TEXTURE_2D, m_Characters[c].id));
 		}
 		
+		/// Returns the character size of this font
 		float getFontSize() const final {
 			return (float)(m_CharacterSize);
 		}

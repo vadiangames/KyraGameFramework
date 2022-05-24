@@ -24,11 +24,21 @@ namespace kyra {
 		
 		bool setPixelFormat(HDC hdc);
 		
+		View m_View;
+		
 		public:
 		RenderDeviceGL();
 		virtual ~RenderDeviceGL();
 		
+		void setView(const View& view) final;
+		View getView() const final;
+		
 		void setActiveSyncEnabled(bool value) final;
+		
+		
+		IFont::Ptr createFont(const std::filesystem::path& path, unsigned int charSize) final;
+		
+		IText::Ptr createText(IFont::Ptr font, const std::string& text) final;
 		
 		ITexture::Ptr createTexture(const std::filesystem::path& path) final;
 		ISprite::Ptr createSprite(ITexture::Ptr texture) final;
