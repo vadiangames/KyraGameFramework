@@ -22,6 +22,7 @@ namespace kyra {
 		
 		inline kyra::math::Vector2<float> getSize() const final;
 		void loadFromFile(const std::filesystem::path& path) final;
+		void create(const math::Vector2<int>& size, void* data) final;
 		void bind(uint32_t slot = 0) final;
 		
 	};

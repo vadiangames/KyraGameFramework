@@ -43,6 +43,30 @@ namespace kyra {
 			
 	}
 	
+	void KYRA_RENDERDEVICEGL_API Texture::create(const math::Vector2<int>& size, void* data) {
+		m_Width = size.get(0);
+		m_Height = size.get(1);
+		GL_CHECK(glGenTextures(1, &m_Id));
+		GL_CHECK(glBindTexture(GL_TEXTURE_2D, m_Id));
+		GL_CHECK(glTexImage2D(
+				GL_TEXTURE_2D,
+				0,
+				GL_RED,
+				size.get(0),
+				size.get(1),
+				0,
+				GL_RED,
+				GL_UNSIGNED_BYTE,
+				data
+		));
+								
+		// set texture options
+		GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
+		GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
+		GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+		GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
+	}
+	
 	math::Vector2<float> KYRA_RENDERDEVICEGL_API Texture::getSize() const {
 		return math::Vector2<float>( static_cast<float>(m_Width), static_cast<float>(m_Height));
 	}

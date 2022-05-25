@@ -50,7 +50,7 @@ namespace kyra {
 	
 
 	void KYRA_RENDERDEVICEGL_API Text::draw(IRenderDevice& renderDevice)  {
-			
+		
 		if(!Text::g_Program) { std::cout << "[WARNING] Text::g_Program is not intialised" << std::endl; return;	}
 
 		Text::g_Program->setVector4("textColor", m_Color);
@@ -69,7 +69,6 @@ namespace kyra {
 		float x = m_Position[0];
 		
 		for(c = m_Text.begin(); c != m_Text.end(); ++c) {
-			
 			float xpos = x + m_Font->getCharacterBearing(*c)[0] * scale;
 			float ypos = m_Position[1];
 				
@@ -94,6 +93,7 @@ namespace kyra {
 			m_Font->bindCharacterTexture(*c);
 			renderDevice.draw(m_VertexBuffer, Text::g_Program, Text::g_VertexLayout);			
 			x += m_Font->getCharacterAdvance(*c);
+			
 		}
 	}
 	

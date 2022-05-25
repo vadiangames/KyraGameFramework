@@ -14,10 +14,12 @@
 
 namespace kyra {
 	
-	KYRA_RENDERDEVICEGL_API RenderDeviceGL::RenderDeviceGL() :  m_WindowHandle(NULL), m_DeviceContext(NULL), VAO(0), m_Window(nullptr) {
+	KYRA_RENDERDEVICEGL_API RenderDeviceGL::RenderDeviceGL() :  m_WindowHandle(NULL), m_DeviceContext(NULL), VAO(0), m_Window(nullptr), m_DrawCalls(0) {
 		
 	}
-		
+	
+	/// Destroys the RenderDeviceGL
+	/// OpenGL-Version:	3.0	-	glDeleteVertexArrays
 	KYRA_RENDERDEVICEGL_API RenderDeviceGL::~RenderDeviceGL() {
 		if(VAO) {
 			GL_CHECK(glDeleteVertexArrays(1, &VAO));
@@ -65,16 +67,7 @@ namespace kyra {
 		return true;
 	}
 	
-	void KYRA_RENDERDEVICEGL_API RenderDeviceGL::setView(const View& view) {
-		m_View = view;
-		GL_CHECK(glViewport(m_View.getX(), m_View.getY(), m_View.getWidth(), m_View.getHeight()));
-	}
-	
-	View KYRA_RENDERDEVICEGL_API RenderDeviceGL::getView() const {
-		return m_View;
-	}
 		
-	
 	bool KYRA_RENDERDEVICEGL_API RenderDeviceGL::create(IWindow& window) {
 		
 		m_WindowHandle = reinterpret_cast<HWND>(window.getHandle());
@@ -114,10 +107,9 @@ namespace kyra {
 			wglMakeCurrent(m_DeviceContext, m_RenderContext);
 		}
 		
-		Rect clientRect = window.getClientRect();
-		setView(View(0,0,clientRect.width,clientRect.height));
 		
-		//GL_CHECK(glViewport(0, 0, clientRect.width, clientRect.height));
+		Rect clientRect = m_Window->getClientRect();
+		GL_CHECK(glViewport(0, 0, clientRect.width, clientRect.height));
 		GL_CHECK(glEnable(GL_BLEND));
 		GL_CHECK(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 		GL_CHECK(glGenVertexArrays(1, &VAO));
@@ -150,6 +142,12 @@ namespace kyra {
 	ITexture::Ptr KYRA_RENDERDEVICEGL_API RenderDeviceGL::createTexture(const std::filesystem::path& path) {
 		ITexture::Ptr texture = ITexture::Ptr(new Texture());
 		texture->loadFromFile(path);
+		return texture;
+	}
+	
+	ITexture::Ptr KYRA_RENDERDEVICEGL_API RenderDeviceGL::createTexture( const math::Vector2<int>& size, void* data ) {
+		ITexture::Ptr texture = ITexture::Ptr(new Texture());
+		texture->create(size,data);
 		return texture;
 	}
 	
@@ -211,6 +209,7 @@ namespace kyra {
 		layout->bind();
 		program->use();
 		
+		m_DrawCalls++;
 		if(buffer->getPrimitiveType() == PrimitiveType::TRIANGLES) {
 			GL_CHECK(glDrawArrays(GL_TRIANGLES,0,buffer->getElementCount()));
 		}
@@ -242,6 +241,7 @@ namespace kyra {
 		program->use();
 		indexBuffer->bind();
 		
+		m_DrawCalls++;
 		if(buffer->getPrimitiveType() == PrimitiveType::TRIANGLES) {
 			GL_CHECK(glDrawElements(GL_TRIANGLES,indexBuffer->getElementCount(), GL_UNSIGNED_INT, 0));
 		}

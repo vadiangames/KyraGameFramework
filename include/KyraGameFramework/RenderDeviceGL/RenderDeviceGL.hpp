@@ -20,6 +20,8 @@ namespace kyra {
 		
 		IWindow* m_Window;
 		
+		uint64_t m_DrawCalls;
+		
 		unsigned int VAO;
 		
 		bool setPixelFormat(HDC hdc);
@@ -30,9 +32,6 @@ namespace kyra {
 		RenderDeviceGL();
 		virtual ~RenderDeviceGL();
 		
-		void setView(const View& view) final;
-		View getView() const final;
-		
 		void setActiveSyncEnabled(bool value) final;
 		
 		
@@ -41,6 +40,8 @@ namespace kyra {
 		IText::Ptr createText(IFont::Ptr font, const std::string& text) final;
 		
 		ITexture::Ptr createTexture(const std::filesystem::path& path) final;
+		ITexture::Ptr createTexture( const math::Vector2<int>& size, void* data ) final;
+		
 		ISprite::Ptr createSprite(ITexture::Ptr texture) final;
 		
 		IProgram::Ptr createProgramFromFile( const std::filesystem::path& vertexShader, const std::filesystem::path& fragmentShader ) final;
@@ -66,6 +67,12 @@ namespace kyra {
 		void draw(IDrawable& drawable) final;
 		
 		IWindow& getWindow() const final;
+
+		uint64_t getDrawCalls() final {
+			uint64_t tmp = m_DrawCalls;
+			m_DrawCalls = 0;
+			return tmp;
+		}
 
 	};
 

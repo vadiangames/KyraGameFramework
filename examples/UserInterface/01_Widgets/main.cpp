@@ -19,6 +19,8 @@ class MyGameState : public kyra::GameState {
 	kyra::ui::Label::Ptr m_ImageButtonLabel;
 	kyra::ui::Label::Ptr m_EditBoxLabel;
 	
+	kyra::ui::ListBox::Ptr m_ListBox;
+	
 	public:
 	MyGameState() {}
 	~MyGameState() {}
@@ -56,13 +58,31 @@ class MyGameState : public kyra::GameState {
 		m_EditBoxLabel = kyra::ui::Label::create(font, "EditBox: ", renderDevice);
 		m_EditBoxLabel->setPosition( kyra::math::Vector3<float>(0,60,0) );
 		
-		
-		m_Context.add(m_Button);
-		m_Context.add(m_ButtonLabel);
-		m_Context.add(m_ImageButton);
-		m_Context.add(m_ImageButtonLabel);
-		m_Context.add(m_EditBoxLabel);
-		m_Context.add(m_EditBox);
+		m_ListBox = kyra::ui::ListBox::create(font, renderDevice);
+		m_ListBox->setPosition( kyra::math::Vector3<float>(100,100,0) );
+		m_ListBox->setSize( kyra::math::Vector2<float>(200,200) );
+		m_ListBox->setRowHeight(20);
+		m_ListBox->add(1, "This is a test");
+		m_ListBox->add(2, "Hello World 2");
+		m_ListBox->add(3, "Entry 3");
+		m_ListBox->add(4, "Entry 3");
+		m_ListBox->add(5, "Entry 3");
+		m_ListBox->add(6, "Entry 3");
+		m_ListBox->add(7, "Entry 3");
+		m_ListBox->add(8, "Entry 3");
+		m_ListBox->add(9, "Entry 3");
+		m_ListBox->add(10, "Entry 3");
+		m_ListBox->add(11, "Entry 3");
+		m_ListBox->add(12, "Entry 3");
+		m_ListBox->add(13, "Entry 3");
+				
+		//m_Context.add(m_Button);
+		//m_Context.add(m_ButtonLabel);
+		//m_Context.add(m_ImageButton);
+		//m_Context.add(m_ImageButtonLabel);
+		//m_Context.add(m_EditBoxLabel);
+		//m_Context.add(m_EditBox);
+		m_Context.add(m_ListBox);
 		
 		renderDevice->getWindow().addListener(&m_Context);
 	}
@@ -71,6 +91,7 @@ class MyGameState : public kyra::GameState {
 		for(auto& widget : m_Context) {
 			device.draw(widget);
 		}
+		std::cout << "Draw Calls: " << device.getDrawCalls() << std::endl;
 	}
 	
 };

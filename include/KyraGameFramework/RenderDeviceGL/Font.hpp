@@ -8,6 +8,7 @@
 #include <map>
 
 #include <KyraGameFramework/AbstractRenderDevice/IFont.hpp>
+#include <KyraGameFramework/RenderDeviceGL/Texture.hpp>
 #include <KyraGameFramework/GLExtensionLoader/GLExtensionLoader.hpp>
 
 /// \todo Could we move this to the AbstractRenderDevice? Need some abstraction but could be possible!
@@ -16,7 +17,7 @@ namespace kyra {
 	
     /// Holds the texture and all informations for a character
 	typedef struct {
-		unsigned int id;				///< The texture id of the character
+		Texture::Ptr texture;			///< The texture of the character
 		math::Vector2<int> size; 		///< The size the character
 		math::Vector2<int> bearing; 	///< The bearing informations of this character
 		long int advance; 				///< Number of pixels to advance after this character
@@ -25,6 +26,7 @@ namespace kyra {
 	/// The font loads, renders and hold all character informations for the font and its characters
 	class Font : public IFont {
 		
+		// Can we do this all in LoadFromFile? We need m_FreeType and m_Face only there
 		FT_Library m_FreeType;	///< Handle to the freetype-system-handle
 		FT_Face    m_Face;		///< Handle to the freetype-face
 		
@@ -37,10 +39,6 @@ namespace kyra {
 		}
 		
 		~Font() {
-			// Release all character textures
-			for(auto& character : m_Characters) {
-				GL_CHECK(glDeleteTextures(1,&(character.second.id)));
-			}
 			// Release the font-face
 			if(m_Face) {
 				FT_Done_Face(m_Face);
@@ -71,44 +69,44 @@ namespace kyra {
 				return false;
 			}
 			
+			
 			FT_Set_Pixel_Sizes(m_Face,0,charSize);
 			GL_CHECK(glPixelStorei(GL_UNPACK_ALIGNMENT,1));
+		
+			int textureWidth = 0;
+			int textureHeight = 0;
+			
+			//CALCULATE SIZE OF THE CHARACTERS-TEXTURE (ALL-IN-ONE) - PROTOTYPE
+			
 			for(unsigned char c = 0; c < 128; c++) {
 				if(FT_Load_Char(m_Face,c,FT_LOAD_RENDER)) {
 					std::cout << "ERROR::FREETYPE: Failed to load glyph" << c << std::endl;
 					continue;
 				}
-				
-				// generate texture
-				/// \todo Texture-generation should be part of the render-device
-				
-				unsigned int texture;
-				GL_CHECK(glGenTextures(1, &texture));
-				GL_CHECK(glBindTexture(GL_TEXTURE_2D, texture));
-				GL_CHECK(glTexImage2D(
-					GL_TEXTURE_2D,
-					0,
-					GL_RED,
-					m_Face->glyph->bitmap.width,
-					m_Face->glyph->bitmap.rows,
-					0,
-					GL_RED,
-					GL_UNSIGNED_BYTE,
-					m_Face->glyph->bitmap.buffer
-				));
+				if(m_Face->glyph->bitmap.rows > textureHeight) {
+					textureHeight = m_Face->glyph->bitmap.rows;
+				}
+				textureWidth += m_Face->glyph->bitmap.width;
+			}
+			std::cout << "Font-Texture Size = " << textureWidth << " " << textureHeight << std::endl;
+
+			Texture::Ptr packedTexture = Texture::Ptr(new Texture());
+			packedTexture->create( math::Vector2<int>(textureWidth, textureHeight), 0);
+			
+			// END OF CALCULATION	- PROTOTYPE
+			
+			for(unsigned char c = 0; c < 128; c++) {
+				if(FT_Load_Char(m_Face,c,FT_LOAD_RENDER)) {
+					std::cout << "ERROR::FREETYPE: Failed to load glyph" << c << std::endl;
+					continue;
+				}
 								
-				// set texture options
-				GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
-				GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
-				GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
-				GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
-				
-				/// end of todo
-				
-				
+				Texture::Ptr text = Texture::Ptr(new Texture());
+				text->create( math::Vector2<int>(m_Face->glyph->bitmap.width, m_Face->glyph->bitmap.rows), m_Face->glyph->bitmap.buffer);
+											
 				// now store character for later use
 				Character character = {
-					texture, 
+					text,
 					math::Vector2<int>(m_Face->glyph->bitmap.width, m_Face->glyph->bitmap.rows),
 					math::Vector2<int>(m_Face->glyph->bitmap_left, m_Face->glyph->bitmap_top),
 					m_Face->glyph->advance.x
@@ -141,8 +139,9 @@ namespace kyra {
 		/// Binds the charater-texture
 		/// \todo Couldn't we move this to the RenderDevice
 		inline void bindCharacterTexture(char c) final {
-			GL_CHECK(glActiveTexture(GL_TEXTURE0));
-			GL_CHECK(glBindTexture(GL_TEXTURE_2D, m_Characters[c].id));
+			if(m_Characters[c].texture) {
+				m_Characters[c].texture->bind(0);
+			} 
 		}
 		
 		/// Returns the character size of this font

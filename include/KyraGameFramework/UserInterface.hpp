@@ -7,6 +7,7 @@
 	#include <KyraGameFramework/UserInterface/Button.hpp>
 	#include <KyraGameFramework/UserInterface/ImageButton.hpp>
 	#include <KyraGameFramework/UserInterface/EditBox.hpp>
+	#include <KyraGameFramework/UserInterface/ListBox.hpp>
 	#include <KyraGameFramework/UserInterface/Layout.hpp>
 	#include <KyraGameFramework/UserInterface/VerticalLayout.hpp>
 	#include <KyraGameFramework/UserInterface/HorizontalLayout.hpp>

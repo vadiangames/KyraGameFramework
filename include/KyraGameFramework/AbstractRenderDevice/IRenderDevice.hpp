@@ -29,9 +29,7 @@ namespace kyra {
 
 		typedef std::shared_ptr<IRenderDevice> Ptr;
 		
-		virtual void setView(const View& view) = 0;
-		
-		virtual View getView() const = 0;
+		virtual uint64_t getDrawCalls() = 0;
 		
 		virtual void setActiveSyncEnabled(bool value) = 0;
 		
@@ -41,6 +39,10 @@ namespace kyra {
 		
 		//! Abstract class to create a vertex buffer
 		virtual IVertexBuffer::Ptr createVertexBuffer() = 0;
+		
+		
+		//! Abstract class to create a texture from memory
+		virtual ITexture::Ptr createTexture( const math::Vector2<int>& size, void* data ) = 0;
 		
 		//! Abstract class to create a texture
 		virtual ITexture::Ptr createTexture(const std::filesystem::path& path) = 0;

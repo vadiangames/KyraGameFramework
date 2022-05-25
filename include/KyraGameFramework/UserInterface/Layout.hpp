@@ -20,6 +20,10 @@ namespace kyra {
 			Layout(IRenderDevice::Ptr renderDevice) : Widget(renderDevice) {}
 			virtual ~Layout() {}
 			
+			size_t getChildCount() const {
+				return m_Widgets.size();
+			}
+			
 			constexpr virtual bool hasChildElements() const final {
 				return true;
 			}
