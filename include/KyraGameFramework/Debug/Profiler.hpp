@@ -1,75 +1,101 @@
-#ifndef KYRAGAMEFRAMEWORK_DEBUG_PROFILER_HPP
-#define KYRAGAMEFRAMEWORK_DEBUG_PROFILER_HPP
+#ifndef KYRAGAMEFRAMEWORK_DEBUB_PROFILER_HPP
+#define KYRAGAMEFRAMEWORK_DEBUB_PROFILER_HPP
 
-#include <map>
-#include <chrono>
-#include <cstdint>
 #include <string>
-#include <ostream>
+#include <map>
+#include <fstream>
+#include <chrono>
+#include <vector>
+#include <algorithm>
+#include <numeric>
+#include <stack>
 
+#include <KyraGameFramework/Debug/DLL.hpp>
 
-using namespace std::literals;
 
 namespace kyra {
-	
-	typedef struct {
-		uint64_t executionCount = 0;
-		double   totalExecTime = 0.0f;
-		bool isStarted = false;
-		std::chrono::time_point<std::chrono::high_resolution_clock> startTime;
-		std::string parent;
-	}ProfileSection;
-	
-	class Profiler {
-		
-		static std::map<std::string, ProfileSection> m_Data;
-		static std::string m_ActiveSection;
-		
-		public:
-		
-		static void startSection(const std::string& sectionName) {
-			if(Profiler::m_Data.find(sectionName) == Profiler::m_Data.end()) {
-				Profiler::m_Data[sectionName] = ProfileSection();
-			}
-			Profiler::m_Data[sectionName].isStarted = true;
-			Profiler::m_Data[sectionName].startTime = std::chrono::high_resolution_clock::now();
-			if(Profiler::m_ActiveSection != "") {
-				Profiler::m_Data[sectionName].parent = m_ActiveSection;
-			}
-			Profiler::m_ActiveSection = sectionName;
-		}
-		
-		static void endSection(const std::string& sectionName) {
-			std::chrono::time_point<std::chrono::high_resolution_clock> endTime = std::chrono::high_resolution_clock::now();
-			if(Profiler::m_Data[sectionName].isStarted) {
-				Profiler::m_Data[sectionName].executionCount++;
-				Profiler::m_Data[sectionName].isStarted = false;
-				Profiler::m_Data[sectionName].totalExecTime += (endTime - Profiler::m_Data[sectionName].startTime) / 1ms;
-			}
-			Profiler::m_ActiveSection = Profiler::m_Data[sectionName].parent;
-		}
-		
-		static void print(std::ostream& stream) {
-			stream << "PROFILING STATISTICS" << std::endl;
-			for(auto& entry : Profiler::m_Data) {
-				double execTimePerSample = (entry.second.totalExecTime / entry.second.executionCount);
-				if(entry.second.totalExecTime == 0 && entry.second.executionCount == 0) {
-					execTimePerSample = 0;
-				}
-				stream << entry.first << " " << entry.second.parent << " " << entry.second.executionCount << " " << entry.second.totalExecTime << " " << (entry.second.totalExecTime / entry.second.executionCount) << std::endl;
-			}
-		}
-		
-	};
-	
-	std::map<std::string, ProfileSection> Profiler::m_Data;
-	std::string Profiler::m_ActiveSection = "";
 
-	#define PROFILE_START_SECTION(x)	kyra::Profiler::startSection(#x);
-	#define PROFILE_END_SECTION(x)		kyra::Profiler::endSection(#x);
-	#define PROFILE_PRINT(x)			kyra::Profiler::print(x);
-	#define PROFILE_START_FUNCTION()	kyra::Profiler::startSection(__PRETTY_FUNCTION__);
-	#define PROFILE_END_FUNCTION()		kyra::Profiler::endSection(__PRETTY_FUNCTION__);
+KYRA_DEBUG_API extern std::string css_style;
+
+typedef struct {
+	std::string name;
+	size_t calls;
+	std::vector<long long int> new_calls;
+	long long int total;
+	long long int average;
+	long long int median;
+	std::string parent;
+}SectionData;
+
+typedef struct {
+	std::string name;
+	size_t calls;
+	std::vector<long long int> new_calls;
+	long long int total;
+	long long int average;
+	long long int median;
+}FunctionData;
+
+class KYRA_DEBUG_API Application {
+	
+	std::string m_Name;
+	std::vector<SectionData> m_SectionData;
+	std::vector<FunctionData> m_FunctionData;
+	std::stack<std::string> m_Owner;
+	
+	void calculateStatistics();
+	
+	void printTotalRuntime(std::ofstream& file);
+	
+	void printAverageRuntime(std::ofstream& file);
+	
+	void printCallCount(std::ofstream& file, const std::string& parent, int level);
+	
+	void printCallTreeTotalRuntime(std::ofstream& file, const std::string& parent);
+	
+	void printCallTreeAverageRuntime(std::ofstream& file, const std::string& parent);
+
+		
+	void printCallTreeCallCount(std::ofstream& file, const std::string& parent);
+	
+	void saveCapture();
+	
+	public:
+	
+	Application();
+	
+	static Application& getInstance();
+	
+	
+	~Application();
+	
+	void startCapture(const std::string& name);
+	
+	void startSection(const std::string& name);
+	
+	void endSection(const std::string& name, long long int runtime);
+	
+	
+	
+};
+
+
+class KYRA_DEBUG_API Section {
+	
+	Application* m_Application;
+	std::string m_Name;
+	std::chrono::time_point<std::chrono::high_resolution_clock>  m_Start;
+	
+	public:
+	Section( Application& app, const std::string& name);
+
+	~Section();
+	
+};
+
 }
+
+#define KYRA_START_CAPTURE(name)  kyra::Application::getInstance().startCapture(name);kyra::Section section_name(kyra::Application::getInstance(), __PRETTY_FUNCTION__);
+#define PROFILER_FUNCTION() kyra::Section section_name(kyra::Application::getInstance(), __PRETTY_FUNCTION__);
 
 #endif

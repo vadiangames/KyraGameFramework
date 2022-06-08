@@ -1,6 +1,8 @@
+add_subdirectory(Debug)
 add_subdirectory(Window)
 add_subdirectory(GLExtensionLoader)
 add_subdirectory(RenderDeviceGL)
 add_subdirectory(Animation)
 add_subdirectory(UserInterface)
 add_subdirectory(Threading)
+
