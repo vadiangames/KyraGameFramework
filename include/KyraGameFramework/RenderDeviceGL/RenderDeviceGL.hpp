@@ -6,6 +6,7 @@
 #include <KyraGameFramework/RenderDeviceGL/DLL.hpp>
 #include <KyraGameFramework/AbstractRenderDevice/IRenderDevice.hpp>
 #include <KyraGameFramework/AbstractRenderDevice/IRectangleShape.hpp>
+#include <KyraGameFramework/PluginSystem.hpp>
 
 #include <windows.h>
 #include <map>
@@ -76,6 +77,10 @@ namespace kyra {
 
 	};
 
+}
+
+extern "C" {
+	DEFINE_PLUGIN(KYRA_RENDERDEVICEGL_API);
 }
 
 #endif

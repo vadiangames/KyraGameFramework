@@ -5,4 +5,5 @@ add_subdirectory(RenderDeviceGL)
 add_subdirectory(Animation)
 add_subdirectory(UserInterface)
 add_subdirectory(Threading)
+add_subdirectory(KyraGameEngine)
 

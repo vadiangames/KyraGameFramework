@@ -272,3 +272,7 @@ namespace kyra {
 	}
 	
 }
+
+extern "C" {
+	IMPLEMENT_PLUGIN(KYRA_RENDERDEVICEGL_API, kyra::RenderDeviceGL);
+}
