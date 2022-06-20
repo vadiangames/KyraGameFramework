@@ -14,8 +14,7 @@ namespace kyra {
 			IText::Ptr m_Text;
 			
 			
-			Label(IFont::Ptr font, const std::string& text, IRenderDevice::Ptr renderDevice) : Widget(renderDevice) {
-				m_Text = IText::Ptr(new Text());
+			Label(IFont::Ptr font, const std::string& text, IRenderDevice::Ptr renderDevice) : Widget(renderDevice), m_Text(IText::Ptr(new Text())){ 
 				m_Text->setText(font, text, *renderDevice);
 			}
 
@@ -32,7 +31,7 @@ namespace kyra {
 				return false;
 			}
 			
-			virtual Widget::Ptr getHoveredChild( const math::Vector2<float>& vec) {
+			virtual Widget::Ptr getHoveredChild( const math::Vector2<float>& vec) final {
 				return Widget::Ptr(nullptr);
 			}
 			
@@ -45,11 +44,11 @@ namespace kyra {
 				return false;
 			}
 
-			void setPosition(const math::Vector3<float>& vec) {
+			void setPosition(const math::Vector3<float>& vec) final {
 				m_Text->setPosition(vec);
 			}
 			
-			void setSize(const math::Vector2<float>& vec) {
+			void setSize(const math::Vector2<float>& vec) final {
 				
 			}
 			

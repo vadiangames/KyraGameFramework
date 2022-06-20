@@ -107,7 +107,7 @@ namespace kyra {
 	void KYRA_RENDERDEVICEGL_API Sprite::draw(IRenderDevice& renderDevice) {
 		
 		Rect clientRect = renderDevice.getWindow().getClientRect();
-		math::Matrix4<float> projection = math::Matrix4<float>::getOrtho(0.f, (float)(clientRect.width), (float)(clientRect.height), 0.0f);
+		math::Matrix4<float> projection = math::Matrix4<float>::getOrtho(0.f, static_cast<float>(clientRect.width), static_cast<float>(clientRect.height), 0.0f);
 		Sprite::g_Program->setMatrix4("projection", projection);
 				
 		Sprite::g_Program->setInteger("sprite",0);

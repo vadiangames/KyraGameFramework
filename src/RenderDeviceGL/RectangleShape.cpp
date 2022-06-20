@@ -120,7 +120,7 @@ namespace kyra {
 		Rect clientRect = renderDevice.getWindow().getClientRect();
 
 		//Calculate and set the projection matrix
-		math::Matrix4<float> projection = math::Matrix4<float>::getOrtho(0.f, (float)(clientRect.width), (float)(clientRect.height), 0);
+		math::Matrix4<float> projection = math::Matrix4<float>::getOrtho(0.f, static_cast<float>(clientRect.width), static_cast<float>(clientRect.height), 0);
 		RectangleShape::g_Program->setMatrix4("projection", projection);
 
 		//Set the Modelview-Matrix		

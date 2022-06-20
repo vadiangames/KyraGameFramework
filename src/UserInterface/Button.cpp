@@ -6,8 +6,7 @@ namespace kyra {
 	
 	namespace ui {
 		
-		KYRA_USERINTERFACE_API Button::Button(IFont::Ptr font, const std::string& text, IRenderDevice::Ptr renderDevice) : Widget(renderDevice) {
-			m_Text  = renderDevice->createText(font, text);
+		KYRA_USERINTERFACE_API Button::Button(IFont::Ptr font, const std::string& text, IRenderDevice::Ptr renderDevice) : Widget(renderDevice), m_Text(renderDevice->createText(font, text)) {
 			m_Shape = renderDevice->createRectangleShape(math::Vector3(0.0f, 0.0f,0.0f), math::Vector2(0.0f,0.0f));
 		}
 

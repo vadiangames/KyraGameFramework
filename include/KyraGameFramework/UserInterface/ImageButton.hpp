@@ -33,16 +33,16 @@ namespace kyra {
 				return false;
 			}
 			
-			virtual Widget::Ptr getHoveredChild( const math::Vector2<float>& vec) {
+			virtual Widget::Ptr getHoveredChild( const math::Vector2<float>& vec) final {
 				return Widget::Ptr(nullptr);
 			}
 			
 			
-			void setPosition(const math::Vector3<float>& position);
+			void setPosition(const math::Vector3<float>& position) final;
 			
 			void setTexture( ITexture::Ptr texture );
 			
-			void setSize(const math::Vector2<float>& size);
+			void setSize(const math::Vector2<float>& size) final;
 			
 			void setColor(const math::Vector4<float>& color);
 			

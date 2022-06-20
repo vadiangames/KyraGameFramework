@@ -17,7 +17,14 @@ namespace kyra {
 					text = text.substr(pos+limiter.size());
 					pos = text.find(limiter);
 				}
+				if(text != "") {
+					data.push_back(text);
+				}
 				return data;
+			}
+			
+			static int32_t toInt32(const std::string& text) {
+				return atoi(text.c_str());
 			}
 			
 			static int64_t toInt64(const std::string& text) {

@@ -284,10 +284,7 @@ KYRA_DEBUG_API std::string css_style = "*{"
 	}
 	
 
-	KYRA_DEBUG_API Section::Section( Application& app, const std::string& name) {
-		m_Application = &app;
-		m_Name = name;
-		m_Start = std::chrono::high_resolution_clock::now();
+	KYRA_DEBUG_API Section::Section( Application& app, const std::string& name) : m_Application(&app), m_Name(name), m_Start(std::chrono::high_resolution_clock::now()) {
 		m_Application->startSection(m_Name);
 	}
 

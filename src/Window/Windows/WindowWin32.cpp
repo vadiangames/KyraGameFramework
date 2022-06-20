@@ -32,7 +32,7 @@ namespace kyra {
 						dispatcher->sendOnKeyPressedEvent(wParam);
 					return 0;
 					case WM_CHAR:
-						dispatcher->sendOnTextEnteredEvent( (char)(wParam) );
+						dispatcher->sendOnTextEnteredEvent( static_cast<char>(wParam) );
 					return 0;
 					case WM_LBUTTONDOWN:
 						dispatcher->sendOnMouseButtonPressedEvent();

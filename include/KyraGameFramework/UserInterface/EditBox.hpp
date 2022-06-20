@@ -28,7 +28,7 @@ namespace kyra {
 			public:
 			~EditBox();
 			
-			virtual void onTextEntered( char character ) {
+			virtual void onTextEntered( char character ) final {
 				std::string text = m_Text->getText();
 				switch(character) {
 					case 0x08: // Backspace
@@ -50,16 +50,16 @@ namespace kyra {
 				return false;
 			}
 			
-			virtual Widget::Ptr getHoveredChild( const math::Vector2<float>& vec) {
+			virtual Widget::Ptr getHoveredChild( const math::Vector2<float>& vec) final {
 				return Widget::Ptr(nullptr);
 			}
 			
 			
 			typedef std::shared_ptr<EditBox> Ptr;
 			
-			void setPosition(const math::Vector3<float>& position);
+			void setPosition(const math::Vector3<float>& position) final;
 			
-			void setSize(const math::Vector2<float>& size);
+			void setSize(const math::Vector2<float>& size) final;
 			
 			void setColor(const math::Vector4<float>& color);
 			
