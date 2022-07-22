@@ -25,6 +25,9 @@ namespace kyra {
 		void create(const math::Vector2<int>& size, void* data) final;
 		void bind(uint32_t slot = 0) final;
 		
+		///TODO Get image of the texture
+		//Image getImage() const;
+		
 	};
 
 }

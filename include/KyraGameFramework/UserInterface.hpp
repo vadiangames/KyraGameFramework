@@ -11,5 +11,6 @@
 	#include <KyraGameFramework/UserInterface/Layout.hpp>
 	#include <KyraGameFramework/UserInterface/VerticalLayout.hpp>
 	#include <KyraGameFramework/UserInterface/HorizontalLayout.hpp>
+	#include <KyraGameFramework/UserInterface/KUI.hpp>
 	
 #endif

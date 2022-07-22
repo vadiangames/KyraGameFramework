@@ -11,6 +11,11 @@ git submodule add https://github.com/nlohmann/json.git json
 cd json
 git checkout v3.10.5
 
+[tinyxml2]
+git submodule add https://github.com/leethomason/tinyxml2.git tinyxml2
+cd tinyxml2
+git checkout 9.0.0
+
 REMOVE
 
 git submodule deinit <submodule-name>    
